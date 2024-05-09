@@ -30,9 +30,14 @@ install_dependencies() {
   echo
   [[ $REPLY =~ ^[Yy]$ ]] && dependencies+=("zsh")
 
-  read -p "Install i3 window manager? (y/N): " -n 1 -r
-  echo
-  [[ $REPLY =~ ^[Yy]$ ]] && dependencies+=("i3")
+  # Check if the system is likely to have a GUI before installing i3
+  if [ "$(uname -s)" != "Linux" ] || [ -z "$DISPLAY" ]; then
+    echo "i3 window manager installation skipped due to non-GUI system."
+  else
+    read -p "Install i3 window manager? (y/N): " -n 1 -r
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]] && dependencies+=("i3")
+  fi
 
   if [ ${#dependencies[@]} -eq 0 ]; then
     echo "No tools selected for installation."
@@ -101,9 +106,17 @@ link_dotfiles() {
     ["$DOTFILES_DIR/vim/.vimrc"]="$HOME/.vimrc"
     ["$DOTFILES_DIR/bash/.bashrc"]="$HOME/.bashrc"
     ["$DOTFILES_DIR/zsh/.zshrc"]="$HOME/.zshrc"
-    # i3 config typically doesn't have a dot prefix
-    ["$DOTFILES_DIR/i3/config"]="$HOME/.config/i3/config"
   )
+
+  # i3 config typically doesn't have a dot prefix
+  # Check if the i3 config directory exists before attempting to link
+  if [ -d "$HOME/.config/i3" ]; then
+    files_to_link+=(
+      ["$DOTFILES_DIR/i3/config"]="$HOME/.config/i3/config"
+    )
+  else
+    echo "i3 config directory does not exist, skipping i3 config linking..."
+  fi
 
   for src in "${!files_to_link[@]}"; do
     dst=${files_to_link[$src]}
