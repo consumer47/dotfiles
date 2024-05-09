@@ -70,6 +70,17 @@ install_dependencies() {
   esac
 }
 
+# Function to install Oh My Zsh
+install_oh_my_zsh() {
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    # Using the official installation script from Oh My Zsh
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  else
+    echo "Oh My Zsh is already installed."
+  fi
+}
+
 # Function to create a symbolic link and backup the original file
 link_file() {
   local src=$1 dst=$2
@@ -132,6 +143,8 @@ main() {
   else
     echo "Skipping dependency installation."
   fi
+
+  install_oh_my_zsh # Call the function to install Oh My Zsh
 
   link_dotfiles
   echo "Dotfiles installation complete."
