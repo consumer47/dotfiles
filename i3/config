@@ -38,7 +38,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # Terminal
-bindsym $mod+Return exec xterm
+bindsym $mod+Return exec xterm -e tmux
 
 # Close window
 bindsym $mod+Shift+q kill
