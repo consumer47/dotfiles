@@ -40,6 +40,12 @@ tiling_drag modifier titlebar
 # Terminal
 bindsym $mod+Return exec xterm -e tmux
 
+# Start Firefox with Mod+d
+bindsym $mod+Shift+f exec firefox
+
+# Start Ranger with Mod+r
+bindsym $mod+Shift+r exec ranger
+
 # Close window
 bindsym $mod+Shift+q kill
 
