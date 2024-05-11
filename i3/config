@@ -38,7 +38,7 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # Terminal
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec xterm
 
 # Close window
 bindsym $mod+Shift+q kill

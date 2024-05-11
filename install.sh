@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # Define the dotfiles directory
 DOTFILES_DIR="$HOME/dotfiles"
