@@ -37,14 +37,23 @@ floating_modifier $mod
 # Drag floating windows with the mouse
 tiling_drag modifier titlebar
 
+# resizing window with keys
+bindsym $mod+Ctrl+l resize shrink width 1 px or 1 ppt
+bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
+bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
+bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
+
 # Terminal
-bindsym $mod+Return exec xterm -e tmux
+bindsym $mod+Shift+Return exec xterm -e tmux
+bindsym $mod+Return exec xterm 
 
 # Start Firefox with Mod+d
 bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+p exec firefox --private-window
+
 
 # Start Ranger with Mod+r
-bindsym $mod+Shift+r exec ranger
+bindsym $mod+Shift+z exec ranger
 
 # Close window
 bindsym $mod+Shift+q kill
