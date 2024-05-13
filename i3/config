@@ -43,6 +43,9 @@ bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
 bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
 bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
 
+# display to the right
+exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
+
 # Terminal
 bindsym $mod+Shift+Return exec xterm -e tmux
 bindsym $mod+Return exec xterm 
