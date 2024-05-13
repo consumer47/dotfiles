@@ -1,5 +1,3 @@
-#!/bin/bash
-
 # Define the settings options
 options="Network\nBluetooth\nAudio\nDisplay\nFile Manager\nSystem Monitor"
 

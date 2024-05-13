@@ -63,7 +63,7 @@ bindsym $mod+Shift+z exec ranger
 # Close window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
+bindsym $mod+Shift+s exec ~/NixosConfig/dotfiles/rofi/settings_menu.sh
 
 
 # Program launcher
