@@ -45,6 +45,9 @@ bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
 bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
 bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
 
+# display to the right
+exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
+
 # Terminal
 bindsym $mod+Shift+Return exec xterm -e tmux
 bindsym $mod+Return exec xterm 
@@ -60,8 +63,12 @@ bindsym $mod+Shift+z exec ranger
 # Close window
 bindsym $mod+Shift+q kill
 
+bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
+
+
 # Program launcher
-bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec rofi -show run
 
 # Focus windows
 bindsym $mod+h focus left
