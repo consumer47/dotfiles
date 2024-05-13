@@ -12,7 +12,7 @@ case "$choice" in
     Bluetooth) blueman-manager ;;
     Audio) pavucontrol ;;
     Display) arandr ;;
-    "File Manager") ranger ;;
-    "System Monitor") gnome-system-monitor ;;
+    "File Manager") gnome-terminal -- ranger ;;
+    "System Monitor") gnome-terminal -- htop ;;
     *) exit 1 ;;
 esac

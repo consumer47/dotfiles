@@ -61,8 +61,12 @@ bindsym $mod+Shift+z exec ranger
 # Close window
 bindsym $mod+Shift+q kill
 
+bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
+
+
 # Program launcher
-bindsym $mod+d exec --no-startup-id dmenu_run
+# bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec rofi -show run
 
 # Focus windows
 bindsym $mod+h focus left
