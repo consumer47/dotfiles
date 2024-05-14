@@ -39,6 +39,8 @@ floating_modifier $mod
 # Drag floating windows with the mouse
 tiling_drag modifier titlebar
 
+# replacing ö witth backspace
+# bindsym odiaeresis Backspace
 # resizing window with keys
 bindsym $mod+Ctrl+l resize shrink width 1 px or 1 ppt
 bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
@@ -63,7 +65,7 @@ bindsym $mod+Shift+z exec ranger
 # Close window
 bindsym $mod+Shift+q kill
 
-bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
+bindsym $mod+Shift+s exec ~/NixosConfig/dotfiles/rofi/settings_menu.sh
 
 
 # Program launcher

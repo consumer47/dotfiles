@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #!/bin/bash
 
 # Check if rofi is installed
@@ -20,10 +19,6 @@ declare -A options=(
 
 # Generate the options string for rofi
 options_string=$(IFS=$'\n'; echo "${!options[*]}")
-=======
-# Define the settings options
-options="Network\nBluetooth\nAudio\nDisplay\nFile Manager\nSystem Monitor"
->>>>>>> refs/remotes/origin/main
 
 # Get the user choice through rofi
 choice=$(echo -e "$options_string" | rofi -dmenu -i -p 'Settings' )
