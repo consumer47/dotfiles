@@ -1,3 +1,11 @@
+vim nvim
+
+
 gd 			go to definition
 gD 			go to declaration
+gf			go to file when cursor over path
 ctrl + o		jump back
+ctrl + y		accept proposal
+
+
+:e filepath		open fil3 rele

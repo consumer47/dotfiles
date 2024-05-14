@@ -195,3 +195,6 @@ bar {
 }
 #include /home/dennis/.config/i3/config.work
 #include /home/dennis/.config/i3/config.work
+# check if on work or private machine and load config file
+include ~/.config/i3/config.machine
+
