@@ -2,6 +2,7 @@
 export PATH=$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH
 
 alias please='sudo $(fc -ln -1)'
+alias pushcommitadddotfiles='cd ~/dotfiles/ && git add . && git commit -m "..." && git push'
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
