@@ -1,0 +1,3 @@
+gd 			go to definition
+gD 			go to declaration
+ctrl + o		jump back
