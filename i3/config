@@ -192,3 +192,4 @@ bar {
         status_command i3status
 }
 #include /home/dennis/.config/i3/config.work
+#include /home/dennis/.config/i3/config.work
