@@ -1,5 +1,12 @@
+# Terminal
+bindsym $mod+Shift+Return exec gnome-terminal e tmux
+bindsym $mod+Return exec gnome-terminal 
+
+
 # Assign Firefox to workspace 1
 assign [class="^Firefox$"] $ws1
 
 # Start Firefox with specific pages on workspace 1
 exec --no-startup-id firefox --new-window "https://outlook.office.com/mail/" --new-tab "https://teams.microsoft.com/v2/"
+
+bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
