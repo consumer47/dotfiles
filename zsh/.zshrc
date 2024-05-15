@@ -1,6 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH
 
+alias MyShortcuts='batcat /home/dennis/dotfiles/shortcuts/shortcuts'
 alias please='sudo $(fc -ln -1)'
 alias pushcommitadddotfiles='cd ~/dotfiles/ && git add . && git commit -m "..." && git push'
 # Path to your oh-my-zsh installation.

@@ -1,0 +1,28 @@
+# Shortcuts Reference
+
+This file contains a collection of useful shortcuts for various tools and applications. It is structured by application and mode where applicable.
+
+## Vim / Neovim
+
+### Normal Mode
+- `gd`: Go to definition
+- `gD`: Go to declaration
+- `gf`: Go to file when cursor over path
+- `ctrl + o`: Jump back
+- `;` or `,`: Repeat last f, F, t, or T movement in same/opposite direction (use with sneak or f/t commands)
+- `dip`: Delete in paragraph
+
+### Insert Mode
+- `ctrl + y`: Accept autocomplete proposal
+
+### Command Mode
+- `:e <filepath>`: Open file in editor
+- `:Tutor`: Start Vim tutor
+- `:s/thee/the`: Substitute 'thee' with 'the' once on the current line
+
+## Command Line Interface (CLI)
+
+(Add CLI shortcuts here when applicable)
+
+## vscode
+- ctrl + ww: switch window focus
