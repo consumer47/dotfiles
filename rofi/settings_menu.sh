@@ -8,7 +8,7 @@ fi
 
 # Define the settings options as an associative array
 declare -A options=(
-    ["Network"]="nm-applet"
+    ["Network"]="nm-connection-editor"
     ["Bluetooth"]="blueman-manager"
     ["Audio"]="pavucontrol"
     ["Display (GUI)"]="arandr"

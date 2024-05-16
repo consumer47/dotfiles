@@ -3,10 +3,16 @@ bindsym $mod+Shift+Return exec gnome-terminal e tmux
 bindsym $mod+Return exec gnome-terminal 
 
 
+assign [class="^nvim$"] $ws9
+assign [class="^code$"] $ws10
+
+exec --no-startup-id alacritty -e nvim 
+exec --no-startup-id code
 # Assign Firefox to workspace 1
 assign [class="^Firefox$"] $ws1
 
 # Start Firefox with specific pages on workspace 1
 exec --no-startup-id firefox --new-window "https://outlook.office.com/mail/" --new-tab "https://teams.microsoft.com/v2/"
+
 
 bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh

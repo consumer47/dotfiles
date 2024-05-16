@@ -65,6 +65,7 @@ workspace 10 output HDMI-1
 # Start Firefox with Mod+d
 bindsym $mod+Shift+f exec firefox
 bindsym $mod+Shift+p exec firefox --private-window
+bindsym $mod+Shift+n exec alacritty -e nvim
 
 
 # Start Ranger with Mod+r
