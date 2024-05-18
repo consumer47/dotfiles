@@ -1,9 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH
 
-alias MyShortcuts='batcat /home/dennis/dotfiles/shortcuts/shortcuts'
-alias please='sudo $(fc -ln -1)'
-alias pushcommitadddotfiles='cd ~/dotfiles/ && git add . && git commit -m "..." && git push'
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -143,7 +141,10 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 #
-# Example aliases
+
+alias MyShortcuts='batcat /home/dennis/dotfiles/shortcuts/shortcuts'
+alias please='sudo $(fc -ln -1)'
+alias pushcommitadddotfiles='cd ~/dotfiles/ && git add . && git commit -m "..." && git push'
 alias clippit="xclip -selection clipboard"
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
@@ -160,3 +161,10 @@ PERL5LIB="/home/dennis/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LI
 PERL_LOCAL_LIB_ROOT="/home/dennis/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/dennis/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/dennis/perl5"; export PERL_MM_OPT;
+
+gpt_my_cli() {
+    export OPENAI_API_KEY=$(<~/.openai_api_key)
+     cd ~/gpt_py_cli/
+    python3 CliManager.py "$@"
+    unset OPENAI_API_KEY
+}
