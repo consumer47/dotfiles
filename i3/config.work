@@ -1,6 +1,6 @@
 # Terminal
-bindsym $mod+Shift+Return exec gnome-terminal e tmux
-bindsym $mod+Return exec gnome-terminal 
+bindsym $mod+Return exec gnome-terminal -- tmux
+bindsym $mod+Shift+Return exec gnome-terminal 
 
 
 assign [class="^nvim$"] $ws9

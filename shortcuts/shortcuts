@@ -26,3 +26,13 @@ This file contains a collection of useful shortcuts for various tools and applic
 
 ## vscode
 - ctrl + ww: switch window focus
+
+## tmux 
+
+for tmux yank: 
+
+   - Enter copy mode: `Ctrl + a`, then `[` (Note: `Ctrl + a` is the prefix we set)
+   - Navigate using Vim-style keys (`h`, `j`, `k`, `l`)
+   - Begin selection: `v`
+   - Yank (copy) selected text: `y`
+   - Exit copy mode: `q`

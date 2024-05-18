@@ -146,6 +146,9 @@ alias MyShortcuts='batcat /home/dennis/dotfiles/shortcuts/shortcuts'
 alias please='sudo $(fc -ln -1)'
 alias pushcommitadddotfiles='cd ~/dotfiles/ && git add . && git commit -m "..." && git push'
 alias clippit="xclip -selection clipboard"
+
+alias tmux_clean='tmux list-sessions -F "#{session_attached} #{session_id}" | awk "\$1 == 0 {print \$2}" | xargs -I {} tmux kill-session -t {}'
+
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias ll='ls -al'
@@ -162,7 +165,7 @@ PERL_LOCAL_LIB_ROOT="/home/dennis/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_
 PERL_MB_OPT="--install_base \"/home/dennis/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/dennis/perl5"; export PERL_MM_OPT;
 
-gpt_my_cli() {
+gpt() {
     export OPENAI_API_KEY=$(<~/.openai_api_key)
      cd ~/gpt_py_cli/
     python3 CliManager.py "$@"
