@@ -188,6 +188,7 @@ gpt() {
 
 
 export PATH=$PATH:$HOME/.todo.txt-cli
+export EDITOR='nvim'
 alias t="todo.sh"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

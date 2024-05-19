@@ -2,8 +2,6 @@
 bindsym $mod+Return exec gnome-terminal -- tmux
 bindsym $mod+Shift+Return exec gnome-terminal 
 
-bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/brightnessctl-wrapper set +10%
-bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/brightnessctl-wrapper set 10%-
 
 assign [class="^nvim$"] $ws9
 assign [class="^code$"] $ws10
