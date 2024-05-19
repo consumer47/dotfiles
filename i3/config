@@ -66,7 +66,7 @@ workspace 7 output HDMI-1
 workspace 8 output HDMI-1
 workspace 9 output HDMI-1
 workspace 10 output HDMI-1
-bindsym $mod+Shift+g exec alacritty -e zsh -c 'source ~/.zshrc && gpt_my_cli'
+bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && gpt'
 bindsym $mod+Shift+f exec firefox
 bindsym $mod+Shift+p exec firefox --private-window
 bindsym $mod+Shift+n exec alacritty -e nvim
