@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH
 
@@ -53,7 +60,7 @@ chpwd_functions=(${chpwd_functions[@]} "_zoxide_hook")
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+# ZSH_THEME="robbyrussell"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -115,8 +122,10 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vim-interaction zoxide ssh git fzf zsh-autosuggestions)
+plugins=(vim-interaction zoxide ssh git fzf zsh-autosuggestions zsh-syntax-highlighting)
 
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -140,14 +149,19 @@ source $ZSH/oh-my-zsh.sh
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
-#
+
+plugins+=(alias-tips)
+
 
 alias MyShortcuts='batcat /home/dennis/dotfiles/shortcuts/shortcuts'
+
 alias please='sudo $(fc -ln -1)'
 alias pushcommitadddotfiles='cd ~/dotfiles/ && git add . && git commit -m "..." && git push'
 alias clippit="xclip -selection clipboard"
 
 alias tmux_clean='tmux list-sessions -F "#{session_attached} #{session_id}" | awk "\$1 == 0 {print \$2}" | xargs -I {} tmux kill-session -t {}'
+
+bindkey '^f' 'fzf'
 
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
@@ -171,3 +185,9 @@ gpt() {
     python3 CliManager.py "$@"
     unset OPENAI_API_KEY
 }
+
+
+export PATH=$PATH:$HOME/.todo.txt-cli
+alias t="todo.sh"
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
