@@ -1,0 +1,39 @@
+
+! ~/.Xmodmap - Gradual transition from German (QWERTZ) to English (QWERTY)
+
+! Swap Y and Z keys
+
+! The German layout has 'Y' and 'Z' swapped compared to the US layout.
+! This swaps ! keycode 52 (which produces 'z' in the US layout) to 'z' and 'Z'.
+! And ! keycode 29 (which produces 'y' in the US layout) to 'y' and 'Y'.
+keycode 52 = z Z
+keycode 29 = y Y
+
+! Define number keys as they appeared in the `xev` output
+! The number row in a typical US layout includes numbers and their common shift characters.
+! These are reverted back to typical US layout characters (commented out as they may already be correct).
+
+! ! keycode 10 = 1 exclam      ! Maps keycode 10 to '1' and '!'
+! ! keycode 11 = 2 at          ! Maps keycode 11 to '2' and '@'
+! ! keycode 12 = 3 numbersign  ! Maps keycode 12 to '3' and '#'
+! ! keycode 13 = 4 dollar      ! Maps keycode 13 to '4' and '$'
+! ! keycode 14 = 5 percent     ! Maps keycode 14 to '5' and '%'
+! ! keycode 15 = 6 asciicircum ! Maps keycode 15 to '6' and '^'
+! ! keycode 16 = 7 ampersand   ! Maps keycode 16 to '7' and '&'
+! ! keycode 17 = 8 asterisk    ! Maps keycode 17 to '8' and '*'
+! ! keycode 18 = 9 parenleft   ! Maps keycode 18 to '9' and '('
+! ! keycode 19 = 0 parenright  ! Maps keycode 19 to '0' and ')'
+! ! keycode 20 = minus underscore  ! Maps keycode 20 to '-' and '_'
+
+! Define non-alphanumeric keys
+
+! keycode 34 = bracketleft braceleft  ! Maps keycode 34 to '[' and '{'
+! keycode 35 = bracketright braceright ! Maps keycode 35 to ']' and '}'
+! keycode 47 = backslash bar          ! Maps keycode 47 to '\' and '|'
+! keycode 48 = asciicircum dead_circumflex ! Maps keycode 48 to '^' (dead key for circumflex accents)
+! keycode 51 = minus underscore       ! Maps keycode 51 to '-' and '_'
+! keycode 59 = equal plus             ! Maps keycode 59 to '=' and '+'
+! keycode 60 = backslash bar          ! Maps keycode 60 to '\' and '|'
+! keycode 61 = underscore minus       ! Maps keycode 61 to '_' and '-'
+! keycode 94 = backslash bar          ! Maps keycode 94 to '\' and '|'
+

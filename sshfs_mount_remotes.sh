@@ -1,5 +1,7 @@
 #!/bin/bash
-# exampole command: sshfs dietpi@10.20.32.88:/home/dietpi/workbench/rgb-led-pi /home/dennis/remote-rtb-parking-led-pi# Define an associative array for project configurations
+# exampole command: 
+# sshfs dietpi@10.20.32.88:/home/dietpi/workbench/rgb-led-pi /home/dennis/remote-rtb-parking-led-pi
+# Define an associative array for project configurations
 declare -A PROJECTS
 declare -A MOUNT_POINTS
 

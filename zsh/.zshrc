@@ -187,6 +187,8 @@ gpt() {
 }
 
 
+alias qwertz-to-qwerty='python3 ~/gpt_py_cli/find_key.py qwertz_to_qwerty'
+alias qwerty-to-qwertz='python3 ~/gpt_py_cli/find_key.py qwerty_to_qwertz'
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
 alias t="todo.sh"
