@@ -45,8 +45,6 @@ floating_modifier $mod
 # Drag floating windows with the mouse
 tiling_drag modifier titlebar
 
-# replacing ö witth backspace
-# bindsym odiaeresis Backspace
 # resizing window with keys
 bindsym $mod+Ctrl+l resize shrink width 1 px or 1 ppt
 bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
@@ -71,9 +69,9 @@ workspace 10 output HDMI-1
 bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
 bindsym $mod+Shift+f exec firefox
 bindsym $mod+Shift+p exec firefox --private-window
-bindsym $mod+Shift+n exec alacritty -e nvim
+bindsym $mod+Shift+n exec gnome-terminal -- tmux new-session -A -s neovim 'nvim'
 # Start Ranger with Mod+r
-bindsym $mod+Shift+z exec gnome-terminao -- ranger
+bindsym $mod+Shift+z exec gnome-terminal -- ranger
 
 # Close window
 bindsym $mod+Shift+q kill
@@ -205,8 +203,6 @@ bar {
 }
 # my own keyboard mapping to transition to us layout.
 exec --no-startup-id (sleep 5 && xmodmap ~/.xmodmap) &
-#include /home/dennis/.config/i3/config.work
-#include /home/dennis/.config/i3/config.work
 # check if on work or private machine and load config file
 include ~/.config/i3/config.machine
 

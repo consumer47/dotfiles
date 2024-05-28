@@ -191,6 +191,7 @@ alias qwertz-to-qwerty='python3 ~/gpt_py_cli/find_key.py qwertz_to_qwerty'
 alias qwerty-to-qwertz='python3 ~/gpt_py_cli/find_key.py qwerty_to_qwertz'
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
+export BROWSER='firefox'
 alias t="todo.sh"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

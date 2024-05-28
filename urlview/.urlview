@@ -1,0 +1,3 @@
+
+# ~/.urlview
+COMMAND firefox --new-window %s
