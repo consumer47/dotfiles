@@ -7,7 +7,8 @@ fi
 
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH
-
+[[ -f $HOME/.fzf.zsh ]] && source $HOME/.fzf.zsh
+# source ~/.fzf.zsh
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -122,8 +123,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vim-interaction zoxide ssh git fzf zsh-autosuggestions zsh-syntax-highlighting)
-
+plugins=(vim-interaction zoxide ssh alias-tips git zsh-autosuggestions zsh-syntax-highlighting fzf)
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
@@ -150,9 +150,6 @@ source $ZSH/oh-my-zsh.sh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-plugins+=(alias-tips)
-
-
 alias MyShortcuts='batcat /home/dennis/dotfiles/shortcuts/shortcuts'
 
 alias please='sudo $(fc -ln -1)'
@@ -161,7 +158,6 @@ alias clippit="xclip -selection clipboard"
 
 alias tmux_clean='tmux list-sessions -F "#{session_attached} #{session_id}" | awk "\$1 == 0 {print \$2}" | xargs -I {} tmux kill-session -t {}'
 
-bindkey '^f' 'fzf'
 
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
@@ -195,3 +191,4 @@ export BROWSER='firefox'
 alias t="todo.sh"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
