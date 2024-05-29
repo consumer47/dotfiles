@@ -1,5 +1,5 @@
 # Terminal
-bindsym $mod+Return exec gnome-terminal -- tmux 
+bindsym $mod+Return exec env EDITOR=nvim gnome-terminal -- tmux
 bindsym $mod+Shift+Return exec gnome-terminal 
 
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/brightnessctl-wrapper set +10%

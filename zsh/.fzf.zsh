@@ -4,7 +4,16 @@ bindkey '^T' fzf-file-widget
 
 # Improved Key Bindings
 bindkey '^F' fzf-file-widget
+
+   fzf-history-widget() {
+       local selected_command
+       selected_command=$(fc -l -1000 | fzf --query="$LBUFFER") || return
+       BUFFER=$selected_command
+       zle accept-line
+   }
+   zle -N fzf-history-widget
 bindkey '^R' fzf-history-widget
+
 
 # Useful Aliases
 alias fzg='fzf --preview "bat --style=numbers --color=always --line-range :500 {}" < <(git ls-files)'
