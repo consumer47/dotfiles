@@ -4,3 +4,6 @@
 [submodule "ec5e632beafecf19449ef5a9ef4f5897"]
 	path = ec5e632beafecf19449ef5a9ef4f5897
 	url = git@gist.github.com:ec5e632beafecf19449ef5a9ef4f5897.git
+[submodule "zsh/.oh-my-zsh"]
+	path = zsh/.oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
