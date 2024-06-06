@@ -13,3 +13,6 @@
 [submodule "zsh/.ohmyzsh"]
 	path = zsh/.ohmyzsh
 	url = git@github.com:consumer47/ohmyzsh.git
+[submodule ".oh-my-zsh"]
+	path = .oh-my-zsh
+	url = git@github.com:consumer47/ohmyzsh.git
