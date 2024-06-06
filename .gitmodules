@@ -1,9 +1,3 @@
 [submodule "contextor"]
 	path = contextor
 	url = git@github.com:consumer47/Contextor.git
-[submodule "ec5e632beafecf19449ef5a9ef4f5897"]
-	path = ec5e632beafecf19449ef5a9ef4f5897
-	url = git@gist.github.com:ec5e632beafecf19449ef5a9ef4f5897.git
-[submodule ".oh-my-zsh"]
-	path = .oh-my-zsh
-	url = git@github.com:consumer47/ohmyzsh.git
