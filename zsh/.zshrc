@@ -128,7 +128,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vim-interaction zoxide ssh alias-tips git zsh-autosuggestions zsh-syntax-highlighting fzf)
+plugins=(vim-interaction zoxide ssh git zsh-autosuggestions zsh-syntax-highlighting fzf)
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
@@ -190,6 +190,6 @@ export EDITOR='nvim'
 export BROWSER='firefox'
 alias t="todo.sh"
 alias bat="batcat"
-alias a="gpt -t"
+alias a="gpt -t \""
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
