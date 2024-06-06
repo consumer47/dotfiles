@@ -71,7 +71,7 @@ ssh-fzf() {
     ssh "$host"
   fi
 }
-alias ssh="ssh-fzf"
+# alias ssh="ssh-fzf"
 
 # Bat (cat replacement)
 export FZF_DEFAULT_COMMAND='fd --type f'

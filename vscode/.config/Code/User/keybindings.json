@@ -1,0 +1,167 @@
+
+[
+
+  {
+    "key": "ctrl+shift+alt+z", 
+    "command": "workbench.action.toggleMaximizedPanel",
+    "when": "terminalFocus"
+},
+// Toggle between terminal and editor focus
+{
+  "key":     "ctrl+shift+z",
+  "command": "workbench.action.terminal.focus"
+},
+{
+  "key":     "ctrl+shift+z",
+  "command": "workbench.action.focusActiveEditorGroup",
+  "when":    "terminalFocus"
+},
+
+  // NAVIGATION
+    {
+    "key": "ctrl+shift+e",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "workbench.action.togglePanel"
+  },
+  {
+    "key": "ctrl+shift+n",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "ctrl+shift+w",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  // FILE TREE
+
+
+  {
+    "key": "space e",
+    "command": "workbench.action.toggleSidebarVisibility",
+    "when": "filesExplorerFocus && !inputFocus"
+  },
+  {
+    "key": "a",
+    "command": "explorer.newFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "f",
+    "command": "explorer.newFolder",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "r",
+    "command": "renameFile",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "x",
+    "command": "filesExplorer.cut",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !explorerResourceReadonly && !inputFocus"
+  },
+  {
+    "key": "y",
+    "command": "filesExplorer.copy",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceIsRoot && !inputFocus"
+  },
+  {
+    "key": "p",
+    "command": "filesExplorer.paste",
+    "when": "explorerViewletVisible && filesExplorerFocus && !explorerResourceReadonly && !inputFocus"
+  },
+
+
+
+  // EXTRA
+  {
+    "key": "ctrl+shift+5",
+    "command": "editor.emmet.action.matchTag"
+  },
+  {
+    "key": "ctrl+z",
+    "command": "workbench.action.toggleZenMode"
+  },
+  {
+    "key": "ctrl+n",
+    "command": "-workbench.action.files.newUntitledFile"
+  },
+  {
+    "key": "ctrl+p",
+    "command": "-workbench.action.quickOpen"
+  },
+{
+  "key": "ctrl+n",
+  "command": "workbench.action.quickOpenNavigateNextInFilePicker",
+  "when": "inFilesPicker && inQuickOpen"
+},
+{
+  "key": "ctrl+p",
+  "command": "workbench.action.quickOpenNavigatePreviousInFilePicker",
+  "when": "inFilesPicker && inQuickOpen"
+},
+{
+  "key": "ctrl+i",
+  "command": "-workbench.action.chat.startVoiceChat",
+  "when": "chatIsEnabled && hasSpeechProvider && inChatInput && !chatSessionRequestInProgress && !editorFocus && !inlineChatHasActiveRequest && !inlineVoiceChatInProgress && !notebookEditorFocused && !quickVoiceChatInProgress && !terminalChatActiveRequest && !terminalVoiceChatInProgress && !voiceChatGettingReady && !voiceChatInEditorInProgress && !voiceChatInViewInProgress || chatIsEnabled && hasSpeechProvider && inlineChatFocused && !chatSessionRequestInProgress && !editorFocus && !inlineChatHasActiveRequest && !inlineVoiceChatInProgress && !notebookEditorFocused && !quickVoiceChatInProgress && !terminalChatActiveRequest && !terminalVoiceChatInProgress && !voiceChatGettingReady && !voiceChatInEditorInProgress && !voiceChatInViewInProgress"
+},
+{
+  "key": "ctrl+i",
+  "command": "-workbench.action.chat.stopListeningAndSubmit",
+  "when": "chatIsEnabled && hasSpeechProvider && inChatInput && voiceChatInProgress || chatIsEnabled && hasSpeechProvider && inlineChatFocused && voiceChatInProgress"
+},
+{
+  "key": "ctrl+i",
+  "command": "-codeium.openCodeiumCommand",
+  "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
+},
+{
+  "key": "ctrl+i",
+  "command": "-workbench.action.terminal.chat.focusInput",
+  "when": "terminalChatFocus && !inlineChatFocused"
+},
+{
+  "key": "ctrl+i",
+  "command": "-inlineChat.start",
+  "when": "editorFocus && inlineChatHasProvider && !editorReadonly"
+},
+{
+  "key": "ctrl+i",
+  "command": "-workbench.action.terminal.chat.start",
+  "when": "inlineChatHasProvider && terminalFocusInAny && terminalHasBeenCreated || inlineChatHasProvider && terminalFocusInAny && terminalProcessSupported"
+},
+{
+  "key": "ctrl+i",
+  "command": "-focusSuggestion",
+  "when": "suggestWidgetVisible && textInputFocus && !suggestWidgetHasFocusedSuggestion"
+},
+{
+  "key": "ctrl+i",
+  "command": "-inlineChat.holdForSpeech",
+  "when": "hasSpeechProvider && inlineChatHasProvider && inlineChatVisible && textInputFocus"
+},
+{
+  "key": "ctrl+i",
+  "command": "-notebook.cell.chat.start",
+  "when": "config.notebook.experimental.cellChat && inlineChatHasProvider && notebookEditable && notebookEditorFocused && !inputFocus || config.notebook.experimental.generate && inlineChatHasProvider && notebookEditable && notebookEditorFocused && !inputFocus"
+},
+{
+  "key": "ctrl+i",
+  "command": "-toggleSuggestionDetails",
+  "when": "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus"
+},
+{
+  "key": "ctrl+i",
+  "command": "-workbench.action.chat.holdToVoiceChatInChatView",
+  "when": "chatIsEnabled && hasSpeechProvider && !editorFocus && !inChatInput && !inlineChatFocused && !notebookEditorFocused"
+},
+{
+  "key": "ctrl+shift+z",
+  "command": "-redo"
+}
+]

@@ -1,0 +1,4 @@
+bindsym $mod+Shift+Return exec xterm -e tmux
+bindsym $mod+Return exec xterm 
+
+bindsym $mod+Shift+s exec ~/NixosConfig/dotfiles/rofi/settings_menu.sh

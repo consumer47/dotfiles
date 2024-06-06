@@ -189,5 +189,7 @@ export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
 export BROWSER='firefox'
 alias t="todo.sh"
+alias bat="batcat"
+alias a="gpt -t"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
