@@ -13,7 +13,7 @@ install_packages() {
 
 # Clone dotfiles repository
 clone_dotfiles() {
-    git clone https://github.com/consumer47/dotfiles.git ~/dotfiles
+    git clone --recurse-submodules https://github.com/consumer47/dotfiles.git ~/dotfiles
     cd ~/dotfiles
 }
 
