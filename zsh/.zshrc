@@ -183,13 +183,15 @@ gpt() {
 }
 
 
-alias qwertz-to-qwerty='python3 ~/gpt_py_cli/find_key.py qwertz_to_qwerty'
-alias qwerty-to-qwertz='python3 ~/gpt_py_cli/find_key.py qwerty_to_qwertz'
+alias zy='python3 ~/gpt_py_cli/find_key.py qwertz_to_qwerty'
+alias yz='python3 ~/gpt_py_cli/find_key.py qwerty_to_qwertz'
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
 export BROWSER='firefox'
 alias t="todo.sh"
-alias bat="batcat"
+alias n="nvim"
+alias b="batcat"
 alias a="gpt -t \""
+alias pinkel="ping 8.8.8.8"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

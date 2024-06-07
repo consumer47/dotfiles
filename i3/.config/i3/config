@@ -78,7 +78,7 @@ bindsym $mod+Shift+n exec gnome-terminal -- tmux new-session -A -s neovim 'nvim'
 bindsym $mod+Shift+z exec gnome-terminal -- ranger
 
 # Close window
-bindsym $mod+Shift+q kill
+bindsym $mod+q kill
 
 # Program launcher
 # bindsym $mod+d exec --no-startup-id dmenu_run

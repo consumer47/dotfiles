@@ -1,5 +1,6 @@
 {
     "terminal.integrated.shell.linux": "zsh",
+    "terminal.integrated.defaultProfile.linux": "tmux",
     "workbench.colorTheme": "Visual Studio Dark - C++",
     "files.watcherExclude": {
         "**/leaf-data/**": true

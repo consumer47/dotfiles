@@ -4,7 +4,7 @@
 install_packages() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
         sudo apt-get update
-        sudo apt-get install -y git stow zsh neovim
+        sudo apt-get install -y git stow zsh neovim tmux
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         brew update
         brew install git stow zsh neovim
