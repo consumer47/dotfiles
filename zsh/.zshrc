@@ -175,6 +175,11 @@ PERL_LOCAL_LIB_ROOT="/home/dennis/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_
 PERL_MB_OPT="--install_base \"/home/dennis/perl5\""; export PERL_MB_OPT;
 PERL_MM_OPT="INSTALL_BASE=/home/dennis/perl5"; export PERL_MM_OPT;
 
+jibidi() {
+    export OPENAI_API_KEY=$(<~/.openai_api_key)
+    python3 ~/gpt_py_cli/CliManager.py "$@"
+    unset OPENAI_API_KEY
+}
 gpt() {
     export OPENAI_API_KEY=$(<~/.openai_api_key)
      cd ~/gpt_py_cli/
@@ -191,7 +196,7 @@ export BROWSER='firefox'
 alias t="todo.sh"
 alias n="nvim"
 alias b="batcat"
-alias a="gpt -t \""
+alias a="jibidi -t \""
 alias pinkel="ping 8.8.8.8"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

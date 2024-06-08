@@ -1,0 +1,6 @@
+
+   dotfiles/
+   ├── tmux/
+   │   └── .tmux.conf
+   │   └── install_tmux_plugins.sh
+   
