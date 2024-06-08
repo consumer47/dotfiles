@@ -55,8 +55,6 @@ bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
 bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
 bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
 
-# display to the right
-exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
 
 
 workspace 1 output eDP-1
@@ -69,6 +67,12 @@ workspace 7 output HDMI-1
 workspace 8 output HDMI-1
 workspace 9 output HDMI-1
 workspace 10 output HDMI-1
+
+# display start and shortcuts
+exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
+bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh
+bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh
+
 
 bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
 bindsym $mod+Shift+f exec firefox
