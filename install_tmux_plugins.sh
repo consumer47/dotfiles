@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Clone tpm if it doesn't exist
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  echo "Installing tmux plugin manager (tpm)..."
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+  echo "tmux plugin manager already installed."
+fi
+
+# Install the plugins
+echo "Installing tmux plugins..."
+$HOME/.tmux/plugins/tpm/bin/install_plugins
+echo "tmux plugins installed."
