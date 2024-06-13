@@ -163,5 +163,13 @@
 {
   "key": "ctrl+shift+z",
   "command": "-redo"
+},
+{
+  "key": "ctrl+shift+n",
+  "command": "-workbench.action.newWindow"
+},
+{ "key": "ctrl+shift+n",
+    "command": "workbench.action.terminal.new"
 }
+
 ]

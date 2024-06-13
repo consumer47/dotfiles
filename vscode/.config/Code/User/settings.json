@@ -1,7 +1,9 @@
 {
-    "terminal.integrated.shell.linux": "zsh",
-    "terminal.integrated.defaultProfile.linux": "tmux",
+    "terminal.integrated.shell.linux": "bash",
+    "terminal.integrated.defaultProfile.linux": "bash",
     "workbench.colorTheme": "Visual Studio Dark - C++",
+    // "workbench.activityBar.location": "right",
+    "workbench.sideBar.location": "right",
     "files.watcherExclude": {
         "**/leaf-data/**": true
     },
@@ -157,9 +159,8 @@
       "editor.cursorSurroundingLines": 8,
       "cmake.configureOnOpen": true,
       "codeium.enableConfig": {
-        "*": true,
+        "*": false,
         "markdown": true
-
       },
       "remote.SSH.defaultForwardedPorts": [
 

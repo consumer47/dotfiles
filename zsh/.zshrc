@@ -198,5 +198,9 @@ alias n="nvim"
 alias b="batcat"
 alias a="jibidi -t \""
 alias pinkel="ping 8.8.8.8"
+export WLAN_OUTDOOR="FRITZ\!Box 7490"
+export WLAN_OUTDOOR_PASS="68631738386882378679"
+export WLAN_HOME="FRITZ\!Box 7590 PG"
+export WLAN_HOME_PASS="07483358857555792066"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
