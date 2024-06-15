@@ -8,6 +8,8 @@
 ! And ! keycode 29 (which produces 'y' in the US layout) to 'y' and 'Y'.
 keycode 52 = z Z
 keycode 29 = y Y
+clear Lock
+keycode 66 = Escape
 
 ! Define number keys as they appeared in the `xev` output
 ! The number row in a typical US layout includes numbers and their common shift characters.

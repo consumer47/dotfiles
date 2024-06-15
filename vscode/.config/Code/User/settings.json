@@ -1,7 +1,7 @@
 {
-    "terminal.integrated.shell.linux": "bash",
-    "terminal.integrated.defaultProfile.linux": "bash",
+    "terminal.integrated.defaultProfile.linux": "zsh",
     "workbench.colorTheme": "Visual Studio Dark - C++",
+    "keyboard.dispatch": "keyCode",
     // "workbench.activityBar.location": "right",
     "workbench.sideBar.location": "right",
     "files.watcherExclude": {
@@ -159,7 +159,7 @@
       "editor.cursorSurroundingLines": 8,
       "cmake.configureOnOpen": true,
       "codeium.enableConfig": {
-        "*": false,
+        "*": true,
         "markdown": true
       },
       "remote.SSH.defaultForwardedPorts": [
@@ -167,4 +167,9 @@
       ],
       "remote.SSH.enableRemoteCommand": true,
       "remote.SSH.showLoginTerminal": true,
+      "cmake.pinnedCommands": [
+        "workbench.action.tasks.configureTaskRunner",
+        "workbench.action.tasks.runTask"
+      ],
+      "workbench.startupEditor": "none",
 }
