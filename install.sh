@@ -3,11 +3,15 @@
 # Install essential packages
 install_packages() {
     if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        sudo apt-get update
-        sudo apt-get install -y git stow zsh neovim tmux fzf
+        if command -v pacman &> /dev/null; then
+            sudo pacman -Sy --noconfirm git stow zsh neovim tmux fzf
+        else
+            sudo apt-get update
+            sudo apt-get install -y git stow zsh neovim tmux fzf
+        fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         brew update
-        brew install git stow zsh neovim
+        brew install git stow zsh neovim tmux fzf
     fi
 }
 
@@ -33,4 +37,3 @@ main() {
 }
 
 main
-

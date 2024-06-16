@@ -188,8 +188,6 @@ gpt() {
 }
 
 
-alias zy='python3 ~/gpt_py_cli/find_key.py qwertz_to_qwerty'
-alias yz='python3 ~/gpt_py_cli/find_key.py qwerty_to_qwertz'
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
 export BROWSER='firefox'
@@ -199,6 +197,7 @@ alias b="batcat"
 alias a="jibidi -t \""
 alias pinkel="ping 8.8.8.8"
 alias nicer_slicer_gui="ssh -X dennis@NicerSlicer 'prusa-slicer'"
+alias k='feh ~/keyboard_layouts/*'
 export WLAN_OUTDOOR="FRITZ\!Box 7490"
 export WLAN_OUTDOOR_PASS="68631738386882378679"
 export WLAN_HOME="FRITZ\!Box 7590 PG"
