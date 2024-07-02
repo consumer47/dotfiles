@@ -6,8 +6,8 @@
 ! The German layout has 'Y' and 'Z' swapped compared to the US layout.
 ! This swaps ! keycode 52 (which produces 'z' in the US layout) to 'z' and 'Z'.
 ! And ! keycode 29 (which produces 'y' in the US layout) to 'y' and 'Y'.
-keycode 52 = z Z
-keycode 29 = y Y
+! keycode 52 = z Z
+! keycode 29 = y Y
 clear Lock
 keycode 66 = Escape
 

@@ -10,7 +10,8 @@ fi
 declare -A options=(
     ["Network"]="nm-connection-editor"
     ["Bluetooth"]="blueman-manager"
-    ["Audio"]="pavucontrol"
+    ["Audio"]="gnome-terminal -- pulsemixer"
+    ["Audio_old"]="pavucontrol"
     ["Display (GUI)"]="arandr"
 #    ["Display (CLI)"]="gnome-terminal -- xrandr & read"
     ["File Manager"]="gnome-terminal -- ranger"

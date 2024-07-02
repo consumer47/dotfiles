@@ -1,175 +1,416 @@
 {
-    "terminal.integrated.defaultProfile.linux": "zsh",
-    "workbench.colorTheme": "Visual Studio Dark - C++",
-    "keyboard.dispatch": "keyCode",
-    // "workbench.activityBar.location": "right",
-    "workbench.sideBar.location": "right",
-    "files.watcherExclude": {
-        "**/leaf-data/**": true
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "workbench.colorTheme": "Visual Studio Dark - C++",
+  "keyboard.dispatch": "keyCode",
+  // "workbench.activityBar.location": "right",
+  "workbench.sideBar.location": "right",
+  "files.watcherExclude": {
+    "**/leaf-data/**": true
+  },
+  "projectManager.git.baseFolders": [
+    "~/myWorkspace"
+  ],
+  "[python]": {
+    "editor.formatOnType": true
+  },
+  "git.enableSmartCommit": true,
+  "git.confirmSync": false,
+  "editor.lineNumbers": "relative",
+  "vim.easymotion": true,
+  "vim.enableNeovim": true,
+  "vim.sneak": true,
+  "vim.leader": "<Space>",
+  "vim.normalModeKeyBindingsNonRecursive": [
+    // NAVIGATION
+    // switch b/w buffers
+    {
+      "before": [
+        "leader",
+        "j"
+      ],
+      "commands": [
+        ":bprevious"
+      ]
     },
-    "projectManager.git.baseFolders": [
-        "~/myWorkspace"
-    ],
-    "[python]": {
-        "editor.formatOnType": true
+    {
+      "before": [
+        "leader",
+        "k"
+      ],
+      "commands": [
+        ":bnext"
+      ]
     },
-    "git.enableSmartCommit": true,
-    "git.confirmSync": false,
-
-    "editor.lineNumbers": "relative",
-    "vim.easymotion": true,
-    "vim.enableNeovim": true,
-    "vim.sneak": true,
-    "vim.leader": "<Space>",
-    "vim.normalModeKeyBindingsNonRecursive": [
-        // NAVIGATION
-        // switch b/w buffers
-        { "before": ["leader", "j"], "commands": [":bprevious"] },
-        { "before": ["leader", "k"], "commands": [":bnext"] },
-    
-        { "before": ["leader", "f"], "commands": ["fzf-quick-open.runFzfFileProjectRoot"] }, 
-        // splits
-        { "before": ["leader", "v"], "commands": [":vsplit"] },
-        { "before": ["leader", "s"], "commands": [":split"] },
-    
-        // panes
-        {
-          "before": ["leader", "h"],
-          "commands": ["workbench.action.focusLeftGroup"]
-        },
-        {
-          "before": ["leader", "l"],
-          "commands": ["workbench.action.focusRightGroup"]
-        },
-        // Debugging keybindings
-        {
-          "before": ["<leader>", "b"],
-          "commands": ["editor.debug.action.toggleBreakpoint"]
-        },
-        {
-          "before": ["<leader>", "d", "c"],
-          "commands": ["workbench.action.debug.continue"]
-        },
-        {
-          "before": ["<leader>", "d", "d"],
-          "commands": ["workbench.action.debug.start"]
-        },
-        {
-          "before": ["<leader>", "d", "o"],
-          "commands": ["workbench.action.debug.stepOver"]
-        },
-        {
-          "before": ["<leader>", "d", "i"],
-          "commands": ["workbench.action.debug.stepInto"]
-        },
-        {
-          "before": ["<leader>", "d", "u"],
-          "commands": ["workbench.action.debug.stepOut"]
-        },
-        {
-          "before": ["<leader>", "d", "r"],
-          "commands": ["workbench.action.debug.restart"]
-        },
-        {
-          "before": ["<leader>", "d", "s"],
-          "commands": ["workbench.action.debug.stop"]
-        },
-        {
-          "before": ["<leader>", "d", "e"],
-          "commands": ["workbench.debug.action.focusRepl"]
-        },
-        {
-          "before": ["<leader>", "d", "h"],
-          "commands": ["editor.debug.action.showDebugHover"]
-        },
-        {
-          "before": ["<leader>", "d", "p"],
-          "commands": ["workbench.debug.action.toggleRepl"]
-        },
-        {
-          "before": ["<leader>", "d", "f"],
-          "commands": ["workbench.debug.viewlet.action.addFunctionBreakpointAction"]
-        },
-        {
-          "before": ["<leader>", "d", "a"],
-          "commands": ["workbench.debug.viewlet.action.disableAllBreakpoints"],
-        },
-        {
-          "before": ["<leader>", "d", "A"],
-          "commands": ["workbench.debug.viewlet.action.enableAllBreakpoints"]
-        },
-        {
-          "before": ["<leader>", "d", "x"],
-          "commands": ["workbench.debug.viewlet.action.removeAllBreakpoints"]
-        },
-        {
-          "before": ["<leader>", "d", "t"],
-          "commands": ["editor.debug.action.runToCursor"]
-        },
-        // FILE EXPLORER
-        {
-          "before": ["<leader>", "e"],
-          "commands": ["workbench.view.explorer"]
-        },
-        // NICE TO HAVE
-        { "before": ["leader", "w"], "commands": [":w!"] },
-        { "before": ["leader", "q"], "commands": [":q!"] },
-        { "before": ["leader", "x"], "commands": [":x!"] },
-        {
-          "before": ["[", "d"],
-          "commands": ["editor.action.marker.prev"]
-        },
-        {
-          "before": ["]", "d"],
-          "commands": ["editor.action.marker.next"]
-        },
-        {
-          "before": ["<leader>", "c", "a"],
-          "commands": ["editor.action.quickFix"]
-        },
-        { "before": ["leader", "f"], "commands": ["workbench.action.quickOpen"] },
-        { "before": ["leader", "p"], "commands": ["editor.action.formatDocument"] },
-        {
-          "before": ["g", "h"],
-          "commands": ["editor.action.showDefinitionPreviewHover"]
-        }
+    {
+      "before": [
+        "leader",
+        "f"
       ],
-      "vim.visualModeKeyBindings": [
-        // Stay in visual mode while indenting
-        { "before": ["<"], "commands": ["editor.action.outdentLines"] },
-        { "before": [">"], "commands": ["editor.action.indentLines"] },
-        // Move selected lines while staying in visual mode
-        { "before": ["J"], "commands": ["editor.action.moveLinesDownAction"] },
-        { "before": ["K"], "commands": ["editor.action.moveLinesUpAction"] },
-        // toggle comment selection
-        { "before": ["leader", "c"], "commands": ["editor.action.commentLine"] }
+      "commands": [
+        "fzf-quick-open.runFzfFileProjectRoot"
+      ]
+    },
+    // splits
+    {
+      "before": [
+        "leader",
+        "v"
       ],
-      "terminal.external.linuxExec": "gnome-terminal",
-
-      "vim.useSystemClipboard": true,
-      "vim.highlightedyank.enable": true,
-      "vim.highlightedyank.color": "#a9dc7660",
-      "vim.highlightedyank.duration": 250,
-      "editor.minimap.enabled": false,
-      "editor.stickyScroll.enabled": false,
-      "editor.renderWhitespace": "none",
-      "vim.indentwise": true,
-      "vim.neovimConfigPath": "~/.config/nvim/init.lua",
-      "vim.neovimPath": "/usr/bin/nvim",
-      "editor.cursorSurroundingLines": 8,
-      "cmake.configureOnOpen": true,
-      "codeium.enableConfig": {
-        "*": true,
-        "markdown": true
-      },
-      "remote.SSH.defaultForwardedPorts": [
-
+      "commands": [
+        ":vsplit"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "s"
       ],
-      "remote.SSH.enableRemoteCommand": true,
-      "remote.SSH.showLoginTerminal": true,
-      "cmake.pinnedCommands": [
-        "workbench.action.tasks.configureTaskRunner",
-        "workbench.action.tasks.runTask"
+      "commands": [
+        ":split"
+      ]
+    },
+    // panes
+    {
+      "before": [
+        "leader",
+        "h"
       ],
-      "workbench.startupEditor": "none",
+      "commands": [
+        "workbench.action.focusLeftGroup"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "l"
+      ],
+      "commands": [
+        "workbench.action.focusRightGroup"
+      ]
+    },
+    // Debugging keybindings
+    {
+      "before": [
+        "<leader>",
+        "b"
+      ],
+      "commands": [
+        "editor.debug.action.toggleBreakpoint"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "c"
+      ],
+      "commands": [
+        "workbench.action.debug.continue"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "d"
+      ],
+      "commands": [
+        "workbench.action.debug.start"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "o"
+      ],
+      "commands": [
+        "workbench.action.debug.stepOver"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "i"
+      ],
+      "commands": [
+        "workbench.action.debug.stepInto"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "u"
+      ],
+      "commands": [
+        "workbench.action.debug.stepOut"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "r"
+      ],
+      "commands": [
+        "workbench.action.debug.restart"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "s"
+      ],
+      "commands": [
+        "workbench.action.debug.stop"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "e"
+      ],
+      "commands": [
+        "workbench.debug.action.focusRepl"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "h"
+      ],
+      "commands": [
+        "editor.debug.action.showDebugHover"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "p"
+      ],
+      "commands": [
+        "workbench.debug.action.toggleRepl"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "f"
+      ],
+      "commands": [
+        "workbench.debug.viewlet.action.addFunctionBreakpointAction"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "a"
+      ],
+      "commands": [
+        "workbench.debug.viewlet.action.disableAllBreakpoints"
+      ],
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "A"
+      ],
+      "commands": [
+        "workbench.debug.viewlet.action.enableAllBreakpoints"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "x"
+      ],
+      "commands": [
+        "workbench.debug.viewlet.action.removeAllBreakpoints"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
+        "t"
+      ],
+      "commands": [
+        "editor.debug.action.runToCursor"
+      ]
+    },
+    // FILE EXPLORER
+    {
+      "before": [
+        "<leader>",
+        "e"
+      ],
+      "commands": [
+        "workbench.view.explorer"
+      ]
+    },
+    // NICE TO HAVE
+    {
+      "before": [
+        "leader",
+        "w"
+      ],
+      "commands": [
+        ":w!"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "q"
+      ],
+      "commands": [
+        ":q!"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "x"
+      ],
+      "commands": [
+        ":x!"
+      ]
+    },
+    {
+      "before": [
+        "[",
+        "d"
+      ],
+      "commands": [
+        "editor.action.marker.prev"
+      ]
+    },
+    {
+      "before": [
+        "]",
+        "d"
+      ],
+      "commands": [
+        "editor.action.marker.next"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "c",
+        "a"
+      ],
+      "commands": [
+        "editor.action.quickFix"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "f"
+      ],
+      "commands": [
+        "workbench.action.quickOpen"
+      ]
+    },
+    {
+      "before": [
+        "leader",
+        "p"
+      ],
+      "commands": [
+        "editor.action.formatDocument"
+      ]
+    },
+    {
+      "before": [
+        "g",
+        "h"
+      ],
+      "commands": [
+        "editor.action.showDefinitionPreviewHover"
+      ]
+    }
+  ],
+  "vim.visualModeKeyBindings": [
+    // Stay in visual mode while indenting
+    {
+      "before": [
+        "<"
+      ],
+      "commands": [
+        "editor.action.outdentLines"
+      ]
+    },
+    {
+      "before": [
+        ">"
+      ],
+      "commands": [
+        "editor.action.indentLines"
+      ]
+    },
+    // Move selected lines while staying in visual mode
+    {
+      "before": [
+        "J"
+      ],
+      "commands": [
+        "editor.action.moveLinesDownAction"
+      ]
+    },
+    {
+      "before": [
+        "K"
+      ],
+      "commands": [
+        "editor.action.moveLinesUpAction"
+      ]
+    },
+    // toggle comment selection
+    {
+      "before": [
+        "leader",
+        "c"
+      ],
+      "commands": [
+        "editor.action.commentLine"
+      ]
+    }
+  ],
+  "terminal.external.linuxExec": "gnome-terminal",
+  "vim.useSystemClipboard": true,
+  "vim.highlightedyank.enable": true,
+  "vim.highlightedyank.color": "#a9dc7660",
+  "vim.highlightedyank.duration": 250,
+  "editor.minimap.enabled": false,
+  "editor.stickyScroll.enabled": false,
+  "editor.renderWhitespace": "none",
+  "vim.indentwise": true,
+  "vim.neovimConfigPath": "~/.config/nvim/init.lua",
+  "vim.neovimPath": "/usr/bin/nvim",
+  "editor.cursorSurroundingLines": 8,
+  "cmake.configureOnOpen": true,
+  "codeium.enableConfig": {
+    "*": true,
+    "markdown": true
+  },
+  "remote.SSH.defaultForwardedPorts": [],
+  "remote.SSH.enableRemoteCommand": true,
+  "remote.SSH.showLoginTerminal": true,
+  "cmake.pinnedCommands": [
+    "workbench.action.tasks.configureTaskRunner",
+    "workbench.action.tasks.runTask"
+  ],
+  "workbench.startupEditor": "none",
 }

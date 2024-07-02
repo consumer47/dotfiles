@@ -11,14 +11,18 @@
 
 
 set $mod Mod4
-# Capslock as Escape.
-
+exec --no-startup-id udiskie -s
 exec --no-startup-id picom
-exec --no-startup-id feh --bg-scale ~/backgrounds/nice-blue-background.png
+exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
 
-
-
+# start with us layout
+exec --no-startup-id sleep 3 && "~/.config/i3/switch_layout.sh us"]
+# Switch to US layout
+bindsym $mod+u exec "~/.config/i3/switch_layout.sh us"
+# Switch to German layout
+bindsym $mod+i exec "~/.config/i3/switch_layout.sh de"
+bindsym $mod+Alt+v exec "~/.vim-anywhere/bin/run"
 exec_always killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh --my_forest
 
@@ -206,16 +210,18 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Window switching with Alt+Tab and Alt+Shift+Tab
-bindsym Mod1+Tab focus right
-bindsym Mod1+Shift+Tab focus left
+# bindsym Mod1+Tab focus right
+# bindsym Mod1+Shift+Tab focus left
 
 # # i3bar configuration
 # bar {
 #         status_command i3status
 # }
 # my own keyboard mapping to transition to us layout.
-exec_always --no-startup-id (sleep 5 && xmodmap ~/.xmodmap) &
+# exec_always --no-startup-id (sleep 2 && xmodmap ~/.xmodmap) &
 
+exec --no-startup-id sh -c 'sleep 2 &&  udiskie -atn &> /tmp/udiskie.log'
+# exec --no-startup-id sh -c 'sleep 2 && udiskie -s'
 # check if on work or private machine and load config file
 include ~/.config/i3/config.machine
 
