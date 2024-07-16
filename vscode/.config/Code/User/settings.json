@@ -3,6 +3,10 @@
   "workbench.colorTheme": "Visual Studio Dark - C++",
   "keyboard.dispatch": "keyCode",
   // "workbench.activityBar.location": "right",
+  // Allow comments in JSON files
+  "files.associations": {
+    "*.json": "jsonc"
+  },
   "workbench.sideBar.location": "right",
   "files.watcherExclude": {
     "**/leaf-data/**": true
@@ -16,7 +20,6 @@
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "editor.lineNumbers": "relative",
-  "vim.easymotion": true,
   "vim.enableNeovim": true,
   "vim.sneak": true,
   "vim.leader": "<Space>",
@@ -242,6 +245,16 @@
       "before": [
         "<leader>",
         "d",
+        "v"
+      ],
+      "commands": [
+        "workbench.debug.action.focusVariablesView"
+      ]
+    },
+    {
+      "before": [
+        "<leader>",
+        "d",
         "t"
       ],
       "commands": [
@@ -413,4 +426,7 @@
     "workbench.action.tasks.runTask"
   ],
   "workbench.startupEditor": "none",
+  "vim.neovimUseConfigFile": true,
+  "vim.smartRelativeLine": true,
+  "whichkey.bindingOverrides": [],
 }

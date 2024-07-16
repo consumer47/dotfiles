@@ -9,8 +9,11 @@ fi
 # Define the settings options as an associative array
 declare -A options=(
     ["Network"]="nm-connection-editor"
+    ["Network_TUI"]="gnome-terminal -- nmtui"
+    ["Network_NVIm"]="gnome-terminal -- sudo nvim /etc/NetworkManager/system-connections/"
     ["Bluetooth"]="blueman-manager"
     ["Audio"]="gnome-terminal -- pulsemixer"
+    ["SpotifyTUI"]="gnome-terminal -- spt"
     ["Audio_old"]="pavucontrol"
     ["Display (GUI)"]="arandr"
 #    ["Display (CLI)"]="gnome-terminal -- xrandr & read"

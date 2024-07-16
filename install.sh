@@ -7,7 +7,7 @@ install_packages() {
             sudo pacman -Sy --noconfirm git stow zsh neovim tmux fzf
         else
             sudo apt-get update
-            sudo apt-get install -y git stow zsh neovim tmux fzf
+            sudo apt-get install -y git stow zsh neovim tmux fzf zoxide
         fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
         brew update

@@ -38,7 +38,7 @@
   {
     "key": "space e",
     "command": "workbench.action.toggleSidebarVisibility",
-    "when": "filesExplorerFocus && !inputFocus"
+    "when": "variablesFocused || filesExplorerFocus || scmViewletVisible && !inputFocus"
   },
   {
     "key": "a",

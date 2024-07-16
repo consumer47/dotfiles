@@ -9,20 +9,20 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
-
 set $mod Mod4
 exec --no-startup-id udiskie -atn
 exec --no-startup-id picom
+exec --no-startup-id team-for-linux
 exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
 
 # start with us layout
-exec --no-startup-id sleep 3 && "~/.config/i3/switch_layout.sh us"]
+exec --no-startup-id sleep 3 && "~/.config/i3/switch_layout.sh us"
 # Switch to US layout
 bindsym $mod+u exec "~/.config/i3/switch_layout.sh us"
 # Switch to German layout
 bindsym $mod+i exec "~/.config/i3/switch_layout.sh de"
-bindsym $mod+Alt+v exec "~/.vim-anywhere/bin/run"
+# bindsym $mod+Alt+v exec "~/.vim-anywhere/bin/run"
 exec_always killall polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh --my_forest
 
@@ -60,12 +60,16 @@ bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
 bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
 
 
-
 workspace 1 output eDP-1
 workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
 workspace 5 output eDP-1
+# workspace 6 output DP-2-1
+# workspace 7 output DP-2-1
+# workspace 8 output DP-2-1
+# workspace 9 output DP-2-1
+# workspace 10 output DP-2-1
 workspace 6 output HDMI-1
 workspace 7 output HDMI-1
 workspace 8 output HDMI-1
@@ -74,8 +78,17 @@ workspace 10 output HDMI-1
 
 # display start and shortcuts
 exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
-bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh
-bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh
+# bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh
+# bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh
+# bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh
+# Keybinding to set HDMI-1 output for workspaces 6 through 10
+bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh && ~/.config/i3/switch_workspaces.sh hdmi
+
+# Keybinding to set single monitor layout
+bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh && ~/.config/i3/switch_workspaces.sh dp
+
+# Keybinding to set DP-2-1 output for workspaces 6 through 10
+bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh && ~/.config/i3/switch_workspaces.sh dp
 
 
 bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
@@ -209,6 +222,16 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Scratchpads
+for_window [class="pulse|ttrm|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
+
+bindsym $mod+n [class="ttrm"] scratchpad show; move position center
+exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
+# Move focused window to scratchpad
+bindsym $mod+Ctrl+s move scratchpad
+# Show the first (or switch to the next) scratchpad window
+bindsym $mod+Ctrl+g scratchpad show
+
 # Window switching with Alt+Tab and Alt+Shift+Tab
 # bindsym Mod1+Tab focus right
 # bindsym Mod1+Shift+Tab focus left
@@ -220,8 +243,7 @@ bindsym $mod+r mode "resize"
 # my own keyboard mapping to transition to us layout.
 # exec_always --no-startup-id (sleep 2 && xmodmap ~/.xmodmap) &
 
-exec --no-startup-id sh -c 'sleep 2 &&  udiskie -atn &> /tmp/udiskie.log'
+# exec --no-startup-id sh -c 'sleep 2 &&  udiskie -atn &> /tmp/udiskie.log'
 # exec --no-startup-id sh -c 'sleep 2 && udiskie -s'
 # check if on work or private machine and load config file
 include ~/.config/i3/config.machine
-

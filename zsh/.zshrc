@@ -177,7 +177,6 @@ export KEYTIMEOUT=1
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 PATH="/home/dennis/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/dennis/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/dennis/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
@@ -195,8 +194,6 @@ gpt() {
     python3 CliManager.py "$@"
     unset OPENAI_API_KEY
 }
-
-
 
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
@@ -216,3 +213,5 @@ export WLAN_HOME_PASS="07483358857555792066"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export PATH=$PATH:~/.local/share/flatpak/exports/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
+export PATH=$PATH:/$HOME/.cargo/bin
+export PATH=$PATH:/root/.cargo/bin
