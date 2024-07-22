@@ -1,20 +1,20 @@
 # Terminal
-bindsym $mod+Return exec env EDITOR=nvim gnome-terminal -- tmux
-bindsym $mod+BackSpace exec env EDITOR=nvim gnome-terminal -- tmux
+bindsym $mod+Return exec env EDITOR=nvim alacritty -e tmux
+bindsym $mod+BackSpace exec env EDITOR=nvim kitty tmux
 # bindsym $mod+Return exec env EDITOR=nvim wezterm start zellij
-bindsym $mod+Shift+Return exec gnome-terminal 
+bindsym $mod+Shift+Return exec kitty 
 
 
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/brightnessctl-wrapper set +2%
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/brightnessctl-wrapper set 2%-
 
 # Workspace assignments
-assign [class="^gnome-terminal$"] $ws9
+assign [class="^kitty$"] $ws9
 assign [class="^code$"] $ws10
 assign [class="^Firefox$"] $ws1
 
 # Startup applications
-# exec --no-startup-id sleep 1 && gnome-terminal -- tmux new-session -A -s neovim 'nvim'
+# exec --no-startup-id sleep 1 && kitty -e tmux new-session -A -s neovim 'nvim'
 # exec --no-startup-id sleep 2 && code
 exec --no-startup-id sleep 3 && firefox --new-window "https://outlook.office.com/mail/" --new-tab "https://teams.microsoft.com/v2/"
 
