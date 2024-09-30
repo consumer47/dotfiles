@@ -458,4 +458,8 @@
   "codeium.enableCodeLens": false,
   "bitbake.loggingLevel": "debug",
   "bitbake.parseOnSave": false,
+  "git.autofetch": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "numso.prettier-standard-vscode"
+  },
 }
