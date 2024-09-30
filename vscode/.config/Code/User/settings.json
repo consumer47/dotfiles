@@ -1,5 +1,5 @@
 {
-  "terminal.integrated.defaultProfile.linux": "bash",
+  "terminal.integrated.defaultProfile.linux": "zsh",
   "workbench.colorTheme": "Visual Studio Dark - C++",
   "keyboard.dispatch": "keyCode",
   // "workbench.activityBar.location": "right",
@@ -14,8 +14,12 @@
   "projectManager.git.baseFolders": [
     "~/myWorkspace"
   ],
+
   "[python]": {
-    "editor.formatOnType": true
+    "editor.formatOnType": true, 
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.defaultFormatter": "ms-python.autopep8"
   },
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
@@ -410,10 +414,11 @@
   "editor.stickyScroll.enabled": false,
   "editor.renderWhitespace": "none",
   "vim.indentwise": true,
-  "vim.neovimConfigPath": "~/.config/nvim/init.lua",
+  "vim.neovimConfigPath": "/home/dennis/.config/nvim/init.lua",
+  "vim.neovimUseConfigFile": true,
   "vim.neovimPath": "/usr/bin/nvim",
   "editor.cursorSurroundingLines": 8,
-  "cmake.configureOnOpen": true,
+  "cmake.configureOnOpen": false,
   "codeium.enableConfig": {
     "*": true,
     "markdown": true
@@ -426,7 +431,7 @@
     "workbench.action.tasks.runTask"
   ],
   "workbench.startupEditor": "none",
-  "vim.neovimUseConfigFile": true,
   "vim.smartRelativeLine": true,
   "whichkey.bindingOverrides": [],
+  "codeium.enableCodeLens": false,
 }

@@ -6,8 +6,13 @@ if [ -z "$SSH_AUTH_SOCK" ]; then
     eval "$(ssh-agent -s)"
 fi
 
-# ssh-add ~/.ssh/id_ecdsa
-# ssh-add ~/.ssh/id_ed25519
+if ! ssh-add -l > /dev/null 2>&1; then
+    ssh-add ~/.ssh/id_rsa_hapeArchibald > /dev/null 2>&1
+    ssh-add ~/.ssh/id_rsa_slicer > /dev/null 2>&1
+    ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
+    ssh-add ~/.ssh/id_rsa_ubuntu_work > /dev/null 2>&1
+fi
+
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -198,13 +203,17 @@ gpt() {
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
 export BROWSER='firefox'
+alias control_arch='ssh dennis@192.168.178.151 -X x2x -west -to :0'
+alias control_pi='ssh pi@192.168.178.89 -X x2x -west -to :0'
 alias t="todo.sh"
 alias n="nvim"
 alias b="batcat"
 alias a="jibidi -t \""
 alias pinkel="ping 8.8.8.8"
+alias :e="nvim"
 alias nicer_slicer_gui="ssh -X dennis@NicerSlicer 'prusa-slicer'"
 alias k='feh ~/keyboard_layouts/*'
+alias addcard='/home/dennis/workbench/rust_testing/anki_card_manager/target/debug/anki_card_manager'
 export WLAN_OUTDOOR="FRITZ\!Box 7490"
 export WLAN_OUTDOOR_PASS="68631738386882378679"
 export WLAN_HOME="FRITZ\!Box 7590 PG"
@@ -213,5 +222,5 @@ export WLAN_HOME_PASS="07483358857555792066"
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export PATH=$PATH:~/.local/share/flatpak/exports/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
-export PATH=$PATH:/$HOME/.cargo/bin
-export PATH=$PATH:/root/.cargo/bin
+# export PATH=$PATH:/root/.cargo/bin
+export PATH="$HOME/.cargo/bin:$PATH"

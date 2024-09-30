@@ -9,14 +9,14 @@ bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/brightnessctl-wrapper set
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/brightnessctl-wrapper set 2%-
 
 # Workspace assignments
-assign [class="^kitty$"] $ws9
+assign [class="^alacritty$"] $ws9
 assign [class="^code$"] $ws10
 assign [class="^Firefox$"] $ws1
 
 # Startup applications
 # exec --no-startup-id sleep 1 && kitty -e tmux new-session -A -s neovim 'nvim'
 # exec --no-startup-id sleep 2 && code
-exec --no-startup-id sleep 3 && firefox --new-window "https://outlook.office.com/mail/" --new-tab "https://teams.microsoft.com/v2/"
+exec --no-startup-id sleep 3 && firefox --new-window "https://outlook.office.com/mail/" 
 
 # Additional binding for settings menu
 bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh

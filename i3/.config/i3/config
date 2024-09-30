@@ -13,7 +13,7 @@
 set $mod Mod4
 exec --no-startup-id udiskie -atn
 exec --no-startup-id picom
-exec --no-startup-id team-for-linux
+exec --no-startup-id teams-for-linux
 exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
 

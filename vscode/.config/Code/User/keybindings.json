@@ -173,5 +173,10 @@
   {
     "key": "ctrl+shift+n",
     "command": "workbench.action.terminal.new"
+  },
+  {
+    "key": "ctrl+shift+i",
+    "command": "-codeium.openCodeiumCommand",
+    "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
   }
 ]
