@@ -142,9 +142,9 @@ ENABLE_CORRECTION="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # vim-interaction 
-    plugins=(vim-interaction zoxide ssh git zsh-autosuggestions zsh-syntax-highlighting zsh-vim-mode fzf)
+    plugins=(vim-interaction zoxide ssh git zsh-autosuggestions zsh-syntax-highlighting zsh-vi-mode fzf)
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -239,3 +239,4 @@ export PATH=$PATH:~/.local/share/flatpak/exports/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
 # export PATH=$PATH:/root/.cargo/bin
 export PATH="$HOME/.cargo/bin:$PATH"
+source ~/powerlevel10k/powerlevel10k.zsh-theme
