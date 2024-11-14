@@ -3,7 +3,7 @@
 install_dependencies:
 	apt install -y stow curl zsh 
 
-install_omz: install_zsh
+install_omz: install_dependencies install_zsh
 	@echo "Installing Oh My Zsh..."
 	sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc --unattended
 
