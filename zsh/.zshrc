@@ -8,7 +8,7 @@ fi
 
 if ! ssh-add -l > /dev/null 2>&1; then
     ssh-add ~/.ssh/id_rsa_hapeArchibald > /dev/null 2>&1
-    ssh-add ~/.ssh/id_rsa_slicer > /dev/null 2>&1
+    ssh-add ~/.ssh/id_rsa_rb_led_pi_2024_11_13 > /dev/null 2>&1
     ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
     ssh-add ~/.ssh/id_rsa_ubuntu_work > /dev/null 2>&1
 fi
@@ -200,11 +200,25 @@ gpt() {
     unset OPENAI_API_KEY
 }
 
+# create new tmux alaritty session with same path
+function cw() {
+   # Get the current directory path
+   local current_path=$(pwd)
+   # Open a new Alacritty window that starts a tmux session in the current directory
+   alacritty -e tmux new-session -c "$current_path" &
+}
+
+
 export PATH=$PATH:$HOME/.todo.txt-cli
 export EDITOR='nvim'
 export BROWSER='firefox'
 alias control_arch='ssh dennis@192.168.178.151 -X x2x -west -to :0'
 alias control_pi='ssh pi@192.168.178.89 -X x2x -west -to :0'
+alias control_dolphin='ssh dennis@DebbyTheDolphine -X x2x -west -to :0'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 alias t="todo.sh"
 alias n="nvim"
 alias b="batcat"
@@ -213,6 +227,7 @@ alias pinkel="ping 8.8.8.8"
 alias :e="nvim"
 alias nicer_slicer_gui="ssh -X dennis@NicerSlicer 'prusa-slicer'"
 alias k='feh ~/keyboard_layouts/*'
+alias ra='joshuto'
 alias addcard='/home/dennis/workbench/rust_testing/anki_card_manager/target/debug/anki_card_manager'
 export WLAN_OUTDOOR="FRITZ\!Box 7490"
 export WLAN_OUTDOOR_PASS="68631738386882378679"

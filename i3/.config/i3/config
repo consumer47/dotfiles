@@ -78,18 +78,19 @@ workspace 9 output HDMI-1
 workspace 10 output HDMI-1
 
 # display start and shortcuts
-exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
+# exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
+exec --no-startup-id ~/.config/i3/dynamic_workspaces.sh
 # bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh
 # bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh
 # bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh
 # Keybinding to set HDMI-1 output for workspaces 6 through 10
-bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh && ~/.config/i3/switch_workspaces.sh hdmi
+bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh && ~/.config/i3/dynamic_workspaces.sh
 
 # Keybinding to set single monitor layout
-bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh && ~/.config/i3/switch_workspaces.sh dp
+bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh && ~/.config/i3/dynamic_workspaces.sh
 
 # Keybinding to set DP-2-1 output for workspaces 6 through 10
-bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh && ~/.config/i3/switch_workspaces.sh dp
+bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh && ~/.config/i3/dynamic_workspaces.sh
 
 
 # bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
