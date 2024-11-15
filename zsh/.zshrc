@@ -23,6 +23,9 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
+
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH
 [[ -f $HOME/.fzf.zsh ]] && source $HOME/.fzf.zsh
