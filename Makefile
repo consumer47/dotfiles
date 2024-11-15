@@ -6,7 +6,8 @@ install_dependencies:
 ifeq ("$(shell whoami)", "root")
 		apt update && apt install -y stow curl zsh
 else
-		@echo "Not running as root. Skipping dependency installation."
+		sudo apt update && apt install -y stow curl zsh
+		@echo "Not running as root."
 endif
 
 install_zsh:
@@ -22,4 +23,4 @@ user_installations:
 		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 		@echo "Installation complete. Remember to add plugins to your .zshrc."
 
-install_omz: install_zsh user_installations
+install_omz: install_dependencies install_zsh user_installations
