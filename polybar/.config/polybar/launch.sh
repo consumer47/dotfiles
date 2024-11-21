@@ -18,7 +18,7 @@ launch_bar() {
 		bash "$dir"/pwidgets/launch.sh --main
 	elif [[ "$style" == "my_forest" ]]; then
 		polybar -q main -c "$dir/$style/config.ini" &
-		polybar -q main2 -c "$dir/$style/config.ini" &	
+		# polybar -q main2 -c "$dir/$style/config.ini" &	
 	else
 		polybar -q main -c "$dir/$style/config.ini" &
 	fi

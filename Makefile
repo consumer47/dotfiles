@@ -23,4 +23,4 @@ user_installations:
 		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 		@echo "Installation complete. Remember to add plugins to your .zshrc."
 
-install_omz: install_dependencies install_zsh user_installations
+install_omz: install_zsh user_installations
