@@ -1,4 +1,26 @@
 {
+  "terminal.integrated.profiles.linux": {
+    "zellij-shell": {
+      "path": "zellij",
+      "args": [
+      ]
+    },
+    "zellij": {
+      "path": "/home/dennis/.config/zellij/zellij_start.sh",
+      "args": [
+        "${workspaceFolder}"
+      ]
+    },
+    "tmux-shell": {
+      "path": "tmux",
+      "args": [
+        "new-session",
+        "-A",
+        "-s",
+        "vscode:${workspaceFolder}"
+      ]
+    }
+  },
   "terminal.integrated.defaultProfile.linux": "zsh",
   "workbench.colorTheme": "Visual Studio Dark - C++",
   "keyboard.dispatch": "keyCode",
@@ -14,9 +36,8 @@
   "projectManager.git.baseFolders": [
     "~/myWorkspace"
   ],
-
   "[python]": {
-    "editor.formatOnType": true, 
+    "editor.formatOnType": true,
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.defaultFormatter": "ms-python.autopep8",
@@ -435,4 +456,6 @@
   "vim.smartRelativeLine": true,
   "whichkey.bindingOverrides": [],
   "codeium.enableCodeLens": false,
+  "bitbake.loggingLevel": "debug",
+  "bitbake.parseOnSave": false,
 }

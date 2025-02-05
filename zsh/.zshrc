@@ -145,7 +145,7 @@ ENABLE_CORRECTION="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 # vim-interaction 
-    plugins=(vim-interaction zoxide ssh git zsh-autosuggestions zsh-syntax-highlighting zsh-vi-mode fzf)
+    plugins=(vim-interaction zoxide ssh git zsh-autosuggestions zsh-syntax-highlighting  fzf)
 
 # ZSH_THEME="powerlevel10k/powerlevel10k"
 source $ZSH/oh-my-zsh.sh
@@ -217,7 +217,7 @@ export EDITOR='nvim'
 export BROWSER='firefox'
 alias control_arch='ssh dennis@192.168.178.151 -X x2x -west -to :0'
 alias control_pi='ssh pi@192.168.178.89 -X x2x -west -to :0'
-alias control_dolphin='ssh dennis@DebbyTheDolphine -X x2x -west -to :0'
+alias control_dolphin='ssh dennis@DebbyTheDolphine -X x2x -west -to :10'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -230,6 +230,7 @@ alias pinkel="ping 8.8.8.8"
 alias :e="nvim"
 alias nicer_slicer_gui="ssh -X dennis@NicerSlicer 'prusa-slicer'"
 alias k='feh ~/keyboard_layouts/*'
+alias mount_cm4="sudo ./workbench/usbboot/rpiboot"
 alias ra='joshuto'
 alias addcard='/home/dennis/workbench/rust_testing/anki_card_manager/target/debug/anki_card_manager'
 export WLAN_OUTDOOR="FRITZ\!Box 7490"
@@ -243,3 +244,16 @@ export PATH=$PATH:/var/lib/flatpak/exports/bin
 # export PATH=$PATH:/root/.cargo/bin
 export PATH="$HOME/.cargo/bin:$PATH"
 source ~/powerlevel10k/powerlevel10k.zsh-theme
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+# Restart your shell for the changes to take effect.
+
+# Load pyenv-virtualenv automatically by adding
+# the following to ~/.bashrc:
+
+export USER_ID=$(id -u)
+export GROUP_ID=$(id -g)
+eval "$(pyenv virtualenv-init -)"
+

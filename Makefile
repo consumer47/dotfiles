@@ -4,9 +4,9 @@ install_dependencies:
 		@echo "Installing dependencies... Please run as root."
 		# Check if the script is running as root
 ifeq ("$(shell whoami)", "root")
-		apt update && apt install -y stow curl zsh
+		apt-get update && apt-get install -y stow curl zsh
 else
-		sudo apt update && apt install -y stow curl zsh
+		sudo apt-get update && apt-get install -y stow curl zsh
 		@echo "Not running as root."
 endif
 
@@ -21,6 +21,8 @@ user_installations:
 		git clone https://github.com/zsh-users/zsh-completions $${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-completions || echo "zsh-completions already installed" && \
 		git clone https://github.com/jeffreytse/zsh-vi-mode  $${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-vi-mode || echo "zsh-vi-mode  already installed" && \
 		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+		git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+		~/.fzf/install
 		@echo "Installation complete. Remember to add plugins to your .zshrc."
 
-install_omz: install_zsh user_installations
+install_omz:  install_zsh user_installations
