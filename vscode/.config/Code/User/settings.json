@@ -21,7 +21,7 @@
       ]
     }
   },
-  "terminal.integrated.defaultProfile.linux": "zsh",
+  "terminal.integrated.defaultProfile.linux": "zellij",
   "workbench.colorTheme": "Visual Studio Dark - C++",
   "keyboard.dispatch": "keyCode",
   // "workbench.activityBar.location": "right",

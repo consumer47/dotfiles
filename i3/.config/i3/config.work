@@ -2,7 +2,8 @@
 bindsym $mod+Shift+Return exec env EDITOR=nvim alacritty -e tmux
 bindsym $mod+BackSpace exec env EDITOR=nvim kitty tmux
 # bindsym $mod+Return exec env EDITOR=nvim wezterm start zellij
-bindsym $mod+Return exec alacritty -e zellij
+bindsym $mod+Return exec alacritty -e zsh -c 'zellij'
+# bindsym $mod+Return exec alacritty -e zellij
 
 
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/brightnessctl-wrapper set +2%

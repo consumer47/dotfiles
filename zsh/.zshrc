@@ -20,9 +20,17 @@ fi
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vim'
+  # if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='nvim'
+# fi
+
 else
   export EDITOR='nvim'
 fi
+
+export VISUAL='nvim'
 
 POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
