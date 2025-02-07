@@ -130,6 +130,20 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
+        // will run "tail -f /tmp/foo" in a pane opened below the focused one
+        bind "Alt g" {
+            // NewTab;
+            Run "zsh" "-c" "jibidi" {
+                cwd "/tmp"
+                direction "Down"
+            }
+        }
+        bind "Alt b" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij-bookmarks.wasm" {
+                floating true
+                cwd "/home/dennis/.config/zellij/"
+            };
+        }
         bind "Alt w" { CloseTab; }
         bind "Alt q" { CloseFocus; }
         bind "Alt enter" { NewPane; SwitchToMode "normal"; }
