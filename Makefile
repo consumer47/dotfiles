@@ -13,6 +13,9 @@ endif
 install_zsh:
 		@stow -v zsh
 
+install_commonrc:
+		@stow -v commonrc
+
 user_installations:
 		@echo "Installing Oh My Zsh and plugins..."
 		cd && sh -c "$$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --keep-zshrc --unattended && \
@@ -25,4 +28,4 @@ user_installations:
 		~/.fzf/install --bin # bin argument should prevent interactive prompt and wont change rc files
 		@echo "Installation complete. Remember to add plugins to your .zshrc."
 
-install_omz:  install_zsh user_installations
+install_omz:  install_zsh install_commonrc user_installations

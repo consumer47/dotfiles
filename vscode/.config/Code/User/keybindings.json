@@ -9,6 +9,17 @@
     "command": "workbench.action.toggleMaximizedPanel",
     "when": "terminalFocus && !terminalMaximized"
   },
+  {
+    "key": "ctrl+shift+o",
+    // "command": "workbench.scm.action.focusNextInput",
+    "command": "workbench.action.focusActiveEditorGroup",
+    "when": "!terminalFocus || !editorFocus"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "workbench.scm.action.focusNextInput",
+    "when": "terminalFocus || editorFocus"
+  },
   // Toggle between terminal and editor focus
   // {
   //   "key": "ctrl+shift+z",
@@ -221,5 +232,25 @@
     "key": "ctrl+shift+i",
     "command": "-codeium.openCodeiumCommand",
     "when": "codeium.commandEnabled && editorTextFocus && !inlineSuggestionsVisible"
+  },
+  {
+    "key": "ctrl+shift+keyincomposition",
+    "command": "workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+shift+g",
+    "command": "-workbench.view.scm",
+    "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "-editor.action.accessibleViewGoToSymbol",
+    "when": "accessibilityHelpIsShown && accessibleViewGoToSymbolSupported || accessibleViewGoToSymbolSupported && accessibleViewIsShown"
+  },
+  {
+    "key": "ctrl+shift+o",
+    "command": "-workbench.action.gotoSymbol",
+    "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
   }
 ]
