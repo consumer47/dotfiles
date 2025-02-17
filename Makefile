@@ -14,9 +14,9 @@ install_zsh:
 		@stow -v zsh
 
 install_zellij:
+	@stow zellij
 	curl https://sh.rustup.rs -sSf | sh -s -- -y
 	cargo install --locked zellij
-	@stow zellij
 
 
 install_commonrc:
