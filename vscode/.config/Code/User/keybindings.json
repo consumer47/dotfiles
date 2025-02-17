@@ -7,13 +7,18 @@
   {
     "key": "ctrl+shift+z",
     "command": "workbench.action.toggleMaximizedPanel",
-    // "when": "terminalFocus && !terminalMaximized"
+    "when": "terminalFocus && !terminalMaximized"
   },
   // Toggle between terminal and editor focus
   // {
   //   "key": "ctrl+shift+z",
   //   "command": "workbench.action.terminal.focus"
   // },
+  {
+    "key": "ctrl+shift+e",
+  //   "command": "workbench.action.toggleStatusBarVisibility",
+    "command": "workbench.action.toggleSidebarVisibility",
+  },
   {
     "key": "ctrl+shift+j",
   //   "command": "workbench.action.toggleStatusBarVisibility",
@@ -29,7 +34,7 @@
   {
     "key": "ctrl+shift+k",
     "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus"
+    // "when": "terminalFocus"
   },
   {
     "key": "ctrl+shift+x",
@@ -57,11 +62,11 @@
   //   "when": "terminalFocus && terminalMaximized"
   // },
   // NAVIGATION
-  {
-    "key": "ctrl+shift+e",
-    "command": "workbench.action.focusActiveEditorGroup",
-    "when": "terminalFocus"
-  },
+  // {
+  //   "key": "ctrl+shift+e",
+  //   "command": "workbench.action.focusActiveEditorGroup",
+  //   "when": "terminalFocus"
+  // },
   {
     "key": "ctrl+shift+n",
     "command": "workbench.action.terminal.new",
