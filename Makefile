@@ -22,7 +22,7 @@ user_installations:
 		git clone https://github.com/jeffreytse/zsh-vi-mode  $${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-vi-mode || echo "zsh-vi-mode  already installed" && \
 		git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 		git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-		~/.fzf/install
+		~/.fzf/install --bin # bin argument should prevent interactive prompt and wont change rc files
 		@echo "Installation complete. Remember to add plugins to your .zshrc."
 
 install_omz:  install_zsh user_installations
