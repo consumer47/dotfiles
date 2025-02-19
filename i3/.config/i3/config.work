@@ -17,7 +17,6 @@ assign [class="^Firefox$"] $ws1
 # Startup applications
 # exec --no-startup-id sleep 1 && kitty -e tmux new-session -A -s neovim 'nvim'
 # exec --no-startup-id sleep 2 && code
-exec --no-startup-id sleep 3 && firefox --new-window "https://outlook.office.com/mail/" 
 
 # Additional binding for settings menu
 bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
