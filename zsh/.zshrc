@@ -5,9 +5,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Powerlevel10k Config
-POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=false
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-source ~/powerlevel10k/powerlevel10k.zsh-theme
+source /usr/share/zsh-theme-powerlevel10k/powerlevel10k.zsh-theme
+# source ~/powerlevel10k/powerlevel10k.zsh-theme
 
 # Oh My Zsh setup
 export ZSH="$HOME/.oh-my-zsh"
