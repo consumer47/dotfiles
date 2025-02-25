@@ -14,7 +14,8 @@ set $mod Mod4
 exec --no-startup-id udiskie -atn
 exec --no-startup-id picom
 exec --no-startup-id teams-for-linux
-exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
+exec_always --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
+# exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
 
 # start with us layout
@@ -35,7 +36,9 @@ font pango:monospace 11
 exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock with i3loc
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3lock/lock  --nofork
+bindsym $mod+x exec "~/.config/i3lock/lock"
+
 # NetworkManager applet
 exec --no-startup-id nm-applet
 # Volume control with pactl
@@ -59,6 +62,18 @@ bindsym $mod+Ctrl+l resize shrink width 1 px or 1 ppt
 bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
 bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
 bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
+
+# Increase brightness by 5% with Super + Shift + Ctrl + k
+bindsym $mod+Mod1+k exec --no-startup-id brightnessctl set +50
+# Decrease brightness by 5% with Super + Shift + Ctrl + j
+bindsym $mod+Mod1+j exec --no-startup-id brightnessctl set 50-
+# Set brightness to minimum (0%) with Super + Shift + Ctrl + h
+bindsym $mod+Mod1+h exec --no-startup-id brightnessctl set 0%
+# Set brightness to maximum (100%) with Super + Shift + Ctrl + l
+bindsym $mod+Mod1+l exec --no-startup-id brightnessctl set 100%
+# Toggle redshift (enable/disable)
+bindsym $mod+Mod1+u exec --no-startup-id redshift -O 3000
+bindsym $mod+Mod1+d exec --no-startup-id redshift -x
 
 
 workspace 1 output eDP-1
@@ -94,8 +109,8 @@ bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_do
 
 
 # bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
-bindsym $mod+Shift+f exec firefox
-bindsym $mod+Shift+p exec firefox --private-window
+bindsym $mod+Shift+f exec firefox -P default-release
+bindsym $mod+Shift+p exec firefox -P default-release --private-window
 # bindsym $mod+Shift+n exec gnome-terminal -- tmux new-session -A -s neovim 'nvim'
 # Start Ranger with Mod+r
 bindsym $mod+Shift+z exec alacritty -e ranger
@@ -225,14 +240,16 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Scratchpads
-for_window [class="pulse|ttrm|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
+for_window [class="pulse|ttrm|mus|fm|obsidian"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
 
 bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e ranger 
+bindsym $mod+n [class="obsidian"] scratchpad show; move position center
+exec_always --no-startup-id pgrep -f '^alacritty --class obsidian,obsidian' || alacritty --class obsidian,obsidian -e obsidian 
 bindsym $mod+m [class="pulse"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class pulse,pulse' || alacritty --class pulse,pulse -e pulsemixer 
-bindsym $mod+n [class="ttrm"] scratchpad show; move position center
-exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
+# bindsym $mod+n [class="ttrm"] scratchpad show; move position center
+# exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
 # Move focused window to scratchpad
 bindsym $mod+Ctrl+s move scratchpad
 # Show the first (or switch to the next) scratchpad window
@@ -256,7 +273,7 @@ bindsym $mod+Ctrl+g scratchpad show
 # set gaps
 gaps inner 5
 gaps outer 5
-# smart_borders on
+smart_borders on
 smart_gaps inverse_outer 
 
 include ~/.config/i3/config.machine
