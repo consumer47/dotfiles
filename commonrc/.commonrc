@@ -27,7 +27,9 @@ export PATH="$HOME/Apps/nvim-linux64/bin:$HOME/bin:/usr/local/bin:$PATH"
 export PATH=$PATH:$HOME/.todo.txt-cli
 export PATH=$PATH:~/.local/share/flatpak/exports/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
+export PATH=$PATH:/var/lib/flatpak/exports/bin
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # for docker dev container in vscode: 
 export DOCKER_BUILDKIT=0
