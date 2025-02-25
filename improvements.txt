@@ -1,0 +1,3 @@
+zellij: 
+	open new tab when alt + number is not existent.
+	open new tab with jibidi

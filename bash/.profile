@@ -35,3 +35,14 @@ export XDG_DATA_DIRS="/var/lib/flatpak/exports/share:/home/dennis/.local/share/f
 
 # for docker dev container in vscode: 
 export DOCKER_BUILDKIT=0
+
+if [ -z "$SSH_AUTH_SOCK" ]; then
+    eval "$(ssh-agent -s)" > /dev/null
+fi
+
+if ! ssh-add -l > /dev/null 2>&1; then
+    ssh-add ~/.ssh/id_rsa_hapeArchibald > /dev/null 2>&1
+    ssh-add ~/.ssh/id_rsa_rb_led_pi_2024_11_13 > /dev/null 2>&1
+    ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
+    ssh-add ~/.ssh/id_rsa_ubuntu_work > /dev/null 2>&1
+fi

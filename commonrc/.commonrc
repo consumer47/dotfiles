@@ -1,6 +1,5 @@
-# SSH Configuration
 if [ -z "$SSH_AUTH_SOCK" ]; then
-    eval "$(ssh-agent -s > /dev/null 2>&1)"
+    eval "$(ssh-agent -s)" > /dev/null
 fi
 
 if ! ssh-add -l > /dev/null 2>&1; then
@@ -64,6 +63,7 @@ alias t="todo.sh"
 alias n="nvim"
 alias b="batcat"
 alias a="jibidi -t \""
+alias workspace_detect=~/.config/i3/dynamic_workspaces.sh
 alias pinkel="ping 8.8.8.8"
 alias :e="nvim"
 alias nicer_slicer_gui="ssh -X dennis@NicerSlicer 'prusa-slicer'"
