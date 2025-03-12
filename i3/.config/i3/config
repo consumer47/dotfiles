@@ -86,11 +86,11 @@ workspace 5 output eDP-1
 # workspace 8 output DP-2-1
 
 # workspace 10 output DP-2-1
-workspace 6 output HDMI-1
-workspace 7 output HDMI-1
-workspace 8 output HDMI-1
-workspace 9 output HDMI-1
-workspace 10 output HDMI-1
+workspace 6 output eDP-1
+workspace 7 output eDP-1
+workspace 8 output eDP-1
+workspace 9 output eDP-1
+workspace 10 output eDP-1
 
 # display start and shortcuts
 # exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1

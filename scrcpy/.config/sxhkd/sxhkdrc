@@ -1,0 +1,23 @@
+# Move with Vim keys
+alt + h : xdotool key Left
+alt + l : xdotool key Right
+alt + k : xdotool key Up
+alt + j : xdotool key Down
+
+# Emulator home button
+alt + g : adb shell input keyevent 3
+
+# Back button
+alt + b : adb shell input keyevent 4
+
+# Switch apps (overview)
+alt + o : adb shell input keyevent 187
+
+# App drawer (trigger quick swipe up)
+alt + d : adb shell input swipe 500 2000 500 1000
+
+
+alt + t = adb shell monkey -p com.termux -c android.intent.category.LAUNCHER 1
+alt + f = adb shell monkey -p org.mozilla.firefox -c android.intent.category.LAUNCHER
+alt + c : adb shell input text "$(xclip -o -selection clipboard)"
+alt + v : adb shell am broadcast -a clipper.get | xclip -selection clipboard
