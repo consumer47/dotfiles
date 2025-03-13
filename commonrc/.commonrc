@@ -59,7 +59,8 @@ export BROWSER='firefox'
 
 
 # Aliases
-alias control_smartphone='scrcpy --turn-screen-off --disable-screensaver --show-touches --stay-awake --video-codec=h265 --video-bit-rate=8M --audio-bit-rate=128K --max-fps=60'
+alias control_smartphone='scrcpy --turn-screen-off --disable-screensaver --show-touches --stay-awake  --video-bit-rate=8M --show-touches --max-size=1080 --window-width=500 --audio-bit-rate=128K --max-fps=60'
+alias control_smartphone_tcpip='control_smartphone --select-tcpip '
 alias ssh_smartphone='ssh -p 8022 u0a_533@192.168.178.171'
 alias adbwifi="~/bin/adbwifi.sh"
 alias ..='cd ..'
