@@ -18,6 +18,7 @@ install_i3:
 	sudo apt-get update
 	sudo apt-get install -y i3 i3status i3lock dmenu
 	sudo apt-get install -y alacritty
+	sudo apt-get install -y pulsemixer
 	sudo apt-get install -y feh picom rofi dunst
 	sudo apt-get install -y xbacklight pulseaudio pavucontrol
 	@echo "i3 and dependencies installed successfully."
