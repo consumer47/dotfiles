@@ -12,11 +12,12 @@
 
 set $mod Mod4
 exec --no-startup-id udiskie -atn
+exec --no-startup-id autorandr
 exec --no-startup-id picom
 exec --no-startup-id teams-for-linux
-exec_always --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
-# exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
+exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
+exec --no-startup-id flameshot
 
 # start with us layout
 exec --no-startup-id sleep 3 && "~/.config/i3/switch_layout.sh us"
@@ -36,9 +37,7 @@ font pango:monospace 11
 exec --no-startup-id dex --autostart --environment i3
 
 # xss-lock with i3loc
-exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3lock/lock  --nofork
-bindsym $mod+x exec "~/.config/i3lock/lock"
-
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # NetworkManager applet
 exec --no-startup-id nm-applet
 # Volume control with pactl
@@ -63,54 +62,45 @@ bindsym $mod+Ctrl+k resize grow height 1 px or 1 ppt
 bindsym $mod+Ctrl+j resize shrink height 1 px or 1 ppt
 bindsym $mod+Ctrl+h resize grow width 1 px or 1 ppt
 
-# Increase brightness by 5% with Super + Shift + Ctrl + k
-bindsym $mod+Mod1+k exec --no-startup-id brightnessctl set +50
-# Decrease brightness by 5% with Super + Shift + Ctrl + j
-bindsym $mod+Mod1+j exec --no-startup-id brightnessctl set 50-
-# Set brightness to minimum (0%) with Super + Shift + Ctrl + h
-bindsym $mod+Mod1+h exec --no-startup-id brightnessctl set 0%
-# Set brightness to maximum (100%) with Super + Shift + Ctrl + l
-bindsym $mod+Mod1+l exec --no-startup-id brightnessctl set 100%
-# Toggle redshift (enable/disable)
-bindsym $mod+Mod1+u exec --no-startup-id redshift -O 3000
-bindsym $mod+Mod1+d exec --no-startup-id redshift -x
-
 
 workspace 1 output eDP-1
 workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
 workspace 5 output eDP-1
-# workspace 6 output DP-2-1
-# workspace 7 output DP-2-1
-# workspace 8 output DP-2-1
-
-# workspace 10 output DP-2-1
 workspace 6 output eDP-1
 workspace 7 output eDP-1
 workspace 8 output eDP-1
 workspace 9 output eDP-1
 workspace 10 output eDP-1
+# workspace 6 output eDP-1
+# workspace 7 output eDP-1
+# workspace 8 output eDP-1
+# workspace 9 output eDP-1
+# workspace 10 output eDP-1
 
 # display start and shortcuts
 # exec --no-startup-id xrandr --output HDMI-1 --auto --right-of eDP-1
-exec --no-startup-id ~/.config/i3/dynamic_workspaces.sh
+exec --always --no-startup-id ~/.config/i3/dynamic_workspaces.sh
 # bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh
 # bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh
 # bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh
 # Keybinding to set HDMI-1 output for workspaces 6 through 10
-bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh && ~/.config/i3/dynamic_workspaces.sh
+# bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_extRight.sh && ~/.config/i3/dynamic_workspaces.sh
+bindsym $mod+Ctrl+i exec --no-startup-id ~/.screenlayout/layout_home_kensington_two_externals.sh && ~/.config/i3/dynamic_workspaces.sh
 
 # Keybinding to set single monitor layout
 bindsym $mod+Ctrl+u exec --no-startup-id ~/.screenlayout/layout_single_intern.sh && ~/.config/i3/dynamic_workspaces.sh
 
 # Keybinding to set DP-2-1 output for workspaces 6 through 10
 bindsym $mod+Ctrl+o exec --no-startup-id ~/.screenlayout/layout_work_extRight_docking.sh && ~/.config/i3/dynamic_workspaces.sh
+# Keybinding to set DP-2-1 output for workspaces 6 through 10
+bindsym $mod+Ctrl+p exec --no-startup-id ~/.screenlayout/HDMI-1-only.sh && ~/.config/i3/dynamic_workspaces.sh
 
 
 # bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
-bindsym $mod+Shift+f exec firefox -P default-release
-bindsym $mod+Shift+p exec firefox -P default-release --private-window
+bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+p exec firefox --private-window
 # bindsym $mod+Shift+n exec gnome-terminal -- tmux new-session -A -s neovim 'nvim'
 # Start Ranger with Mod+r
 bindsym $mod+Shift+z exec alacritty -e ranger
@@ -163,6 +153,13 @@ bindsym $mod+f fullscreen toggle
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
+
+# Bind Super + Alt + j/k/h/l to arrow keys
+# bindsym $mod+Mod1+j focus left
+# bindsym $mod+Mod1+k focus down
+# bindsym $mod+Mod1+l focus right
+# bindsym $mod+Mod1+h focus up
+
 
 # Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
@@ -239,17 +236,32 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Scratchpads
-for_window [class="pulse|ttrm|mus|fm|obsidian"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
+
+# 📌 Define a variable for Scrcpy options (so you can modify later)
+set $scrcpy_runner scrcpy --window-title "scrcpy" --tcpip --turn-screen-off --disable-screensaver --show-touches --stay-awake  --video-bit-rate=8M --show-touches --max-size=1080 --window-width=500 --audio-bit-rate=128K --max-fps=60
+
+# 🛠 Auto-start the background ADB script inside a hidden terminal
+exec_always --no-startup-id pgrep -f 'alacritty.*adb' || \
+   alacritty --class adb,adb -e /home/dennis/.config/i3/adb_scrcpy.sh
+
+# 🚀 Start Scrcpy if it's not running
+bindsym $mod+Shift+n exec --no-startup-id pgrep -x scrcpy || $scrcpy_runner
+
+# 🎭 Automatically format Scrcpy in the scratchpad
+for_window [class="scrcpy"] floating enable, resize set 500 1080, move scratchpad, border pixel 0
+
+# 🔄 Toggle Scrcpy visibility
+bindsym $mod+b [class="scrcpy"] scratchpad show; move position center
+bindsym $mod+Shift+b exec --no-startup-id /home/dennis/.config/i3/adb_unlock.sh
+
+for_window [class="pulse|ttrm|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
 
 bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
-exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e ranger 
-bindsym $mod+n [class="obsidian"] scratchpad show; move position center
-exec_always --no-startup-id pgrep -f '^alacritty --class obsidian,obsidian' || alacritty --class obsidian,obsidian -e obsidian 
+exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e y
 bindsym $mod+m [class="pulse"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class pulse,pulse' || alacritty --class pulse,pulse -e pulsemixer 
-# bindsym $mod+n [class="ttrm"] scratchpad show; move position center
-# exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
+bindsym $mod+n [class="ttrm"] scratchpad show; move position center
+exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
 # Move focused window to scratchpad
 bindsym $mod+Ctrl+s move scratchpad
 # Show the first (or switch to the next) scratchpad window
@@ -273,7 +285,7 @@ bindsym $mod+Ctrl+g scratchpad show
 # set gaps
 gaps inner 5
 gaps outer 5
-smart_borders on
+# smart_borders on
 smart_gaps inverse_outer 
 
-include ~/.config/i3/config.machine
+include ~/.config/i3/config.work
