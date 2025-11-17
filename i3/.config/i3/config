@@ -9,12 +9,15 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+bindsym $mod+Shift+v exec ~/.vim-anywhere/bin/run
+bindsym $mod+Shift+d exec kitty -e yazi
+bindsym $mod+Shift+g exec alacritty -e ~/.config/i3/jibidi-tmux-launcher.sh
 
 set $mod Mod4
 exec --no-startup-id udiskie -atn
 exec --no-startup-id autorandr
 exec --no-startup-id picom
-exec --no-startup-id teams-for-linux
+# exec --no-startup-id teams-for-linux
 exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id flameshot
@@ -68,11 +71,11 @@ workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
 workspace 5 output eDP-1
-workspace 6 output eDP-1
-workspace 7 output eDP-1
-workspace 8 output eDP-1
-workspace 9 output eDP-1
-workspace 10 output eDP-1
+workspace 6 output DP-2-2-1
+workspace 7 output DP-2-2-1
+workspace 8 output DP-2-2-1
+workspace 9 output DP-2-2-1
+workspace 10 output DP-2-2-1
 # workspace 6 output eDP-1
 # workspace 7 output eDP-1
 # workspace 8 output eDP-1
@@ -99,11 +102,11 @@ bindsym $mod+Ctrl+p exec --no-startup-id ~/.screenlayout/HDMI-1-only.sh && ~/.co
 
 
 # bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
-bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+f exec firefox -P default-release
 bindsym $mod+Shift+p exec firefox --private-window
 # bindsym $mod+Shift+n exec gnome-terminal -- tmux new-session -A -s neovim 'nvim'
 # Start Ranger with Mod+r
-bindsym $mod+Shift+z exec alacritty -e ranger
+# bindsym $mod+Shift+z exec alacritty -e ranger
 
 # Close window
 bindsym $mod+q kill
@@ -207,13 +210,13 @@ bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # Reload configuration
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
 
 # Restart i3 in-place
 bindsym $mod+Shift+r restart
 
 # Exit i3
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
+# bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Do you really want to exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # Resize mode
 mode "resize" {
@@ -256,8 +259,8 @@ bindsym $mod+Shift+b exec --no-startup-id /home/dennis/.config/i3/adb_unlock.sh
 
 for_window [class="pulse|ttrm|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
 
-bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
-exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e y
+# bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
+# exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e y
 bindsym $mod+m [class="pulse"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class pulse,pulse' || alacritty --class pulse,pulse -e pulsemixer 
 bindsym $mod+n [class="ttrm"] scratchpad show; move position center
@@ -287,5 +290,62 @@ gaps inner 5
 gaps outer 5
 # smart_borders on
 smart_gaps inverse_outer 
+
+for_window [class=".*"] focus_on_window_activation focus
+for_window [class="Firefox"] focus_on_window_activation focus
+for_window [urgent=latest] focus
+
+# ========================================
+# Pop-up GPT / Jibidi Scratchpad Configuration
+# ========================================
+
+# Automatically move jibidi windows to scratchpad with floating behavior
+for_window [class="jibidi"] floating enable, resize set 1200 800, move scratchpad, border pixel 2
+
+# Floating editor window for multi-line input (centered, not in scratchpad)
+for_window [class="floatingEditor"] floating enable, resize set 800 600, move position center, border pixel 2
+
+# Toggle the most recent jibidi scratchpad window
+bindsym $mod+o [class="jibidi"] scratchpad show; move position center
+
+# Launch new jibidi instance with rofi prompt (quick input, can paste with Ctrl+V)
+bindsym $mod+Shift+o exec ~/workbench/pop-up-gpt/pop-up-gpt.sh
+
+# Launch jibidi with multi-line vim/nvim editor input (for complex prompts)
+bindsym $mod+Mod1+o exec ~/workbench/pop-up-gpt/pop-up-gpt-multiline.sh
+
+# Jibidi with file/directory context (type or paste path, then prompt)
+bindsym $mod+p exec ~/workbench/pop-up-gpt/pop-up-gpt-with-file.sh
+
+# Jibidi with file context + multi-line input
+bindsym $mod+Mod1+p exec ~/workbench/pop-up-gpt/pop-up-gpt-multiline-with-file.sh
+
+# Jibidi with clipboard as file path (copy path first, then use this)
+bindsym $mod+Ctrl+Shift+p exec ~/workbench/pop-up-gpt/pop-up-gpt-clipboard-file.sh
+
+# Quick translation (clipboard → EN/DE/ES via translate-shell, shows notification)
+bindsym $mod+t exec ~/workbench/pop-up-gpt/pop-up-gpt-quick-translate.sh
+
+# GPT-powered translation (clipboard → GPT chat with menu options)
+bindsym $mod+Shift+t exec ~/workbench/pop-up-gpt/pop-up-gpt-translate.sh
+
+# Spanish verb conjugation (clipboard verb → GPT conjugation table)
+bindsym $mod+Ctrl+t exec ~/workbench/pop-up-gpt/pop-up-gpt-conjugate.sh
+
+# Spanish learning helper (personalized exercises)
+bindsym $mod+x exec ~/workbench/pop-up-gpt/pop-up-gpt-learn.sh
+
+bindsym $mod+Ctrl+x exec ~/workbench/pop-up-gpt/pop-up-gpt-history.sh
+
+# Explain code/command (selection or clipboard → GPT explanation)
+bindsym $mod+Shift+e exec ~/workbench/pop-up-gpt/pop-up-gpt-explain-code.sh
+
+# Vocabulary management (add/import/view words)
+bindsym $mod+Shift+x exec ~/workbench/pop-up-gpt/pop-up-gpt-vocab.sh
+
+bindsym $mod+Ctrl+e exec  bash -c 'img=$(mktemp /tmp/ocr_XXXX.png); txt=$(mktemp /tmp/ocr_XXXX.txt); flameshot gui -r > "$img" && tesseract "$img" "$txt" && xclip -selection clipboard -i "${txt}.txt" '
+
+
+
 
 include ~/.config/i3/config.work

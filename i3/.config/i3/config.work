@@ -1,6 +1,7 @@
-# Terminal
+# Terminali3
 bindsym $mod+Shift+Return exec env EDITOR=nvim alacritty -e tmux
-bindsym $mod+BackSpace exec env EDITOR=nvim kitty tmux
+# Launch Zellij with the custom sidebar layout
+bindsym $mod+BackSpace exec alacritty -e zsh -ic 'zellij --layout /home/dennis/dotfiles/zellij/.config/zellij/layouts/sidebar.kdl'
 # bindsym $mod+Return exec env EDITOR=nvim wezterm start zellij
 bindsym $mod+Return exec alacritty -e zsh -ic 'zellij'
 # bindsym $mod+Return exec alacritty -e zellij
@@ -10,9 +11,9 @@ bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/brightnessctl-wrapper set
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/brightnessctl-wrapper set 2%-
 
 # Workspace assignments
-assign [class="^alacritty$"] $ws9
-assign [class="^code$"] $ws10
-assign [class="^Firefox$"] $ws1
+# assign [class="^alacritty$"] $ws9
+# assign [class="^code$"] $ws10
+# assign [class="^Firefox$"] $ws1
 
 # Startup applications
 # exec --no-startup-id sleep 1 && kitty -e tmux new-session -A -s neovim 'nvim'
@@ -20,3 +21,6 @@ assign [class="^Firefox$"] $ws1
 
 # Additional binding for settings menu
 bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
+
+# Firefox private profile binding (Super+Shift+Alt+F)
+bindsym $mod+Shift+Mod1+f exec ~/dotfiles/shortcuts/firefox-private-profile.sh
