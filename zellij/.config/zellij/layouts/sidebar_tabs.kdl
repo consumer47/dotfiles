@@ -1,0 +1,12 @@
+layout {
+    pane split_direction="vertical" {
+        pane
+        // Right sidebar: tabs only
+        pane size=28 borderless=true {
+            plugin location="zellij:tab-bar"
+        }
+    }
+    pane size=1 borderless=true {
+        plugin location="zellij:compact-bar"
+    }
+}

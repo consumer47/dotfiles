@@ -1,0 +1,10 @@
+layout {
+    pane split_direction="vertical" {
+        // Left workspace: single pane
+        pane
+        // Right sidebar: session/tabs/panes
+        pane size=28 borderless=true {
+            plugin location="zellij:session-manager"
+        }
+    }
+}

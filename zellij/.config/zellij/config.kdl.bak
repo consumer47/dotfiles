@@ -15,7 +15,6 @@ keybinds clear-defaults=true {
         bind "d" { NewPane "down"; SwitchToMode "normal"; }
         bind "e" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
         bind "f" { ToggleFocusFullscreen; SwitchToMode "normal"; }
-        bind "g" { NewPane "right"; SwitchToMode "normal"; }
         bind "h" { MoveFocus "left"; }
         bind "j" { MoveFocus "down"; }
         bind "k" { MoveFocus "up"; }
@@ -24,9 +23,11 @@ keybinds clear-defaults=true {
         bind "p" { SwitchFocus; }
         bind "Ctrl p" { SwitchToMode "normal"; }
         bind "r" { NewPane "right"; SwitchToMode "normal"; }
-        bind "v" { NewPane "down"; SwitchToMode "normal"; }
         bind "w" { ToggleFloatingPanes; SwitchToMode "normal"; }
         bind "z" { TogglePaneFrames; SwitchToMode "normal"; }
+        // i3-like: g = split horizontal (new pane right), v = split vertical (new pane down)
+        bind "g" { NewPane "right"; SwitchToMode "normal"; }
+        bind "v" { NewPane "down"; SwitchToMode "normal"; }
     }
     tab {
         bind "left" { GoToPreviousTab; }
@@ -93,20 +94,18 @@ keybinds clear-defaults=true {
         bind "Alt down" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "Alt up" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "Alt right" { MoveFocusOrTab "right"; SwitchToMode "normal"; }
-        bind "c" { EditScrollback; SwitchToMode "normal"; }
+        bind "e" { EditScrollback; SwitchToMode "normal"; }
         bind "Alt h" { MoveFocusOrTab "left"; SwitchToMode "normal"; }
         bind "Alt j" { MoveFocus "down"; SwitchToMode "normal"; }
         bind "Alt k" { MoveFocus "up"; SwitchToMode "normal"; }
         bind "Alt l" { MoveFocusOrTab "right"; SwitchToMode "normal"; }
         bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
-        bind "q" { SwitchToMode "normal"; }
     }
     search {
         bind "c" { SearchToggleOption "CaseSensitivity"; }
         bind "n" { Search "down"; }
         bind "o" { SearchToggleOption "WholeWord"; }
         bind "p" { Search "up"; }
-        bind "q" { SwitchToMode "normal"; }
         bind "w" { SearchToggleOption "Wrap"; }
     }
     session {
@@ -134,9 +133,37 @@ keybinds clear-defaults=true {
         }
     }
     shared_except "locked" {
-        bind "Alt +" { Resize "Increase"; }
-        bind "Alt -" { Resize "Decrease"; }
-        bind "Alt 0" { GoToTab 10; SwitchToMode "normal"; }
+        // will run "tail -f /tmp/foo" in a pane opened below the focused one
+        bind "Alt g" {
+            // NewTab;
+            Run "zsh" "-c" "jibidi" {
+                cwd "/tmp"
+                direction "Down"
+            }
+        }
+        bind "Alt b" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/zellij-bookmarks.wasm" {
+                floating true
+                cwd "/home/dennis/.config/zellij/"
+            };
+        }
+        // Vim-like pickers: use yazi/filepicker with Alt+j/k navigation inside the tool
+        bind "Alt p" {
+            Run "zsh" "-ic" "yazi" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+        bind "Alt w" { CloseTab; }
+        bind "Alt q" { CloseFocus; }
+        bind "Alt enter" { NewPane; SwitchToMode "normal"; }
+        bind "Alt a" { EditScrollback; }
+        bind "Alt n" { ToggleFloatingPanes; }
+        // Safer toggle than Esc for floating plugin panels (eg. file picker)
+        bind "Alt esc" { ToggleFloatingPanes; }
+        bind "Alt f" { ToggleFocusFullscreen; }
+        bind "Alt e" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
+        bind "Alt `" { NewTab; }
         bind "Alt 1" { GoToTab 1; SwitchToMode "normal"; }
         bind "Alt 2" { GoToTab 2; SwitchToMode "normal"; }
         bind "Alt 3" { GoToTab 3; SwitchToMode "normal"; }
@@ -146,52 +173,35 @@ keybinds clear-defaults=true {
         bind "Alt 7" { GoToTab 7; SwitchToMode "normal"; }
         bind "Alt 8" { GoToTab 8; SwitchToMode "normal"; }
         bind "Alt 9" { GoToTab 9; SwitchToMode "normal"; }
-        bind "Alt =" { Resize "Increase"; }
-        bind "Alt [" { PreviousSwapLayout; }
-        bind "Alt ]" { NextSwapLayout; }
-        bind "Alt `" { NewTab; }
-        bind "Alt a" { EditScrollback; }
-        bind "Alt b" {
-            LaunchOrFocusPlugin "file:/home/dennis/.config/zellij/plugins/zellij-bookmarks.wasm" {
-                floating true
-            }
-        }
-        bind "Alt e" { TogglePaneEmbedOrFloating; SwitchToMode "normal"; }
-        bind "Alt f" { ToggleFocusFullscreen; }
-        bind "Ctrl g" { SwitchToMode "locked"; }
-        bind "Alt g" {
-            Run "zsh" "-c" "jibidi" {
-                cwd "/tmp"
-                direction "down"
-            }
-        }
-        bind "Ctrl Alt Shift h" { MoveTab "left"; }
-        bind "Alt Shift h" { MovePane "left"; }
-        bind "Alt Shift j" { MovePane "down"; }
-        bind "Alt Shift k" { MovePane "up"; }
-        bind "Ctrl Alt Shift l" { MoveTab "right"; }
-        bind "Alt Shift l" { MovePane "right"; }
-        bind "Alt Ctrl h" { Resize "Increase left"; }
-        bind "Alt Ctrl j" { Resize "Decrease up"; }
-        bind "Alt Ctrl k" { Resize "Increase up"; }
-        bind "Alt Ctrl l" { Resize "Decrease left"; }
-        bind "Alt n" { ToggleFloatingPanes; }
-        bind "Alt p" {
-            LaunchOrFocusPlugin "filepicker" {
-                floating true
-                move_to_focused_tab true
-            }
-        }
-        bind "Alt q" { CloseFocus; }
+        bind "Alt 0" { GoToTab 10; SwitchToMode "normal"; }
+        // Quick floating panels
         bind "Alt s" {
             LaunchOrFocusPlugin "session-manager" {
                 floating true
                 move_to_focused_tab true
             }
         }
-        bind "Alt w" { CloseTab; }
-        bind "Alt esc" { ToggleFloatingPanes; }
-        bind "Alt enter" { NewPane; SwitchToMode "normal"; }
+        bind "Alt p" {
+            LaunchOrFocusPlugin "filepicker" {
+                floating true
+                move_to_focused_tab true
+            }
+        }
+        bind "Alt Shift h" { MovePane "left"; }
+        bind "Alt Shift l" { MovePane "right"; }
+        bind "Alt Shift k" { MovePane "up"; }
+        bind "Alt Shift j" { MovePane "down"; }
+
+        bind "Alt +" { Resize "Increase"; }
+        bind "Alt -" { Resize "Decrease"; }
+        bind "Alt =" { Resize "Increase"; }
+        bind "Alt [" { PreviousSwapLayout; }
+        bind "Alt ]" { NextSwapLayout; }
+        // bind "Alt f" { ToggleFloatingPanes; }
+        bind "Ctrl g" { SwitchToMode "locked"; }
+        bind "Alt Shift Ctrl h" { MoveTab "left"; }
+        // bind "Alt n" { NewPane; }
+        bind "Alt Shift Ctrl l" { MoveTab "right"; } // bind "Ctrl q" { Quit; }
     }
     shared_except "locked" "move" {
         bind "Ctrl h" { SwitchToMode "move"; }
@@ -294,7 +304,6 @@ keybinds clear-defaults=true {
 // Plugin aliases - can be used to change the implementation of Zellij
 // changing these requires a restart to take effect
 plugins {
-    about location="zellij:about"
     compact-bar location="zellij:compact-bar"
     configuration location="zellij:configuration"
     filepicker location="zellij:strider" {
@@ -315,9 +324,6 @@ plugins {
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
 }
-web_client {
-    font "monospace"
-}
  
 // Use a simplified UI without special fonts (arrow glyphs)
 // Options:
@@ -330,6 +336,35 @@ web_client {
 // Default: default
 // 
 theme "nord"
+
+// themes {
+//    dracula {
+//         fg 248 248 242
+//         bg 40 42 54
+//         black 0 0 0
+//         red 255 85 85
+//         green 80 250 123
+//         yellow 241 250 140
+//         blue 98 114 164
+//         magenta 255 121 198
+//         cyan 139 233 253
+//         white 255 255 255
+//         orange 255 184 108
+//     }
+//     nord {
+//         fg "#D8DEE9"
+//         bg "#2E3440"
+//         black "#3B4252"
+//         red "#BF616A"
+//         green "#A3BE8C"
+//         yellow "#EBCB8B"
+//         blue "#81A1C1"
+//         magenta "#B48EAD"
+//         cyan "#88C0D0"
+//         white "#E5E9F0"
+//         orange "#D08770"
+//     }
+// }
  
 // Choose the base input mode of zellij.
 // Default: normal
@@ -372,7 +407,7 @@ default_mode "normal"
 // Toggle having pane frames around the panes
 // Options:
 //   - true (default, enabled)
-//   - false
+  // - false
 // 
 pane_frames false
  
@@ -495,85 +530,3 @@ pane_frames false
 // Default: true (if the host terminal supports it)
 // 
 // support_kitty_keyboard_protocol false
-// Whether to make sure a local web server is running when a new Zellij session starts.
-// This web server will allow creating new sessions and attaching to existing ones that have
-// opted in to being shared in the browser.
-// When enabled, navigate to http://127.0.0.1:8082
-// (Requires restart)
-// 
-// Note: a local web server can still be manually started from within a Zellij session or from the CLI.
-// If this is not desired, one can use a version of Zellij compiled without
-// `web_server_capability`
-// 
-// Possible values:
-// - true
-// - false
-// Default: false
-// 
-// web_server false
-// Whether to allow sessions started in the terminal to be shared through a local web server, assuming one is
-// running (see the `web_server` option for more details).
-// (Requires restart)
-// 
-// Note: This is an administrative separation and not intended as a security measure.
-// 
-// Possible values:
-// - "on" (allow web sharing through the local web server if it
-// is online)
-// - "off" (do not allow web sharing unless sessions explicitly opt-in to it)
-// - "disabled" (do not allow web sharing and do not permit sessions started in the terminal to opt-in to it)
-// Default: "off"
-// 
-// web_sharing "off"
-// A path to a certificate file to be used when setting up the web client to serve the
-// connection over HTTPs
-// 
-// web_server_cert "/path/to/cert.pem"
-// A path to a key file to be used when setting up the web client to serve the
-// connection over HTTPs
-// 
-// web_server_key "/path/to/key.pem"
-/// Whether to enforce https connections to the web server when it is bound to localhost
-/// (127.0.0.0/8)
-///
-/// Note: https is ALWAYS enforced when bound to non-local interfaces
-///
-/// Default: false
-// 
-// enforce_https_for_localhost false
- 
-// Whether to stack panes when resizing beyond a certain size
-// Default: true
-// 
-// stacked_resize false
- 
-// Whether to show tips on startup
-// Default: true
-// 
-show_startup_tips false
- 
-// Whether to show release notes on first version run
-// Default: true
-// 
-// show_release_notes false
- 
-// Whether to enable mouse hover effects and pane grouping functionality
-// default is true
-// advanced_mouse_actions false
- 
-// The ip address the web server should listen on when it starts
-// Default: "127.0.0.1"
-// (Requires restart)
-// web_server_ip "127.0.0.1"
- 
-// The port the web server should listen on when it starts
-// Default: 8082
-// (Requires restart)
-// web_server_port 8082
- 
-// A command to run (will be wrapped with sh -c and provided the RESURRECT_COMMAND env variable) 
-// after Zellij attempts to discover a command inside a pane when resurrecting sessions, the STDOUT
-// of this command will be used instead of the discovered RESURRECT_COMMAND
-// can be useful for removing wrappers around commands
-// Note: be sure to escape backslashes and similar characters properly
-// post_command_discovery_hook "echo $RESURRECT_COMMAND | sed <your_regex_here>"
