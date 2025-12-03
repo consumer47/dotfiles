@@ -260,7 +260,7 @@ for_window [class="pulse|ttrm|mus|fm"] floating enable, resize set 1000 600, mov
 
 # bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
 # exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e y
-bindsym $mod+m [class="pulse"] scratchpad show; move position center
+bindsym $mod+Shift+m [class="pulse"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class pulse,pulse' || alacritty --class pulse,pulse -e pulsemixer 
 bindsym $mod+n [class="ttrm"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
@@ -360,10 +360,10 @@ mode "mouse" {
     bindsym Shift+l exec --no-startup-id xdotool mousemove_relative -- 50 0
 
     # Jump movement (half screen) - quick large jumps
-    bindsym Ctrl+h exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-left
-    bindsym Ctrl+j exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-down
-    bindsym Ctrl+k exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-up
-    bindsym Ctrl+l exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-right
+    bindsym Mod1+h exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-left
+    bindsym Mod1+j exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-down
+    bindsym Mod1+k exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-up
+    bindsym Mod1+l exec --no-startup-id ~/.config/i3/mouse-helper.sh jump-right
 
     # === CLICKS ===
     bindsym a exec --no-startup-id xdotool click 1   # left click
@@ -385,8 +385,9 @@ mode "mouse" {
     bindsym Shift+d exec --no-startup-id xdotool click 7   # scroll right
 
     # === DRAG OPERATIONS ===
-    bindsym f exec --no-startup-id xdotool mousedown 1   # mousedown (start drag)
-    bindsym r exec --no-startup-id xdotool mouseup 1     # mouseup (end drag)
+    bindsym Shift+a exec --no-startup-id xdotool mousedown 1   # left drag start
+    bindsym Shift+s exec --no-startup-id xdotool mousedown 3   # right drag start
+    bindsym r exec --no-startup-id xdotool mouseup 1 mouseup 2 mouseup 3   # release all drags
 
     # === POSITION JUMPS ===
     # Jump to center of focused window
@@ -395,14 +396,35 @@ mode "mouse" {
     # Jump to center of screen
     bindsym 0 exec --no-startup-id ~/.config/i3/mouse-helper.sh screen-center
 
+    # === PASSTHROUGH: Window focus ===
+    bindsym $mod+h focus left
+    bindsym $mod+j focus down
+    bindsym $mod+k focus up
+    bindsym $mod+l focus right
+
+    # === PASSTHROUGH: Workspace switching ===
+    bindsym $mod+1 workspace number $ws1
+    bindsym $mod+2 workspace number $ws2
+    bindsym $mod+3 workspace number $ws3
+    bindsym $mod+4 workspace number $ws4
+    bindsym $mod+5 workspace number $ws5
+    bindsym $mod+6 workspace number $ws6
+    bindsym $mod+7 workspace number $ws7
+    bindsym $mod+8 workspace number $ws8
+    bindsym $mod+9 workspace number $ws9
+
+    # === PASSTHROUGH: Common actions ===
+    bindsym $mod+q kill
+    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+space exec --no-startup-id rofi -show combi
+
     # === EXIT MOUSE MODE ===
-    bindsym Return mode "default"
     bindsym q mode "default"
     bindsym Escape mode "default"
 }
 
 # keybinding to enter mouse mode
-bindsym $mod+Shift+m mode "mouse"
+bindsym $mod+m mode "mouse"
 
 
 include ~/.config/i3/config.work
