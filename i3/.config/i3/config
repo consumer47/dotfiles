@@ -71,11 +71,11 @@ workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
 workspace 5 output eDP-1
-workspace 6 output DP-2-2-1
-workspace 7 output DP-2-2-1
-workspace 8 output DP-2-2-1
-workspace 9 output DP-2-2-1
-workspace 10 output DP-2-2-1
+workspace 6 output DP-2-3
+workspace 7 output DP-2-3
+workspace 8 output DP-2-3
+workspace 9 output DP-2-3
+workspace 10 output DP-2-3
 # workspace 6 output eDP-1
 # workspace 7 output eDP-1
 # workspace 8 output eDP-1
@@ -346,6 +346,33 @@ bindsym $mod+Shift+x exec ~/workbench/pop-up-gpt/pop-up-gpt-vocab.sh
 bindsym $mod+Ctrl+e exec  bash -c 'img=$(mktemp /tmp/ocr_XXXX.png); txt=$(mktemp /tmp/ocr_XXXX.txt); flameshot gui -r > "$img" && tesseract "$img" "$txt" && xclip -selection clipboard -i "${txt}.txt" '
 
 
+mode "mouse" {
+    # movement (change numbers for speed)
+    bindsym h exec --no-startup-id xdotool mousemove_relative -- -20 0
+    bindsym j exec --no-startup-id xdotool mousemove_relative -- 0 20
+    bindsym k exec --no-startup-id xdotool mousemove_relative -- 0 -20
+    bindsym l exec --no-startup-id xdotool mousemove_relative -- 20 0
+
+    bindsym Shift+h exec --no-startup-id xdotool mousemove_relative -- -60 0
+    bindsym Shift+j exec --no-startup-id xdotool mousemove_relative -- 0 60
+    bindsym Shift+k exec --no-startup-id xdotool mousemove_relative -- 0 -60
+    bindsym Shift+l exec --no-startup-id xdotool mousemove_relative -- 60 0
+    # left / right click
+    bindsym a exec --no-startup-id xdotool click 1   # left
+    bindsym s exec --no-startup-id xdotool click 3   # right
+
+    # scroll
+    bindsym u exec --no-startup-id xdotool click 4   # scroll up
+    bindsym d exec --no-startup-id xdotool click 5   # scroll down
+
+    # exit mouse mode
+    bindsym Return mode "default"
+    bindsym q mode "default"
+    bindsym Escape mode "default"
+}
+
+# keybinding to enter mouse mode
+bindsym $mod+Shift+m mode "mouse"
 
 
 include ~/.config/i3/config.work
