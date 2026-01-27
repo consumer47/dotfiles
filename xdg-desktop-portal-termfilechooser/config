@@ -1,0 +1,9 @@
+[filechooser]
+cmd=/home/dennis/.config/xdg-desktop-portal-termfilechooser/yazi-wrapper.sh
+default_dir=$HOME
+# Use kitty with image support for yazi
+env=TERMCMD=/usr/bin/gnome-terminal --title="File Chooser" --
+
+# Mode must be one of 'suggested', 'default', or 'last'.
+open_mode=suggested
+save_mode=suggested

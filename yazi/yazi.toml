@@ -1,0 +1,36 @@
+[manager]
+ratio = [1, 4, 3]
+sort_by = "alphabetical"
+sort_sensitive = false
+sort_reverse = false
+sort_dir_first = true
+linemode = "none"
+show_hidden = false
+show_symlink = true
+
+[preview]
+image_filter = "triangle"
+image_quality = 75
+sixel_fraction = 15
+ueberzug_scale = 1
+ueberzug_offset = [0, 0, 0, 0]
+
+[opener]
+folder = [
+    { run = 'yazi "$1"', desc = "Open", for = "linux" },
+]
+
+[open]
+rules = [
+    { name = "*/", use = "folder" },
+    { mime = "text/*", use = "edit" },
+    { mime = "image/*", use = "view" },
+    { mime = "video/*", use = "play" },
+    { mime = "audio/*", use = "play" },
+    { mime = "inode/x-empty", use = "edit" },
+]
+
+[tasks]
+micro_workers = 10
+macro_workers = 25
+bizarre_retry = 5 

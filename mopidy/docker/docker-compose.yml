@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mopidy:
+    build: .
+    container_name: mopidy
+    restart: unless-stopped
+    
+    # Audio setup - PulseAudio socket
+    volumes:
+      - ../.config/mopidy:/config
+      - ~/.cache/mopidy:/var/lib/mopidy/.cache/mopidy
+      - ~/.local/share/mopidy:/var/lib/mopidy/.local/share/mopidy
+      - /run/user/1000/pulse:/run/user/1000/pulse
+    
+    environment:
+      - PULSE_SERVER=unix:/run/user/1000/pulse/native
+      - PULSE_COOKIE=/run/user/1000/pulse/cookie
+    
+    ports:
+      - "6680:6680"
+    
+    network_mode: host
+    
+    devices:
+      - /dev/snd:/dev/snd
+    
+    user: "${UID:-1000}:${GID:-1000}"
+
+
