@@ -5,7 +5,7 @@ include make/*.mk
 
 help:
 	@echo "Available targets:"
-	@echo "  install_omz          - Install ZSH, Oh My Zsh, and plugins"
+	@echo "  install_zsh_plugins   - Install ZSH and plugins (without Oh My Zsh)"
 	@echo "  install_yazi         - Install Yazi file manager"
 	@echo "  install_zellij       - Install Zellij terminal multiplexer"
 	@echo "  install_dependencies - Install system dependencies"
