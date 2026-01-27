@@ -58,7 +58,9 @@ case $chosen in
         fi
         ;;
     $lock)
-		if [[ -f /usr/bin/i3lock ]]; then
+		if [[ -f ~/.config/i3/lock-wrapper.sh ]]; then
+			~/.config/i3/lock-wrapper.sh
+		elif [[ -f /usr/bin/i3lock ]]; then
 			i3lock
 		elif [[ -f /usr/bin/betterlockscreen ]]; then
 			betterlockscreen -l
@@ -67,9 +69,13 @@ case $chosen in
     $suspend)
 		ans=$(confirm_exit &)
 		if [[ $ans == "yes" || $ans == "YES" || $ans == "y" || $ans == "Y" ]]; then
-			mpc -q pause
-			amixer set Master mute
-			systemctl suspend
+			if [[ -f ~/.config/i3/suspend-wrapper.sh ]]; then
+				~/.config/i3/suspend-wrapper.sh
+			else
+				mpc -q pause
+				amixer set Master mute
+				systemctl suspend
+			fi
 		elif [[ $ans == "no" || $ans == "NO" || $ans == "n" || $ans == "N" ]]; then
 			exit 0
         else
