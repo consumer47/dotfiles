@@ -54,6 +54,16 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
+# Brightness control with Super + Alt + h/j/k/l
+# Increase brightness by 50 with Super + Alt + k
+bindsym $mod+Mod1+k exec --no-startup-id brightnessctl set +50
+# Decrease brightness by 50 with Super + Alt + j
+bindsym $mod+Mod1+j exec --no-startup-id brightnessctl set 50-
+# Set brightness to minimum (0%) with Super + Alt + h
+bindsym $mod+Mod1+h exec --no-startup-id brightnessctl set 0%
+# Set brightness to maximum (100%) with Super + Alt + l
+bindsym $mod+Mod1+l exec --no-startup-id brightnessctl set 100%
+
 floating_modifier $mod
 
 # Drag floating windows with the mouse

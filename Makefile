@@ -16,12 +16,23 @@ help:
 
 install_i3:
 	@echo "Installing i3 window manager and dependencies..."
-	sudo apt-get update
-	sudo apt-get install -y i3 i3status i3lock dmenu
-	sudo apt-get install -y alacritty
-	sudo apt-get install -y pulsemixer
-	sudo apt-get install -y feh picom rofi dunst
-	sudo apt-get install -y xbacklight pulseaudio pavucontrol
+	@if [ -f /etc/arch-release ]; then \
+		sudo pacman -Sy --noconfirm i3-wm i3status i3lock dmenu; \
+		sudo pacman -Sy --noconfirm alacritty; \
+		sudo pacman -Sy --noconfirm pulsemixer; \
+		sudo pacman -Sy --noconfirm feh picom rofi dunst; \
+		sudo pacman -Sy --noconfirm light pulseaudio pavucontrol; \
+	elif [ -f /etc/debian_version ]; then \
+		sudo apt-get update; \
+		sudo apt-get install -y i3 i3status i3lock dmenu; \
+		sudo apt-get install -y alacritty; \
+		sudo apt-get install -y pulsemixer; \
+		sudo apt-get install -y feh picom rofi dunst; \
+		sudo apt-get install -y xbacklight pulseaudio pavucontrol; \
+	else \
+		echo "Unsupported OS. Please install i3 and dependencies manually."; \
+		exit 1; \
+	fi
 	@echo "i3 and dependencies installed successfully."
 
 install_htop_vim:

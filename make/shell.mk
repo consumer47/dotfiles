@@ -1,12 +1,22 @@
 install_dependencies:
 	@echo "Installing dependencies... Please run as root."
-	# Check if the script is running as root
-ifeq ("$(shell whoami)", "root")
-	apt-get update && apt-get install -y stow curl zsh
-else
-	sudo apt-get update && apt-get install -y stow curl zsh
-	@echo "Not running as root."
-endif
+	# Detect OS and use appropriate package manager
+	@if [ -f /etc/arch-release ]; then \
+		if [ "$$(whoami)" = "root" ]; then \
+			pacman -Sy --noconfirm stow curl zsh; \
+		else \
+			sudo pacman -Sy --noconfirm stow curl zsh; \
+		fi \
+	elif [ -f /etc/debian_version ]; then \
+		if [ "$$(whoami)" = "root" ]; then \
+			apt-get update && apt-get install -y stow curl zsh; \
+		else \
+			sudo apt-get update && sudo apt-get install -y stow curl zsh; \
+		fi \
+	else \
+		echo "Unsupported OS. Please install stow, curl, and zsh manually."; \
+		exit 1; \
+	fi
 
 install_zsh:
 	@stow -v zsh
