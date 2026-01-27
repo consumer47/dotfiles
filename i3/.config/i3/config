@@ -39,8 +39,8 @@ font pango:monospace 11
 # Start XDG autostart .desktop files using dex.
 exec --no-startup-id dex --autostart --environment i3
 
-# xss-lock with i3loc
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+# xss-lock with i3lock wrapper (respects keep-awake mode)
+exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/.config/i3/lock-wrapper.sh
 # NetworkManager applet
 exec --no-startup-id nm-applet
 # Volume control with pactl
@@ -70,11 +70,11 @@ workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
 workspace 5 output eDP-1
-workspace 6 output DP-2-3
-workspace 7 output DP-2-3
-workspace 8 output DP-2-3
-workspace 9 output DP-2-3
-workspace 10 output DP-2-3
+workspace 6 output DP-2-2-1
+workspace 7 output DP-2-2-1
+workspace 8 output DP-2-2-1
+workspace 9 output DP-2-2-1
+workspace 10 output DP-2-2-1
 # workspace 6 output eDP-1
 # workspace 7 output eDP-1
 # workspace 8 output eDP-1
@@ -247,7 +247,7 @@ exec_always --no-startup-id pgrep -f 'alacritty.*adb' || \
    alacritty --class adb,adb -e /home/dennis/.config/i3/adb_scrcpy.sh
 
 # 🚀 Start Scrcpy if it's not running
-bindsym $mod+Shift+n exec --no-startup-id pgrep -x scrcpy || $scrcpy_runner
+# bindsym $mod+Shift+n exec --no-startup-id pgrep -x scrcpy || $scrcpy_runner
 
 # 🎭 Automatically format Scrcpy in the scratchpad
 for_window [class="scrcpy"] floating enable, resize set 500 1080, move scratchpad, border pixel 0
@@ -256,14 +256,17 @@ for_window [class="scrcpy"] floating enable, resize set 500 1080, move scratchpa
 bindsym $mod+b [class="scrcpy"] scratchpad show; move position center
 bindsym $mod+Shift+b exec --no-startup-id /home/dennis/.config/i3/adb_unlock.sh
 
-for_window [class="pulse|ttrm|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
+for_window [class="pulse|ttrm|private|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
 
 # bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
 # exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e y
 bindsym $mod+Shift+m [class="pulse"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class pulse,pulse' || alacritty --class pulse,pulse -e pulsemixer 
-bindsym $mod+n [class="ttrm"] scratchpad show; move position center
+bindsym $mod+n [instance="ttrm"] scratchpad show; [instance="ttrm"] move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
+# Private scratchpad (similar to ttrm but for private stuff)
+bindsym $mod+Shift+n [instance="private"] scratchpad show; [instance="private"] move position center
+exec_always --no-startup-id pgrep -f '^alacritty --class private,private' || alacritty --class private,private
 # Move focused window to scratchpad
 bindsym $mod+Ctrl+s move scratchpad
 # Show the first (or switch to the next) scratchpad window
@@ -402,17 +405,6 @@ mode "mouse" {
     bindsym $mod+k focus up
     bindsym $mod+l focus right
 
-    # === PASSTHROUGH: Workspace switching ===
-    bindsym $mod+1 workspace number $ws1
-    bindsym $mod+2 workspace number $ws2
-    bindsym $mod+3 workspace number $ws3
-    bindsym $mod+4 workspace number $ws4
-    bindsym $mod+5 workspace number $ws5
-    bindsym $mod+6 workspace number $ws6
-    bindsym $mod+7 workspace number $ws7
-    bindsym $mod+8 workspace number $ws8
-    bindsym $mod+9 workspace number $ws9
-
     # === PASSTHROUGH: Common actions ===
     bindsym $mod+q kill
     bindsym $mod+Shift+space floating toggle
@@ -420,11 +412,65 @@ mode "mouse" {
 
     # === EXIT MOUSE MODE ===
     bindsym q mode "default"
-    bindsym Escape mode "default"
+    # bindsym Escape mode "default"
 }
 
 # keybinding to enter mouse mode
 bindsym $mod+m mode "mouse"
+
+# German / Special Character Mode
+mode "german" {
+    # Umlauts
+    bindsym a exec --no-startup-id xdotool type "ä", mode "default"
+    bindsym Shift+a exec --no-startup-id xdotool type "Ä", mode "default"
+    bindsym o exec --no-startup-id xdotool type "ö", mode "default"
+    bindsym Shift+o exec --no-startup-id xdotool type "Ö", mode "default"
+    bindsym u exec --no-startup-id xdotool type "ü", mode "default"
+    bindsym Shift+u exec --no-startup-id xdotool type "Ü", mode "default"
+    
+    # Eszett and Euro
+    bindsym s exec --no-startup-id xdotool type "ß", mode "default"
+    bindsym e exec --no-startup-id xdotool type "€", mode "default"
+    
+    # Exit mode
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+}
+
+# System / Power Mode
+mode "system" {
+    bindsym l exec --no-startup-id ~/.config/i3/lock-wrapper.sh, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id ~/.config/i3/suspend-wrapper.sh, mode "default"
+    bindsym h exec --no-startup-id systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+    
+    # Exit mode
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+}
+
+# Screenshot Mode
+mode "screenshot" {
+    bindsym s exec --no-startup-id flameshot gui, mode "default"
+    bindsym f exec --no-startup-id flameshot full, mode "default"
+    bindsym w exec --no-startup-id flameshot gui -w, mode "default"
+    bindsym c exec --no-startup-id flameshot gui -c, mode "default"
+    
+    # Exit mode
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+}
+
+# Keybindings to enter modes
+bindsym $mod+Mod1+g mode "german"
+bindsym $mod+Mod1+e mode "system"
+bindsym $mod+Print mode "screenshot"
+bindsym $mod+Mod1+s mode "screenshot"
 
 
 include ~/.config/i3/config.work
