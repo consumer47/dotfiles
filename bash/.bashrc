@@ -125,3 +125,12 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Load Common Configuration
 [ -f ~/.commonrc ] && source ~/.commonrc
 [ -f ~/.privaterc ] && source ~/.privaterc
+
+export STM32_PRG_PATH=/home/dennis/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
+
+[[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path bash)"
+
+. "$HOME/.local/share/../bin/env"
+
+# topo-bike bash completion
+[ -f ~/.bash_completion.d/topo-bike ] && source ~/.bash_completion.d/topo-bike

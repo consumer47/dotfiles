@@ -4,6 +4,7 @@ export WLAN_OUTDOOR_PASS="68631738386882378679"
 export WLAN_HOME="FRITZ\!Box 7590 PG"
 export WLAN_HOME_PASS="07483358857555792066"
 
+alias control_synth_pi='ssh pi@192.168.178.202 -X x2x -west -to :0'
 alias control_arch='ssh dennis@192.168.178.151 -X x2x -west -to :0'
 alias control_pi='ssh pi@192.168.178.89 -X x2x -west -to :0'
 alias control_dolphin='ssh dennis@DebbyTheDolphine -X x2x -west -to :10'

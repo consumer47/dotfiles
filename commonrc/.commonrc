@@ -1,13 +1,24 @@
-if [ -z "$SSH_AUTH_SOCK" ]; then
-    eval "$(ssh-agent -s)" > /dev/null
+# SSH Agent - Lazy loading function
+ssh_keys_load() {
+    if [ -z "$SSH_AUTH_SOCK" ]; then
+        eval "$(ssh-agent -s)" > /dev/null
+    fi
+    
+    # Add SSH keys only if they are not already loaded
+    if ! ssh-add -l >/dev/null 2>&1; then
+        [ -f ~/.ssh/id_rsa_rb_led_pi_2024_11_13 ] && ssh-add ~/.ssh/id_rsa_rb_led_pi_2024_11_13 > /dev/null 2>&1
+        [ -f ~/.ssh/id_ed25519_dennis_rtb ] && ssh-add ~/.ssh/id_ed25519_dennis_rtb > /dev/null 2>&1
+        [ -f ~/.ssh/id_rsa_hapeArchibald ] && ssh-add ~/.ssh/id_rsa_hapeArchibald > /dev/null 2>&1
+    fi
+}
+
+if [[ -z "$SSH_AUTH_SOCK" ]] || ssh-add -l 2>&1 | grep -q "The agent has no identities"; then
+  ssh_keys_load
 fi
 
-# Add SSH keys only if they are not already loaded
-if ! ssh-add -l >/dev/null 2>&1; then
-    ssh-add ~/.ssh/id_rsa_hapeArchibald > /dev/null 2>&1
-    ssh-add ~/.ssh/id_rsa_rb_led_pi_2024_11_13 > /dev/null 2>&1
-    ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
-    ssh-add ~/.ssh/id_rsa_ubuntu_work > /dev/null 2>&1
+# Auto-load SSH keys only if we're in an interactive shell and not in SSH
+if [[ $- == *i* ]] && [[ -z "$SSH_CONNECTION" ]]; then
+    ssh_keys_load
 fi
 
 # Editor Configuration Based on SSH Connection
@@ -36,10 +47,23 @@ export PATH="$HOME/.local/bin:$PATH"
 # for docker dev container in vscode: 
 export DOCKER_BUILDKIT=0
 
-# NVM Configuration
+# GStreamer - Fix for Mopidy audio playback (override snap's limited plugin path)
+export GST_PLUGIN_SCANNER=/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner
+export GST_PLUGIN_SYSTEM_PATH=/usr/lib/x86_64-linux-gnu/gstreamer-1.0
+unset GST_PLUGIN_PATH
+
+# NVM Configuration - Lazy Loading
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+# Lazy load NVM to improve shell startup time
+nvm() {
+    unset -f nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+    nvm "$@"
+}
+
+# Add node to PATH if default version exists
+[ -s "$NVM_DIR/alias/default" ] && export PATH="$NVM_DIR/versions/node/$(cat $NVM_DIR/alias/default)/bin:$PATH"
 
 
 # Perl Configuration
@@ -62,6 +86,7 @@ export BROWSER='firefox'
 alias control_smartphone='scrcpy --turn-screen-off --disable-screensaver --show-touches --stay-awake  --video-bit-rate=8M --show-touches --max-size=1080 --window-width=500 --audio-bit-rate=128K --max-fps=60'
 alias control_smartphone_tcpip='control_smartphone --select-tcpip '
 alias ssh_smartphone='ssh -p 8022 u0a_533@192.168.178.171'
+alias control_steamdeck='ssh deck@steamdeck -X x2x -east -to :0'
 alias adbwifi="~/bin/adbwifi.sh"
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -96,6 +121,21 @@ cw() {
    local current_path=$(pwd)
    alacritty -e tmux new-session -c "$current_path" &
 }
+
+
+# Text color codes
+RED="\033[0;31m"
+GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
+BLUE="\033[0;34m"
+RESET="\033[0m"
+
+# Functions to print messages in color
+red()    { echo -e "${RED}$*${RESET}"; }
+green()  { echo -e "${GREEN}$*${RESET}"; }
+yellow() { echo -e "${YELLOW}$*${RESET}"; }
+blue()   { echo -e "${BLUE}$*${RESET}"; }
+
 
 # Cleanup tmux sessions
 alias tmux_clean='tmux list-sessions -F "#{session_attached} #{session_id}" | awk "\$1 == 0 {print \$2}" | xargs -I {} tmux kill-session -t {}'

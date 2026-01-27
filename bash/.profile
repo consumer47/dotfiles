@@ -46,3 +46,7 @@ if ! ssh-add -l > /dev/null 2>&1; then
     ssh-add ~/.ssh/id_ed25519 > /dev/null 2>&1
     ssh-add ~/.ssh/id_rsa_ubuntu_work > /dev/null 2>&1
 fi
+
+. "$HOME/.local/share/../bin/env"
+
+export STM32CubeMX_PATH=/home/dennis/STM32CubeMX
