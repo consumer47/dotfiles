@@ -252,5 +252,122 @@
     "key": "ctrl+shift+o",
     "command": "-workbench.action.gotoSymbol",
     "when": "!accessibilityHelpIsShown && !accessibleViewIsShown"
+  },
+  {
+    "key": "ctrl+i",
+    "command": "composerMode.agent"
+},
+  {
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+        "text": "\\\r\n"
+    },
+    "when": "terminalFocus"
+},
+  // Alt+L/H for terminal pane navigation in split terminals
+  {
+    "key": "alt+h",
+    "command": "workbench.action.terminal.focusPreviousPane",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+l",
+    "command": "workbench.action.terminal.focusNextPane",
+    "when": "terminalFocus"
+  },
+  // Alt+Enter to split terminal
+  {
+    "key": "alt+enter",
+    "command": "workbench.action.terminal.split",
+    "when": "terminalFocus"
+  },
+  // Alt+` to create new terminal
+  {
+    "key": "alt+`",
+    "command": "workbench.action.terminal.new",
+    "when": "terminalFocus"
+  },
+  // Alt+Q to close terminal
+  {
+    "key": "alt+q",
+    "command": "workbench.action.terminal.kill",
+    "when": "terminalFocus"
+  },
+  // Alt+J/K to toggle through terminals (matching Ctrl+Shift+L/H)
+  {
+    "key": "alt+j",
+    "command": "workbench.action.terminal.focusNext",
+    "when": "terminalFocus"
+  },
+  {
+    "key": "alt+k",
+    "command": "workbench.action.terminal.focusPrevious",
+    "when": "terminalFocus"
+  },
+  // Alt+U to toggle terminal panel maximized/minimized
+  {
+    "key": "alt+u",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  // AI Chat Panel - Enlarge/Maximize
+  // Try toggleMaximizedPanel first (works when panel is focused)
+  {
+    "key": "ctrl+shift+m",
+    "command": "workbench.action.toggleMaximizedPanel"
+  },
+  // Also try toggleEditorWidths as fallback (works when editor group is focused)
+  {
+    "key": "ctrl+shift+alt+m",
+    "command": "workbench.action.toggleEditorWidths"
+  },
+  // AI Chat Panel - Vim-like Scrolling
+  // Try multiple approaches: scroll commands and arrow key simulation
+  // Shift+j/k for line scrolling
+  {
+    "key": "shift+j",
+    "command": "scrollLineDown",
+    "when": "!inputFocus"
+  },
+  {
+    "key": "shift+k",
+    "command": "scrollLineUp",
+    "when": "!inputFocus"
+  },
+  // Ctrl+j/k for line scrolling (alternative)
+  {
+    "key": "ctrl+j",
+    "command": "scrollLineDown",
+    "when": "!inputFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "scrollLineUp",
+    "when": "!inputFocus"
+  },
+  // Ctrl+d/u for half-page scrolling
+  // Try editorScroll first (works in editors and some views), fallback to scrollPageDown/Up
+  {
+    "key": "ctrl+d",
+    "command": "editorScroll",
+    "args": { "to": "down", "by": "halfPage", "revealCursor": false },
+    "when": "editorTextFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "editorScroll",
+    "args": { "to": "up", "by": "halfPage", "revealCursor": false },
+    "when": "editorTextFocus && !inputFocus"
+  },
+  // Fallback: full page scroll for panels/webviews that don't support editorScroll
+  {
+    "key": "ctrl+d",
+    "command": "scrollPageDown",
+    "when": "!editorTextFocus && !inputFocus"
+  },
+  {
+    "key": "ctrl+u",
+    "command": "scrollPageUp",
+    "when": "!editorTextFocus && !inputFocus"
   }
 ]

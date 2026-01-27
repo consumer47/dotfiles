@@ -462,4 +462,11 @@
   "[javascript]": {
     "editor.defaultFormatter": "numso.prettier-standard-vscode"
   },
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "python.defaultInterpreterPath": "/bin/python",
 }
