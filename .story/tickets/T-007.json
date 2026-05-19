@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "Measure where the tmux sidebar spends CPU time and whether its current polling/render loop is acceptable. Findings so far: a steady-state watch process in a 1-window session averaged about 0.3% CPU over a short sample, while 50 raw render calls took about 8.34s elapsed / 5.89s CPU (roughly 59ms CPU per render). A 10-window session came out in the same range at about 2.87s CPU for 50 renders. This suggests the main cost is the polling cadence and tmux IPC, not layout scaling. Next decision: keep the current 0.25s poll, or switch to a more event-driven refresh if the user wants lower wakeups.",
+  "id": "T-007",
+  "order": 70,
+  "phase": "tmux",
+  "status": "inprogress",
+  "title": "Analyze CPU load from tmux sidebar",
+  "type": "task"
+}
