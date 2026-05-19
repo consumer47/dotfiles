@@ -255,14 +255,14 @@ sidebar_move_window() {
 
 rename_sidebar_window() {
   local window_id window_name client_tty workdir
-  local popup_script popup_command
 
   window_id="$(current_window)"
   window_name="$(tmux_value "#{window_name}")"
   client_tty="$(current_client_tty)"
   workdir="$(tmux_value "#{pane_current_path}")"
-  popup_script="$HOME/.tmux_sidebar_rename_popup.sh"
-  tmux display-popup -E -T "rename: $window_name" -w 56% -h 20% -d "$workdir" "bash $popup_script" || true
+
+  tmux display-popup -E -T "rename: $window_name" -w 50% -h 18% -d "$workdir" \
+    "python3 ~/.tmux_sidebar_rename_prompt.py" || true
 }
 
 render_sidebar() {
