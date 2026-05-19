@@ -1,9 +1,9 @@
 # Terminali3
-bindsym $mod+Shift+Return exec env EDITOR=nvim alacritty -e tmux
-# Launch Zellij with the custom sidebar layout
-bindsym $mod+BackSpace exec alacritty -e zsh -ic 'zellij --layout /home/dennis/dotfiles/zellij/.config/zellij/layouts/sidebar.kdl'
+bindsym $mod+Return exec env EDITOR=nvim alacritty -e tmux
+# Launch Zellij with the custom sidebar layout as the backup path
+bindsym $mod+Shift+Return exec alacritty -e zsh -ic 'zellij --layout /home/dennis/dotfiles/zellij/.config/zellij/layouts/sidebar.kdl'
+# bindsym $mod+BackSpace exec alacritty -e zsh -ic 'zellij --layout /home/dennis/dotfiles/zellij/.config/zellij/layouts/sidebar.kdl'
 # bindsym $mod+Return exec env EDITOR=nvim wezterm start zellij
-bindsym $mod+Return exec alacritty -e zsh -ic 'zellij'
 # bindsym $mod+Return exec alacritty -e zellij
 
 
