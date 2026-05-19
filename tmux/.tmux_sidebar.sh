@@ -255,19 +255,78 @@ sidebar_move_window() {
 
 rename_sidebar_window() {
   local window_id window_name client_tty workdir
-  local window_id_q window_name_q client_tty_q
+  local tmpdir buffer vimrc popup_script editor
 
   window_id="$(current_window)"
   window_name="$(tmux_value "#{window_name}")"
   client_tty="$(current_client_tty)"
   workdir="$(tmux_value "#{pane_current_path}")"
 
-  window_id_q="$(printf '%q' "$window_id")"
-  window_name_q="$(printf '%q' "$window_name")"
-  client_tty_q="$(printf '%q' "$client_tty")"
+  tmpdir="$(mktemp -d -t tmux-sidebar-popup.XXXXXX)"
+  buffer="$tmpdir/window-name.txt"
+  vimrc="$tmpdir/vimrc"
+  popup_script="$tmpdir/rename-window.sh"
+  editor="${TMUX_SIDEBAR_EDITOR:-nvim}"
 
-  tmux display-popup -E -w 50% -h 18% -d "$workdir" \
-    "bash -lc 'read -e -i $window_name_q -p \"rename window: \" new_name; if [ -n \"\$new_name\" ]; then tmux rename-window -t $window_id_q \"\$new_name\"; fi; tmux switch-client -t $client_tty_q -T tmux-sidebar 2>/dev/null || true'"
+  printf '%s\n' "$window_name" > "$buffer"
+
+  cat > "$vimrc" <<'EOF'
+set nocompatible
+set noswapfile
+set hidden
+set shortmess+=I
+set noruler
+set noshowmode
+set nonumber norelativenumber
+set nowrap
+set signcolumn=no
+set foldcolumn=0
+autocmd VimEnter * normal! ggVGd
+autocmd VimEnter * startinsert
+inoremap <Esc> <Esc>:q!<CR>
+inoremap <M-q> <Esc>:q!<CR>
+inoremap <CR> <Esc>:wq<CR>
+nnoremap <Esc> :q!<CR>
+nnoremap <M-q> :q!<CR>
+nnoremap <CR> :wq<CR>
+vnoremap <Esc> :q!<CR>
+vnoremap <M-q> :q!<CR>
+vnoremap <CR> :wq<CR>
+EOF
+
+  cat > "$popup_script" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+
+tmpdir=$(printf '%q' "$tmpdir")
+buffer=$(printf '%q' "$buffer")
+vimrc=$(printf '%q' "$vimrc")
+window_id=$(printf '%q' "$window_id")
+window_name=$(printf '%q' "$window_name")
+client_tty=$(printf '%q' "$client_tty")
+editor=$(printf '%q' "$editor")
+
+cleanup() {
+  rm -rf "$tmpdir"
+  tmux switch-client -t "$client_tty" -T tmux-sidebar 2>/dev/null || true
+}
+
+trap cleanup EXIT
+
+if ! command -v "$editor" >/dev/null 2>&1; then
+  editor=vim
+fi
+
+"$editor" -u "$vimrc" -n "$buffer"
+
+new_name="$(tr -d '\r\n' < "$buffer")"
+if [ -n "$new_name" ] && [ "$new_name" != "$window_name" ]; then
+  tmux rename-window -t "$window_id" "$new_name"
+fi
+EOF
+
+  chmod +x "$popup_script"
+  tmux display-popup -E -T "rename: $window_name" -w 56% -h 20% -d "$workdir" "$popup_script"
 }
 
 render_sidebar() {
