@@ -198,12 +198,12 @@ focus_sidebar_mode() {
   sidebar_pane="$(sidebar_pane_for_window "$window_id")"
 
   if [ -n "$sidebar_pane" ]; then
-    tmux switch-client -t "$client_tty" -T tmux-sidebar 2>/dev/null || true
+    tmux switch-client -c "$client_tty" -T tmux-sidebar 2>/dev/null || true
     return
   fi
 
   clear_sidebar_repeat_count "$session_name"
-  tmux switch-client -t "$client_tty" -T root 2>/dev/null || true
+  tmux switch-client -c "$client_tty" -T root 2>/dev/null || true
 }
 
 hide_sidebar() {
@@ -225,7 +225,7 @@ toggle_sidebar_mode() {
     set_sidebar_enabled "$session_name" 0
     hide_sidebar "$session_name"
     clear_sidebar_repeat_count "$session_name"
-    tmux switch-client -t "$client_tty" -T root 2>/dev/null || true
+    tmux switch-client -c "$client_tty" -T root 2>/dev/null || true
     return
   fi
 
@@ -255,78 +255,14 @@ sidebar_move_window() {
 
 rename_sidebar_window() {
   local window_id window_name client_tty workdir
-  local tmpdir buffer vimrc popup_script editor
+  local popup_script popup_command
 
   window_id="$(current_window)"
   window_name="$(tmux_value "#{window_name}")"
   client_tty="$(current_client_tty)"
   workdir="$(tmux_value "#{pane_current_path}")"
-
-  tmpdir="$(mktemp -d -t tmux-sidebar-popup.XXXXXX)"
-  buffer="$tmpdir/window-name.txt"
-  vimrc="$tmpdir/vimrc"
-  popup_script="$tmpdir/rename-window.sh"
-  editor="${TMUX_SIDEBAR_EDITOR:-nvim}"
-
-  printf '%s\n' "$window_name" > "$buffer"
-
-  cat > "$vimrc" <<'EOF'
-set nocompatible
-set noswapfile
-set hidden
-set shortmess+=I
-set noruler
-set noshowmode
-set nonumber norelativenumber
-set nowrap
-set signcolumn=no
-set foldcolumn=0
-autocmd VimEnter * normal! ggVGd
-autocmd VimEnter * startinsert
-inoremap <Esc> <Esc>:q!<CR>
-inoremap <M-q> <Esc>:q!<CR>
-inoremap <CR> <Esc>:wq<CR>
-nnoremap <Esc> :q!<CR>
-nnoremap <M-q> :q!<CR>
-nnoremap <CR> :wq<CR>
-vnoremap <Esc> :q!<CR>
-vnoremap <M-q> :q!<CR>
-vnoremap <CR> :wq<CR>
-EOF
-
-  cat > "$popup_script" <<EOF
-#!/usr/bin/env bash
-set -euo pipefail
-
-tmpdir=$(printf '%q' "$tmpdir")
-buffer=$(printf '%q' "$buffer")
-vimrc=$(printf '%q' "$vimrc")
-window_id=$(printf '%q' "$window_id")
-window_name=$(printf '%q' "$window_name")
-client_tty=$(printf '%q' "$client_tty")
-editor=$(printf '%q' "$editor")
-
-cleanup() {
-  rm -rf "$tmpdir"
-  tmux switch-client -t "$client_tty" -T tmux-sidebar 2>/dev/null || true
-}
-
-trap cleanup EXIT
-
-if ! command -v "$editor" >/dev/null 2>&1; then
-  editor=vim
-fi
-
-"$editor" -u "$vimrc" -n "$buffer"
-
-new_name="$(tr -d '\r\n' < "$buffer")"
-if [ -n "$new_name" ] && [ "$new_name" != "$window_name" ]; then
-  tmux rename-window -t "$window_id" "$new_name"
-fi
-EOF
-
-  chmod +x "$popup_script"
-  tmux display-popup -E -T "rename: $window_name" -w 56% -h 20% -d "$workdir" "$popup_script"
+  popup_script="$HOME/.tmux_sidebar_rename_popup.sh"
+  tmux display-popup -E -T "rename: $window_name" -w 56% -h 20% -d "$workdir" "bash $popup_script" || true
 }
 
 render_sidebar() {
@@ -430,7 +366,7 @@ case "${1:-}" in
     set_sidebar_enabled "$(current_session_name)" 0
     hide_sidebar "$(current_session_name)"
     clear_sidebar_repeat_count "$(current_session_name)"
-    tmux switch-client -t "$(current_client_tty)" -T root 2>/dev/null || true
+    tmux switch-client -c "$(current_client_tty)" -T root 2>/dev/null || true
     ;;
   watch)
     target_pane="${2:-${TMUX_PANE:-}}"
