@@ -1,0 +1,13 @@
+{
+  "blockers": [],
+  "date": "2026-05-19",
+  "phases": [
+    {
+      "description": "Move the day-to-day multiplexer workflow back from Zellij to tmux while preserving useful Zellij ergonomics.",
+      "id": "tmux",
+      "label": "TMUX",
+      "name": "tmux migration"
+    }
+  ],
+  "title": "dotfiles"
+}
