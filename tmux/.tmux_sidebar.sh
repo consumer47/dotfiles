@@ -28,6 +28,10 @@ current_session_name() {
   tmux_value "#{session_name}"
 }
 
+current_client_tty() {
+  tmux_value "#{client_tty}"
+}
+
 sidebar_pane_for_window() {
   local window_id="$1"
   tmux list-panes -t "$window_id" -F "#{pane_id}	#{pane_title}" |
@@ -156,19 +160,20 @@ ensure_sidebar() {
 }
 
 focus_sidebar_mode() {
-  local session_name window_id sidebar_pane
+  local session_name window_id sidebar_pane client_tty
 
   session_name="$(current_session_name)"
+  client_tty="$(current_client_tty)"
   window_id="$(current_window)"
   sidebar_pane="$(sidebar_pane_for_window "$window_id")"
 
   if [ -n "$sidebar_pane" ]; then
-    tmux switch-client -T tmux-sidebar 2>/dev/null || true
+    tmux switch-client -t "$client_tty" -T tmux-sidebar 2>/dev/null || true
     return
   fi
 
   clear_sidebar_repeat_count "$session_name"
-  tmux switch-client -T root 2>/dev/null || true
+  tmux switch-client -t "$client_tty" -T root 2>/dev/null || true
 }
 
 hide_sidebar() {
@@ -182,19 +187,21 @@ hide_sidebar() {
 }
 
 toggle_sidebar_mode() {
-  local session_name
+  local session_name client_tty
 
   session_name="$(current_session_name)"
+  client_tty="$(current_client_tty)"
   if sidebar_enabled "$session_name"; then
     set_sidebar_enabled "$session_name" 0
     hide_sidebar "$session_name"
     clear_sidebar_repeat_count "$session_name"
-    tmux switch-client -T root 2>/dev/null || true
+    tmux switch-client -t "$client_tty" -T root 2>/dev/null || true
     return
   fi
 
   set_sidebar_enabled "$session_name" 1
   ensure_sidebar
+  focus_sidebar_mode
 }
 
 sidebar_move_window() {
@@ -309,7 +316,7 @@ case "${1:-}" in
     set_sidebar_enabled "$(current_session_name)" 0
     hide_sidebar "$(current_session_name)"
     clear_sidebar_repeat_count "$(current_session_name)"
-    tmux switch-client -T root 2>/dev/null || true
+    tmux switch-client -t "$(current_client_tty)" -T root 2>/dev/null || true
     ;;
   watch)
     target_pane="${2:-${TMUX_PANE:-}}"
