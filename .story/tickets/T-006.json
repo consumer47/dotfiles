@@ -1,12 +1,12 @@
 {
   "blockedBy": [],
-  "completedDate": null,
+  "completedDate": "2026-05-19",
   "createdDate": "2026-05-19",
   "description": "Introduce a tmux key table that is active only while the sidebar pane is focused. Digits should accumulate a repeat count only inside that mode, and window-navigation keys should consume the count without leaking numeric state into normal shell input. The mode should stay in sync with sidebar focus and clear its count when focus leaves the sidebar.",
   "id": "T-006",
   "order": 60,
   "phase": "tmux",
-  "status": "inprogress",
+  "status": "complete",
   "title": "Add modal tmux sidebar key mode with counts",
   "type": "feature"
 }
