@@ -8,7 +8,7 @@ script_path="${TMUX_SIDEBAR_SCRIPT:-$HOME/.tmux_sidebar.sh}"
 target_pane="${2:-${TMUX_PANE:-}}"
 
 usage() {
-  echo "Usage: $0 toggle-mode|ensure|hide|watch|render"
+  echo "Usage: $0 toggle|toggle-mode|ensure|hide|watch|render"
 }
 
 tmux_value() {
@@ -164,14 +164,23 @@ render_sidebar() {
 }
 
 watch_sidebar() {
+  local last_frame=""
+  local current_frame=""
+
   while true; do
-    printf '\033[H\033[2J'
-    render_sidebar
+    current_frame="$(render_sidebar)"
+    if [ "$current_frame" != "$last_frame" ]; then
+      printf '\033[H\033[2J%s' "$current_frame"
+      last_frame="$current_frame"
+    fi
     sleep 1
   done
 }
 
 case "${1:-}" in
+  toggle)
+    toggle_sidebar_mode
+    ;;
   toggle-mode)
     toggle_sidebar_mode
     ;;
