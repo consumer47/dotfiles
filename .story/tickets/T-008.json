@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "Avoid visible sidebar creation lag when switching windows by creating sidebar panes for all existing windows when sidebar mode is enabled, and by pre-creating the sidebar immediately for newly created windows while sidebar mode is active. Keep window switches as focus-only operations once the sidebar exists. Acceptance: the first switch into an already-open window does not create or resize a sidebar pane, and sidebar-enabled new windows arrive with the sidebar already present.",
+  "id": "T-008",
+  "order": 80,
+  "phase": "tmux",
+  "status": "inprogress",
+  "title": "Prewarm tmux sidebar panes across windows",
+  "type": "task"
+}

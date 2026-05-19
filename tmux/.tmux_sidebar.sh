@@ -9,7 +9,7 @@ script_path="${TMUX_SIDEBAR_SCRIPT:-$HOME/.tmux_sidebar.sh}"
 target_pane="${TMUX_PANE:-}"
 
 usage() {
-  echo "Usage: $0 toggle|toggle-mode|ensure|hide|watch|render|focus|count|window|rename"
+  echo "Usage: $0 toggle|toggle-mode|ensure|ensure-all|hide|watch|render|focus|count|window|rename"
 }
 
 tmux_value() {
@@ -159,6 +159,36 @@ ensure_sidebar() {
   tmux select-pane -t "$new_pane" -T "$sidebar_title"
 }
 
+ensure_sidebar_for_window() {
+  local window_id="$1"
+  local active_pane sidebar_pane new_pane
+
+  [ -n "$window_id" ] || return
+
+  sidebar_pane="$(sidebar_pane_for_window "$window_id")"
+  if [ -n "$sidebar_pane" ]; then
+    return
+  fi
+
+  active_pane="$(tmux list-panes -t "$window_id" -F "#{pane_id}" | head -n1)"
+  [ -n "$active_pane" ] || return
+
+  new_pane="$(
+    tmux split-window -t "$active_pane" -h -f -l "$sidebar_width" -P -F "#{pane_id}" "$script_path watch"
+  )"
+  tmux select-pane -t "$new_pane" -T "$sidebar_title"
+}
+
+ensure_all_sidebars() {
+  local session_name window_id
+
+  session_name="$(current_session_name)"
+  while IFS= read -r window_id; do
+    [ -n "$window_id" ] || continue
+    ensure_sidebar_for_window "$window_id"
+  done < <(tmux list-windows -t "$session_name" -F "#{window_id}")
+}
+
 focus_sidebar_mode() {
   local session_name window_id sidebar_pane client_tty
 
@@ -200,7 +230,7 @@ toggle_sidebar_mode() {
   fi
 
   set_sidebar_enabled "$session_name" 1
-  ensure_sidebar
+  ensure_all_sidebars
   focus_sidebar_mode
 }
 
@@ -327,6 +357,10 @@ case "${1:-}" in
   ensure)
     target_pane="${2:-${TMUX_PANE:-}}"
     ensure_sidebar
+    ;;
+  ensure-all)
+    target_pane="${2:-${TMUX_PANE:-}}"
+    ensure_all_sidebars
     ;;
   focus)
     target_pane="${2:-${TMUX_PANE:-}}"
