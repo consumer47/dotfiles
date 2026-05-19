@@ -9,7 +9,7 @@ script_path="${TMUX_SIDEBAR_SCRIPT:-$HOME/.tmux_sidebar.sh}"
 target_pane="${TMUX_PANE:-}"
 
 usage() {
-  echo "Usage: $0 toggle|toggle-mode|ensure|hide|watch|render|focus|count|window"
+  echo "Usage: $0 toggle|toggle-mode|ensure|hide|watch|render|focus|count|window|rename"
 }
 
 tmux_value() {
@@ -223,6 +223,23 @@ sidebar_move_window() {
   done
 }
 
+rename_sidebar_window() {
+  local window_id window_name client_tty workdir
+  local window_id_q window_name_q client_tty_q
+
+  window_id="$(current_window)"
+  window_name="$(tmux_value "#{window_name}")"
+  client_tty="$(current_client_tty)"
+  workdir="$(tmux_value "#{pane_current_path}")"
+
+  window_id_q="$(printf '%q' "$window_id")"
+  window_name_q="$(printf '%q' "$window_name")"
+  client_tty_q="$(printf '%q' "$client_tty")"
+
+  tmux display-popup -E -w 50% -h 18% -d "$workdir" \
+    "bash -lc 'read -e -i $window_name_q -p \"rename window: \" new_name; if [ -n \"\$new_name\" ]; then tmux rename-window -t $window_id_q \"\$new_name\"; fi; tmux switch-client -t $client_tty_q -T tmux-sidebar 2>/dev/null || true'"
+}
+
 render_sidebar() {
   local session_name active_window_id active_window_index active_window_name
   local window_id window_index window_name window_active
@@ -302,6 +319,10 @@ case "${1:-}" in
   window)
     target_pane="${3:-${TMUX_PANE:-}}"
     sidebar_move_window "${2:-}"
+    ;;
+  rename)
+    target_pane="${2:-${TMUX_PANE:-}}"
+    rename_sidebar_window
     ;;
   ensure)
     target_pane="${2:-${TMUX_PANE:-}}"
