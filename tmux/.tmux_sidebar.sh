@@ -8,7 +8,7 @@ script_path="${TMUX_SIDEBAR_SCRIPT:-$HOME/.tmux_sidebar.sh}"
 target_pane="${2:-${TMUX_PANE:-}}"
 
 usage() {
-  echo "Usage: $0 toggle|watch|render"
+  echo "Usage: $0 toggle-mode|ensure|hide|watch|render"
 }
 
 tmux_value() {
@@ -33,6 +33,23 @@ sidebar_pane_for_window() {
     awk -F '\t' -v title="$sidebar_title" '$2 == title { print $1; exit }'
 }
 
+sidebar_enabled() {
+  local session_id="$1"
+  [ "$(tmux show-option -qv -t "$session_id" @tmux_sidebar_enabled)" = "1" ]
+}
+
+set_sidebar_enabled() {
+  local session_id="$1"
+  local enabled="$2"
+  tmux set-option -q -t "$session_id" @tmux_sidebar_enabled "$enabled"
+}
+
+sidebar_panes_for_session() {
+  local session_id="$1"
+  tmux list-panes -s -t "$session_id" -F "#{pane_id}	#{pane_title}" |
+    awk -F '\t' -v title="$sidebar_title" '$2 == title { print $1 }'
+}
+
 shorten_path() {
   local path="${1:-}"
   local max="${2:-18}"
@@ -46,23 +63,54 @@ shorten_path() {
   printf '...%s' "${path: -$((max - 3))}"
 }
 
-toggle_sidebar() {
+ensure_sidebar() {
   local active_pane window_id sidebar_pane new_pane
 
   active_pane="${target_pane:-$(tmux_value "#{pane_id}")}"
+  if [ -z "$active_pane" ]; then
+    return
+  fi
+
+  if ! sidebar_enabled "$(current_session)"; then
+    return
+  fi
+
   window_id="$(current_window)"
   sidebar_pane="$(sidebar_pane_for_window "$window_id")"
 
   if [ -n "$sidebar_pane" ]; then
-    tmux kill-pane -t "$sidebar_pane"
+    tmux select-pane -t "$sidebar_pane"
     return
   fi
 
   new_pane="$(
-    tmux split-window -t "$active_pane" -h -l "$sidebar_width" -P -F "#{pane_id}" "$script_path watch"
+    tmux split-window -t "$active_pane" -h -f -l "$sidebar_width" -P -F "#{pane_id}" "$script_path watch"
   )"
   tmux select-pane -t "$new_pane" -T "$sidebar_title"
-  tmux select-pane -t "$active_pane"
+}
+
+hide_sidebar() {
+  local session_id="$1"
+  local pane_id
+
+  while IFS= read -r pane_id; do
+    [ -n "$pane_id" ] || continue
+    tmux kill-pane -t "$pane_id" 2>/dev/null || true
+  done < <(sidebar_panes_for_session "$session_id")
+}
+
+toggle_sidebar_mode() {
+  local session_id
+
+  session_id="$(current_session)"
+  if sidebar_enabled "$session_id"; then
+    set_sidebar_enabled "$session_id" 0
+    hide_sidebar "$session_id"
+    return
+  fi
+
+  set_sidebar_enabled "$session_id" 1
+  ensure_sidebar
 }
 
 render_sidebar() {
@@ -124,8 +172,15 @@ watch_sidebar() {
 }
 
 case "${1:-}" in
-  toggle)
-    toggle_sidebar
+  toggle-mode)
+    toggle_sidebar_mode
+    ;;
+  ensure)
+    ensure_sidebar
+    ;;
+  hide)
+    set_sidebar_enabled "$(current_session)" 0
+    hide_sidebar "$(current_session)"
     ;;
   watch)
     watch_sidebar

@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "Add quick actions for sidebar-listed windows: rename the selected/current window and assign a highlight color. Clarify storage for colors, likely tmux window options or @user options keyed by window id/name. Sidebar rendering should show custom colors in the window list and preserve readable Nord defaults when no color is set. Acceptance: user can rename a window quickly, assign/change/clear a highlight color, and see the result in the sidebar.",
+  "id": "T-003",
+  "order": 30,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Add tmux sidebar window rename and color controls",
+  "type": "task"
+}

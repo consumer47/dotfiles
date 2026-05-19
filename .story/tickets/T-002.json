@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "Add interaction to the tmux sidebar so windows and panes can be selected directly. Investigate practical options: mouse bindings, tmux choose-tree replacement, fzf popup driven from sidebar data, or a script that maps visible entries to tmux select-window/select-pane commands. Keep the sidebar read-only display as the fallback if true click support is too brittle. Acceptance: user can quickly jump to a listed window or pane from the sidebar workflow without typing raw tmux ids.",
+  "id": "T-002",
+  "order": 20,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Make tmux sidebar clickable/selectable",
+  "type": "task"
+}

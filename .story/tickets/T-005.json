@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "The sidebar currently clears and redraws every second, so rendering is visible. Improve rendering so updates are less distracting. Options: redraw only when output changes, use alternate screen/tput more carefully, use tmux display-message/status formats, or update at a slower/adaptive interval. Acceptance: sidebar updates without obvious full-screen flicker during normal use.",
+  "id": "T-005",
+  "order": 50,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Reduce tmux sidebar redraw flicker",
+  "type": "task"
+}

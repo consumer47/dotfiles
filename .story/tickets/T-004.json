@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": "2026-05-19",
+  "createdDate": "2026-05-19",
+  "description": "This is the core sidebar architecture ticket. Current sidebar is created by splitting the focused pane, so in layouts with multiple horizontally arranged work panes it appears only next to the focused pane instead of occupying the full right edge. Also, because tmux panes are window-local, the sidebar disappears when switching to another window.\n\nDesired behavior\n- Sidebar behaves like a persistent session-level navigation surface: if enabled, it should appear when switching between windows.\n- Sidebar should sit on the right edge of each visible window layout, not just beside whichever work pane was focused when it was opened.\n- Opening the sidebar should focus it.\n- Hiding the sidebar should disable the sidebar experience and remove sidebar panes without killing work panes.\n\nEvaluation points\n- Determine whether a true single sidebar pane shared across windows is possible in tmux. Likely not, because tmux panes belong to one window.\n- If a true shared pane is impossible, design a per-window sidebar strategy: create/recreate a sidebar pane on window switch when sidebar mode is enabled.\n- Decide where sidebar mode state lives: tmux global/user option, session option, or environment variable.\n- Determine how to prevent duplicate sidebars per window and exclude sidebar panes from work-pane lists.\n- Determine whether layout restore needs saved layouts or a simpler best-effort resize strategy.\n\nAcceptance\n- Sidebar mode can be enabled/disabled with one command.\n- When sidebar mode is enabled, switching windows results in a sidebar being visible for the new current window.\n- Sidebar occupies a predictable right-edge area for common layouts, including multiple horizontal work panes.\n- Hiding sidebar mode removes sidebar panes from affected windows and leaves work panes usable.\n- Implementation remains tmux-native and does not require Zellij.",
+  "id": "T-004",
+  "order": 15,
+  "phase": "tmux",
+  "status": "complete",
+  "title": "Fix tmux sidebar layout with multiple work panes",
+  "type": "task"
+}
