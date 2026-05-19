@@ -22,5 +22,5 @@ bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/brightnessctl-wrapper s
 # Additional binding for settings menu
 bindsym $mod+Shift+s exec ~/dotfiles/rofi/settings_menu.sh
 
-# Firefox private profile binding (Super+Shift+Alt+F)
+# Firefox: Super+Shift+Alt+F = private profile (work-private; script uses -no-remote)
 bindsym $mod+Shift+Mod1+f exec ~/dotfiles/shortcuts/firefox-private-profile.sh

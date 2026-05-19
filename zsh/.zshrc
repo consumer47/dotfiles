@@ -92,9 +92,6 @@ fi
 
 # [[ "$TERM_PROGRAM" == "kiro" ]] && . "$(kiro --locate-shell-integration-path zsh)"
 
-# [ -f ~/workbench/rtb-service-pi/targets/topo/topo-bike/completion.bash ] && source ~/workbench/rtb-service-pi/targets/topo/topo-bike/completion.bash
-# [ -d "$HOME/workbench/rtb-service-pi/cli" ] && export PATH="$HOME/workbench/rtb-service-pi/cli:$PATH"
-
 # [ -f "$HOME/.local/share/../bin/env" ] && . "$HOME/.local/share/../bin/env"
 
 # Audinofy - audible CLI notifications
@@ -102,3 +99,27 @@ fi
 # alias ay='~/workbench_old/audio-signal-cli/audinofy'
 alias todo='nvim "$HOME/Documents/todo/$(date +%F).txt"'
 alias todo_2='nvim "$HOME/Documents/todo2/$(date +%F).txt"'
+
+# --- topo-bike (rtb-service-pi): only when repo is present ---
+if [[ -d "$HOME/rtb-service-pi" ]]; then
+  TOPO_ROOT="$HOME/rtb-service-pi"
+elif [[ -d "$HOME/workbench/rtb-service-pi" ]]; then
+  TOPO_ROOT="$HOME/workbench/rtb-service-pi"
+fi
+if [[ -n "${TOPO_ROOT:-}" ]]; then
+  TOPO_BIKE="$TOPO_ROOT/targets/topo/topo-bike"
+  # GPIO aliases (hardware-abstraction-layer)
+  [[ -f "$TOPO_BIKE/hardware-abstraction-layer/scripts/gpio-aliases.sh" ]] && source "$TOPO_BIKE/hardware-abstraction-layer/scripts/gpio-aliases.sh"
+  # Fastboot flash aliases
+  alias topo-flash-fip='sudo fastboot flash fip "$TOPO_BIKE/deployables/firmware/fip-stm32mp157c-qsmp-1570-optee.bin"'
+  alias topo-flash-boot='sudo fastboot flash boot "$TOPO_BIKE/deployables/firmware/karo-image-bootfs-qsmp-1570.ext4"'
+  alias topo-flash-rootfs='sudo fastboot flash rootfs "$TOPO_BIKE/deployables/firmware/topo-bike-image-qsmp-1570.ext4"'
+  alias topo-flash-all='topo-flash-fip && topo-flash-boot && topo-flash-rootfs'
+  # Optional: CLI in PATH and completion
+  [[ -d "$TOPO_ROOT/cli" ]] && export PATH="$TOPO_ROOT/cli:$PATH"
+  [[ -f "$TOPO_BIKE/completion.bash" ]] && source "$TOPO_BIKE/completion.bash"
+fi
+# opencode
+export PATH=/home/dennis/.opencode/bin:$PATH
+# Rust user binaries (cargo install, e.g. taskwarrior-tui)
+[[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"

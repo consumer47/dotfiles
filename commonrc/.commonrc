@@ -42,6 +42,7 @@ export PATH=$PATH:~/.local/share/flatpak/exports/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
 export PATH=$PATH:/var/lib/flatpak/exports/bin
 export PATH="$HOME/.cargo/bin:$PATH"
+[[ -d "$HOME/go/bin" ]] && export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # for docker dev container in vscode: 
@@ -60,6 +61,14 @@ nvm() {
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
     nvm "$@"
+}
+
+date_for_filename() {
+  date +"%Y%m%d"
+}
+
+date_for_filename_with_time() {
+  date +"%Y%m%d_%H%M%S"
 }
 
 # Add node to PATH if default version exists
@@ -94,6 +103,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias t="todo.sh"
 alias n="nvim"
+alias lg="lazygit"
 alias b="batcat"
 alias a="jibidi -t \""
 alias workspace_detect=~/.config/i3/dynamic_workspaces.sh

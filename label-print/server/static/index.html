@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brother Label Printer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Brother Label Printer</h1>
+        </header>
+
+        <main>
+            <!-- Job Queue Section -->
+            <section class="card">
+                <h2>Print Queue</h2>
+                <div id="queue-container">
+                    <div id="queue-empty" class="empty-state">No jobs in queue</div>
+                    <ul id="job-list"></ul>
+                </div>
+                <div class="queue-actions">
+                    <button id="printer-info-btn" class="btn btn-secondary">Printer Info</button>
+                    <button id="preview-queue-btn" class="btn btn-secondary" disabled>Preview Queue</button>
+                    <div style="display: inline-block; margin: 0 10px;">
+                        <label style="margin-right: 5px;">Lines:</label>
+                        <select id="print-line-count" style="margin-right: 10px;">
+                            <option value="1">1 Line</option>
+                            <option value="2" selected>2 Lines</option>
+                            <option value="3">3 Lines</option>
+                            <option value="4">4 Lines</option>
+                        </select>
+                    </div>
+                    <button id="print-all-btn" class="btn btn-primary" disabled>Print All ({<span id="queue-count">0</span>})</button>
+                    <button id="clear-queue-btn" class="btn btn-secondary" disabled>Clear Queue</button>
+                </div>
+            </section>
+
+            <!-- Create Job Section -->
+            <section class="card">
+                <h2>Create Print Job</h2>
+                <form id="job-form">
+                    <div class="form-group">
+                        <label>Text Lines (1-4 lines):</label>
+                        <div id="lines-container">
+                            <input type="text" class="line-input" placeholder="Line 1" required>
+                        </div>
+                        <button type="button" id="add-line-btn" class="btn-small">+ Add Line</button>
+                        <button type="button" id="remove-line-btn" class="btn-small" style="display: none;">- Remove Line</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Font Size:</label>
+                        <select id="font-size">
+                            <option value="auto">Auto</option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                        </select>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Add to Queue</button>
+                        <button type="button" id="preview-btn" class="btn btn-secondary">Preview</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Preview Section -->
+            <section class="card" id="preview-section" style="display: none;">
+                <h2>Preview</h2>
+                <div id="preview-container"></div>
+            </section>
+
+            <!-- Prepreview Section -->
+            <section class="card">
+                <h2>Prepreview (Job Distribution)</h2>
+                <div class="form-group">
+                    <label>Number of Lines:</label>
+                    <select id="prepreview-line-count">
+                        <option value="1">1 Line</option>
+                        <option value="2" selected>2 Lines</option>
+                        <option value="3">3 Lines</option>
+                        <option value="4">4 Lines</option>
+                    </select>
+                    <button id="generate-prepreview-btn" class="btn btn-secondary">Generate Prepreview</button>
+                </div>
+                <div id="prepreview-container">
+                    <div id="prepreview-empty" class="empty-state">No prepreview generated</div>
+                    <div id="prepreview-image" style="display: none;">
+                        <img id="prepreview-img" src="" alt="Prepreview" style="max-width: 100%; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Templates Section -->
+            <section class="card">
+                <h2>Templates</h2>
+                <div id="templates-container">
+                    <div id="templates-empty" class="empty-state">No templates saved</div>
+                    <ul id="template-list"></ul>
+                </div>
+                <div class="form-group">
+                    <input type="text" id="template-name" placeholder="Template name">
+                    <button id="save-template-btn" class="btn btn-secondary">Save Current as Template</button>
+                </div>
+            </section>
+
+            <!-- QR Code Section -->
+            <section class="card">
+                <h2>QR Code</h2>
+                <form id="qrcode-form">
+                    <div class="form-group">
+                        <label>QR Code Data:</label>
+                        <input type="text" id="qrcode-data" placeholder="Enter text or URL" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Optional Label Text:</label>
+                        <input type="text" id="qrcode-label" placeholder="Text to print above QR code">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Print QR Code</button>
+                </form>
+            </section>
+
+            <!-- History Section -->
+            <section class="card">
+                <h2>Print History</h2>
+                <div id="history-container">
+                    <div id="history-empty" class="empty-state">No print history</div>
+                    <ul id="history-list"></ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

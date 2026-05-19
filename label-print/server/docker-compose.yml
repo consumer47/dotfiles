@@ -1,0 +1,38 @@
+services:
+  label-printer-server:
+    build: .
+    container_name: label-printer-server
+    restart: unless-stopped
+    
+    ports:
+      - "8000:8000"
+    
+    volumes:
+      # Mount the brother-label-print.sh script
+      - ../brother-label-print.sh:/app/brother-label-print.sh:ro
+      # Mount the docker directory so script can find docker-compose.yml
+      # Script expects docker/ subdirectory relative to script location
+      # Note: Not read-only because ptouch-print needs to write to workspace
+      - ../docker:/app/docker
+      # Mount workspace for previews and temp files
+      - ../docker/workspace:/app/workspace
+      # Mount data directory for templates and history
+      - ./data:/app/data
+      # Mount server code for live updates (comment out to use image code)
+      - ./app.py:/app/app.py:ro
+      - ./printer.py:/app/printer.py:ro
+      - ./models.py:/app/models.py:ro
+      - ./templates.py:/app/templates.py:ro
+      - ./prepreview.py:/app/prepreview.py:ro
+      - ./static:/app/static:ro
+      # Mount Docker socket so container can run Docker commands
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      # Mount USB devices so ptouch-print container can access printer
+      - /dev/bus/usb:/dev/bus/usb
+    
+    environment:
+      - PYTHONUNBUFFERED=1
+    
+    # Network mode host for USB access (if needed)
+    network_mode: host
+

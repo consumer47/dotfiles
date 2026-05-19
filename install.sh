@@ -26,6 +26,8 @@ deploy_dotfiles() {
     cd ~/dotfiles
     stow -v zsh
     stow -v nvim
+    stow -v tmux
+    stow -v urlview
 }
 
 # Main function to orchestrate the setup

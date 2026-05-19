@@ -1,0 +1,20 @@
+# Copy to gitlab-watch.conf (gitignored). See: bin/poll-status.sh, bin/pipeline-check.sh
+
+host git.rtb-bl.de
+
+# notify-level: none | failures | finish | all
+notify-level all
+
+# Where CI job traces (.log) are stored. Default: <state>/logs/<host>/repo__/pipeline-ID
+#   state = $GITLAB_WATCH_LOGDIR or ~/.local/state/gitlab-watch
+# logs-root — override the default …/logs base for all repos
+# logs-for  — override base for one repo path (must match repo line exactly)
+# On repo lines you can append: logs=~/path (no spaces in path)
+
+# logs-root ~/Downloads/gitlab-ci-logs
+# logs-for topo/topo_bike/foo ~/tmp/foo-ci-logs
+
+# repo GROUP/proj [notify-level] [logs=PATH]
+# repo topo/example/project all logs=~/logs/example
+
+topo/topo_bike/topo-bike-linux-yocto

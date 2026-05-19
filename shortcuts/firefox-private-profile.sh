@@ -1,5 +1,4 @@
 #!/bin/bash
-# Script to launch Firefox with the work-private profile
-
-firefox -P "work-private" &
+# Launch Firefox with the private profile (snap profile: "Private")
+firefox -P "Private" --no-remote &
 

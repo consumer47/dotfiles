@@ -1,0 +1,12 @@
+[Unit]
+Description=GitLab pipeline status poll (Polybar) and failure log fetch
+# Requires: dotfiles at ~/dotfiles, glab auth, scripts/gitlab-watch/gitlab-watch.conf, bin/run-poll-and-check.sh
+# Install: ln -sf .../scripts/gitlab-watch/systemd/gitlab-watch-poll.service ~/.config/systemd/user/
+#          ln -sf .../scripts/gitlab-watch/systemd/gitlab-watch-poll.timer ~/.config/systemd/user/
+#          systemctl --user daemon-reload && systemctl --user enable --now gitlab-watch-poll.timer
+
+[Service]
+Type=oneshot
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+# Change %h/dotfiles if your repo lives elsewhere.
+ExecStart=%h/dotfiles/scripts/gitlab-watch/bin/run-poll-and-check.sh

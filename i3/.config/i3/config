@@ -17,6 +17,7 @@ set $mod Mod4
 exec --no-startup-id udiskie -atn
 exec --no-startup-id autorandr
 exec --no-startup-id picom
+exec --no-startup-id dunst
 # exec --no-startup-id teams-for-linux
 exec --no-startup-id feh --bg-scale --no-xinerama ~/backgrounds/nice-blue-background.png
 exec --no-startup-id setxkbmap -option caps:escape
@@ -46,6 +47,7 @@ exec --no-startup-id nm-applet
 # Volume control with pactl
 set $refresh_i3status killall -SIGUSR1 i3status
 
+# Brightness: bound in config.work (brightnessctl-wrapper)
 # bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +5%
 # bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 5%-
 
@@ -53,6 +55,10 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+# Close latest dunst notification with Super+Caps Lock
+bindsym $mod+Caps_Lock exec --no-startup-id dunstctl close
+# Close latest dunst notification with Super+Esc
+bindsym $mod+Escape exec --no-startup-id dunstctl close
 
 # Brightness control with Super + Alt + h/j/k/l
 # Increase brightness by 50 with Super + Alt + k
@@ -80,11 +86,11 @@ workspace 2 output eDP-1
 workspace 3 output eDP-1
 workspace 4 output eDP-1
 workspace 5 output eDP-1
-workspace 6 output DP-2-2-1
-workspace 7 output DP-2-2-1
-workspace 8 output DP-2-2-1
-workspace 9 output DP-2-2-1
-workspace 10 output DP-2-2-1
+workspace 6 output eDP-1
+workspace 7 output eDP-1
+workspace 8 output eDP-1
+workspace 9 output eDP-1
+workspace 10 output eDP-1
 # workspace 6 output eDP-1
 # workspace 7 output eDP-1
 # workspace 8 output eDP-1
@@ -111,7 +117,8 @@ bindsym $mod+Ctrl+p exec --no-startup-id ~/.screenlayout/HDMI-1-only.sh && ~/.co
 
 
 # bindsym $mod+Shift+g exec gnome-terminal -- zsh -c 'source ~/.zshrc && tmux new-session -d -s mysession && tmux send-keys -t mysession "gpt" C-m && tmux attach -t mysession'
-bindsym $mod+Shift+f exec firefox -P default-release
+# Firefox: Super+Shift+F = work profile, Super+Shift+Alt+F = private profile (scripts use -no-remote so profile opens directly)
+bindsym $mod+Shift+f exec ~/dotfiles/shortcuts/firefox-work-profile.sh
 bindsym $mod+Shift+p exec firefox --private-window
 # bindsym $mod+Shift+n exec gnome-terminal -- tmux new-session -A -s neovim 'nvim'
 # Start Ranger with Mod+r
@@ -125,7 +132,8 @@ bindsym $mod+c exec ~/.config/polybar/calcurse_launch.sh
 # Program launcher
 # bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+d exec rofi -show run
-bindsym $mod+space exec --no-startup-id rofi -show combi
+# Rofi combi: Super+Space (leader) then Space — see leader-spec.md
+bindsym $mod+space mode "leader"
 bindsym $mod+Tab exec --no-startup-id rofi -show window
 
 # Focus windows
@@ -250,35 +258,45 @@ bindsym $mod+r mode "resize"
 
 
 # 📌 Define a variable for Scrcpy options (so you can modify later)
-set $scrcpy_runner scrcpy --window-title "scrcpy" --tcpip --turn-screen-off --disable-screensaver --show-touches --stay-awake  --video-bit-rate=8M --show-touches --max-size=1080 --window-width=500 --audio-bit-rate=128K --max-fps=60
+set $scrcpy_runner scrcpy --window-title "scrcpy-mirror" --tcpip --turn-screen-off --disable-screensaver --show-touches --stay-awake --bit-rate=8M --max-size=1080 --window-width=500 --max-fps=60
 
 # 🛠 Auto-start the background ADB script inside a hidden terminal
 exec_always --no-startup-id pgrep -f 'alacritty.*adb' || \
-   alacritty --class adb,adb -e /home/dennis/.config/i3/adb_scrcpy.sh
+   alacritty --class adb,adb -e $HOME/.config/i3/adb_scrcpy.sh
 
 # 🚀 Start Scrcpy if it's not running
-# bindsym $mod+Shift+n exec --no-startup-id pgrep -x scrcpy || $scrcpy_runner
+bindsym $mod+Shift+b exec --no-startup-id $HOME/.config/i3/start_scrcpy.sh
+# Restart Scrcpy (kill + start). Use when mirror vanished after phone lock.
+bindsym $mod+Mod1+Shift+b exec --no-startup-id $HOME/.config/i3/restart_scrcpy.sh
+# Debug: Super+Ctrl+Shift+b writes to /tmp/scrcpy_debug.log (remove when done)
+bindsym $mod+Ctrl+Shift+b exec --no-startup-id $HOME/.config/i3/debug_scrcpy.sh
 
-# 🎭 Automatically format Scrcpy in the scratchpad
-for_window [class="scrcpy"] floating enable, resize set 500 1080, move scratchpad, border pixel 0
+# 🎭 No for_window for scrcpy. Window stays floating (no scratchpad) so phone lock/unlock doesn't make it vanish.
+# Format is applied once in start_scrcpy.sh.
 
-# 🔄 Toggle Scrcpy visibility
-bindsym $mod+b [class="scrcpy"] scratchpad show; move position center
-bindsym $mod+Shift+b exec --no-startup-id /home/dennis/.config/i3/adb_unlock.sh
+# 🔄 Focus scrcpy window (bring to front, center)
+bindsym $mod+b exec --no-startup-id $HOME/.config/i3/show_scrcpy.sh
+bindsym $mod+Shift+u exec --no-startup-id $HOME/.config/i3/adb_unlock.sh
 
-for_window [class="pulse|ttrm|private|mus|fm"] floating enable, resize set 1000 600, move scratchpad, border pixel 0
+for_window [class="pulse|ttrm|private|scratch3|scratch4|mus|fm"] floating enable, resize set 1500 900, move scratchpad, border pixel 0
 
 # bindsym $mod+Shift+t [class="fm"] scratchpad show; move position center
 # exec_always --no-startup-id pgrep -f '^alacritty --class fm,fm' || alacritty --class fm,fm -e y
-bindsym $mod+Shift+m [class="pulse"] scratchpad show; move position center
+bindsym $mod+m [class="pulse"] scratchpad show; move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class pulse,pulse' || alacritty --class pulse,pulse -e pulsemixer 
 bindsym $mod+n [instance="ttrm"] scratchpad show; [instance="ttrm"] move position center
+# Weather is launched on demand from leader mode as a normal tiled window.
 exec_always --no-startup-id pgrep -f '^alacritty --class ttrm,ttrm' || alacritty --class ttrm,ttrm
 # Private scratchpad (similar to ttrm but for private stuff)
 bindsym $mod+Shift+n [instance="private"] scratchpad show; [instance="private"] move position center
 exec_always --no-startup-id pgrep -f '^alacritty --class private,private' || alacritty --class private,private
-# Move focused window to scratchpad
-bindsym $mod+Ctrl+s move scratchpad
+# Third scratchpad terminal (Super+Alt+n)
+bindsym $mod+Mod1+n [instance="scratch3"] scratchpad show; [instance="scratch3"] move position center
+exec_always --no-startup-id pgrep -f '^alacritty --class scratch3,scratch3' || alacritty --class scratch3,scratch3
+bindsym $mod+Mod1+Shift+n [instance="scratch4"] scratchpad show; [instance="scratch4"] move position center
+exec_always --no-startup-id pgrep -f '^alacritty --class scratch4,scratch4' || alacritty --class scratch4,scratch4
+# Move focused window to scratchpad (skip scrcpy so phone window can't vanish by accident)
+bindsym $mod+Ctrl+s exec --no-startup-id $HOME/.config/i3/move_to_scratchpad_safe.sh
 # Show the first (or switch to the next) scratchpad window
 bindsym $mod+Ctrl+g scratchpad show
 
@@ -311,11 +329,11 @@ for_window [urgent=latest] focus
 # Pop-up GPT / Jibidi Scratchpad Configuration
 # ========================================
 
-# Automatically move jibidi windows to scratchpad with floating behavior
-for_window [class="jibidi"] floating enable, resize set 1200 800, move scratchpad, border pixel 2
+# Automatically move jibidi windows to scratchpad with floating behavior (sized down)
+for_window [class="jibidi"] floating enable, resize set 1350 870, move scratchpad, border pixel 2
 
 # Floating editor window for multi-line input (centered, not in scratchpad)
-for_window [class="floatingEditor"] floating enable, resize set 800 600, move position center, border pixel 2
+for_window [class="floatingEditor"] floating enable, resize set 700 480, move position center, border pixel 2
 
 # Toggle the most recent jibidi scratchpad window
 bindsym $mod+o [class="jibidi"] scratchpad show; move position center
@@ -418,15 +436,15 @@ mode "mouse" {
     # === PASSTHROUGH: Common actions ===
     bindsym $mod+q kill
     bindsym $mod+Shift+space floating toggle
-    bindsym $mod+space exec --no-startup-id rofi -show combi
+    bindsym $mod+space mode "leader"
 
     # === EXIT MOUSE MODE ===
     bindsym q mode "default"
-    # bindsym Escape mode "default"
+    bindsym Escape mode "default"
 }
 
-# keybinding to enter mouse mode
-bindsym $mod+m mode "mouse"
+# keybinding to enter mouse mode (Super+Shift+m; Super+m is pulse scratchpad)
+bindsym $mod+Shift+m mode "mouse"
 
 # German / Special Character Mode
 mode "german" {
@@ -458,6 +476,38 @@ mode "system" {
     bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
     
     # Exit mode
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+}
+
+# Leader mode (experiment; spec: leader-spec.md)
+mode "leader" {
+    bindsym space exec --no-startup-id rofi -show combi, mode "default"
+    bindsym w exec --no-startup-id alacritty -e bash -c 'curl -s wttr.in/Dortmund; exec bash', mode "default"
+    bindsym y exec --no-startup-id flameshot full -c, mode "default"
+    bindsym t exec alacritty -e ~/.config/i3/taskwarrior-tui-launch.sh, mode "default"
+    bindsym g exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-smart-action.sh, mode "default"
+    bindsym Ctrl+g exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-toggle-poll.sh, mode "default"
+    bindsym Shift+g mode "gitlab-pick"
+
+    bindsym Escape mode "default"
+    bindsym q mode "default"
+    bindsym Return mode "default"
+}
+
+# GitLab pick mode: select repo by number from status.json order.
+mode "gitlab-pick" {
+    bindsym 1 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 1, mode "default"
+    bindsym 2 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 2, mode "default"
+    bindsym 3 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 3, mode "default"
+    bindsym 4 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 4, mode "default"
+    bindsym 5 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 5, mode "default"
+    bindsym 6 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 6, mode "default"
+    bindsym 7 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 7, mode "default"
+    bindsym 8 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 8, mode "default"
+    bindsym 9 exec --no-startup-id ~/.config/polybar/my_forest/scripts/gitlab-open-repo-index.sh 9, mode "default"
+
     bindsym Escape mode "default"
     bindsym q mode "default"
     bindsym Return mode "default"

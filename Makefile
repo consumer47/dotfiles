@@ -11,8 +11,21 @@ help:
 	@echo "  install_dependencies - Install system dependencies"
 	@echo "  install_i3           - Install i3 window manager and dependencies"
 	@echo "  install_htop_vim     - Install htop with vim bindings"
+	@echo "  install_scrcpy       - Install scrcpy and adb for Android mirroring"
+	@echo "  install_tmux         - Stow tmux and urlview config, run TPM plugin installer"
+	@echo "  install_taskwarrior_tui - Install taskwarrior-tui (.deb, sudo) for leader key + Alacritty"
+	@echo "  install_taskwarrior_tui_cargo - Same via cargo (no sudo, needs rust)"
 
-.PHONY: help install_i3
+.PHONY: help install_i3 install_scrcpy install_tmux install_taskwarrior_tui install_taskwarrior_tui_cargo
+
+DOTFILES_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
+
+install_tmux:
+	@echo "Installing tmux config and urlview (symlinks)..."
+	@cd "$(DOTFILES_DIR)" && stow -v tmux && stow -v urlview
+	@echo "Installing TPM and plugins..."
+	@cd "$(DOTFILES_DIR)" && ./install_tmux_plugins.sh
+	@echo "tmux setup done. Restart tmux to load config and plugins."
 
 install_i3:
 	@echo "Installing i3 window manager and dependencies..."
@@ -53,4 +66,26 @@ install_htop_vim:
 	cd /tmp/htop && ./autogen.sh && ./configure && make
 	cd /tmp/htop && sudo make install
 	@echo "htop with vim bindings installed successfully."
-	
+
+install_taskwarrior_tui:
+	@chmod +x "$(DOTFILES_DIR)/scripts/install-taskwarrior-tui-deb.sh" \
+		"$(DOTFILES_DIR)/i3/.config/i3/taskwarrior-tui-launch.sh"
+	@bash "$(DOTFILES_DIR)/scripts/install-taskwarrior-tui-deb.sh"
+
+install_taskwarrior_tui_cargo:
+	@chmod +x "$(DOTFILES_DIR)/scripts/install-taskwarrior-tui-deb.sh" \
+		"$(DOTFILES_DIR)/i3/.config/i3/taskwarrior-tui-launch.sh"
+	@bash "$(DOTFILES_DIR)/scripts/install-taskwarrior-tui-deb.sh" cargo
+
+install_scrcpy:
+	@echo "Installing scrcpy and adb..."
+	@if [ -f /etc/arch-release ]; then \
+		sudo pacman -Sy --noconfirm scrcpy android-tools; \
+	elif [ -f /etc/debian_version ]; then \
+		sudo apt-get update; \
+		sudo apt-get install -y scrcpy adb; \
+	else \
+		echo "Unsupported OS. Please install scrcpy and adb manually."; \
+		exit 1; \
+	fi
+	@echo "scrcpy and adb installed successfully."

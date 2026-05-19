@@ -11,14 +11,19 @@
   },
   {
     "key": "ctrl+shift+o",
-    // "command": "workbench.scm.action.focusNextInput",
-    "command": "workbench.action.focusActiveEditorGroup",
-    "when": "!terminalFocus || !editorFocus"
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.focusFirstEditorGroup"
+      ]
+    },
+    "when": "sideBarVisible"
   },
   {
     "key": "ctrl+shift+o",
-    "command": "workbench.scm.action.focusNextInput",
-    "when": "terminalFocus || editorFocus"
+    "command": "workbench.view.scm",
+    "when": "!sideBarVisible"
   },
   // Toggle between terminal and editor focus
   // {
@@ -27,20 +32,36 @@
   // },
   {
     "key": "ctrl+shift+e",
-  //   "command": "workbench.action.toggleStatusBarVisibility",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.focusFirstEditorGroup"
+      ]
+    },
+    "when": "sideBarVisible"
+  },
+  {
+    "key": "ctrl+shift+e",
+    "command": "workbench.view.explorer",
+    "when": "!sideBarVisible"
   },
   {
     "key": "ctrl+shift+j",
-  //   "command": "workbench.action.toggleStatusBarVisibility",
-    "command": "workbench.action.togglePanel",
-    "when": "terminalFocus"
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.togglePanel",
+        "workbench.action.focusFirstEditorGroup"
+      ]
+    },
+    "when": "panelVisible"
   },
   {
     "key": "ctrl+shift+j",
   //   "command": "workbench.action.toggleStatusBarVisibility",
     "command": "workbench.action.terminal.focus",
-    "when": "!terminalFocus"
+    "when": "!panelVisible"
   },
   {
     "key": "ctrl+shift+k",
@@ -88,10 +109,16 @@
     "command": "workbench.action.terminal.kill",
     "when": "terminalFocus"
   },
-  // FILE TREE
+  // FILE TREE - toggle sidebar then focus editor (first group = code, not chat)
   {
     "key": "space e",
-    "command": "workbench.action.toggleSidebarVisibility",
+    "command": "runCommands",
+    "args": {
+      "commands": [
+        "workbench.action.toggleSidebarVisibility",
+        "workbench.action.focusFirstEditorGroup"
+      ]
+    },
     "when": "variablesFocused || filesExplorerFocus || scmViewletVisible && !inputFocus"
   },
   {
@@ -242,6 +269,22 @@
     "key": "ctrl+shift+g",
     "command": "-workbench.view.scm",
     "when": "workbench.scm.active"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "-workbench.action.chat.open"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "-workbench.action.quickChat.toggle"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "-workbench.action.chat.toggle"
+  },
+  {
+    "key": "ctrl+shift+j",
+    "command": "-workbench.action.terminal.chat.start"
   },
   {
     "key": "ctrl+shift+o",

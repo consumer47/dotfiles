@@ -287,11 +287,21 @@
         "editor.debug.action.runToCursor"
       ]
     },
-    // FILE EXPLORER
+    // GO TO EDITOR (focus editor from terminal/sidebar)
     {
       "before": [
         "<leader>",
         "e"
+      ],
+      "commands": [
+        "workbench.action.focusActiveEditorGroup"
+      ]
+    },
+    // FILE EXPLORER (sidebar)
+    {
+      "before": [
+        "<leader>",
+        "E"
       ],
       "commands": [
         "workbench.view.explorer"

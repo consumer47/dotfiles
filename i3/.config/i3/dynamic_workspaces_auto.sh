@@ -2,23 +2,42 @@
 
 # Auto-setup dynamic workspaces with screen detection
 # eDP-1 is internal and always present (left)
-# DP-2-2-1 is external (right, when connected)
+# Any other connected screen is external (right, when connected)
 
 INTERNAL_SCREEN="eDP-1"
-EXTERNAL_SCREEN="DP-2-2-1"
 
 echo "Detecting connected screens..."
 
-# Check if external screen is connected
-external_connected=$(xrandr --query | grep -c "^${EXTERNAL_SCREEN} connected")
+# Get all connected screens (excluding disconnected ones)
+connected_screens=$(xrandr --query | grep " connected" | awk '{print $1}')
 
-if [[ $external_connected -gt 0 ]]; then
+# Find external screen (any connected screen that is not eDP-1)
+EXTERNAL_SCREEN=""
+for screen in $connected_screens; do
+    if [[ "$screen" != "$INTERNAL_SCREEN" ]]; then
+        EXTERNAL_SCREEN="$screen"
+        break
+    fi
+done
+
+# Check if external screen was found
+external_connected=""
+if [[ -n "$EXTERNAL_SCREEN" ]]; then
+    external_connected="yes"
+fi
+
+if [[ -n "$external_connected" ]]; then
     echo "External screen ${EXTERNAL_SCREEN} detected. Setting up dual monitor layout..."
     echo "Internal screen (${INTERNAL_SCREEN}) will be on the left"
     echo "External screen (${EXTERNAL_SCREEN}) will be on the right"
     
     # Get the resolution of the external screen
     external_resolution=$(xrandr --query | grep "^${EXTERNAL_SCREEN} connected" | grep -oE '[0-9]+x[0-9]+' | head -1)
+    
+    if [[ -z "$external_resolution" ]]; then
+        # Try to get preferred mode if no current mode is set
+        external_resolution=$(xrandr --query | grep -A 1 "^${EXTERNAL_SCREEN} connected" | grep -oE '[0-9]+x[0-9]+' | head -1)
+    fi
     
     if [[ -z "$external_resolution" ]]; then
         # Default resolution if we can't detect it
@@ -41,17 +60,22 @@ if [[ $external_connected -gt 0 ]]; then
     # Extract width from internal resolution for positioning
     internal_width=$(echo "$internal_resolution" | cut -d'x' -f1)
     
-    # Set up xrandr: eDP-1 on left, DP-2-2-1 on right
-    xrandr --output "${INTERNAL_SCREEN}" --primary --mode "${internal_resolution}" --pos 0x0 --rotate normal \
-           --output "${EXTERNAL_SCREEN}" --mode "${external_resolution}" --pos "${internal_width}x0" --rotate normal \
-           --output HDMI-1 --off \
-           --output DP-1 --off \
-           --output DP-2 --off \
-           --output DP-3 --off \
-           --output DP-4 --off \
-           --output DP-2-1 --off \
-           --output DP-2-2 --off \
-           --output DP-2-3 --off
+    # Get all available outputs to turn off the ones we're not using
+    all_outputs=$(xrandr --query | grep -E "^[A-Za-z0-9-]+" | awk '{print $1}')
+    
+    # Build xrandr command: set internal and external, turn off all others
+    xrandr_cmd="xrandr --output ${INTERNAL_SCREEN} --primary --mode ${internal_resolution} --pos 0x0 --rotate normal"
+    xrandr_cmd="${xrandr_cmd} --output ${EXTERNAL_SCREEN} --mode ${external_resolution} --pos ${internal_width}x0 --rotate normal"
+    
+    # Turn off all other outputs
+    for output in $all_outputs; do
+        if [[ "$output" != "$INTERNAL_SCREEN" ]] && [[ "$output" != "$EXTERNAL_SCREEN" ]]; then
+            xrandr_cmd="${xrandr_cmd} --output ${output} --off"
+        fi
+    done
+    
+    # Execute the xrandr command
+    eval "$xrandr_cmd"
     
     echo "Screen layout configured successfully"
 else
@@ -67,17 +91,21 @@ else
         echo "Detected internal screen resolution: ${internal_resolution}"
     fi
     
-    # Set up xrandr: eDP-1 only, turn off all other outputs
-    xrandr --output "${INTERNAL_SCREEN}" --primary --mode "${internal_resolution}" --pos 0x0 --rotate normal \
-           --output HDMI-1 --off \
-           --output DP-1 --off \
-           --output DP-2 --off \
-           --output DP-3 --off \
-           --output DP-4 --off \
-           --output DP-2-1 --off \
-           --output DP-2-2 --off \
-           --output DP-2-2-1 --off \
-           --output DP-2-3 --off
+    # Get all available outputs to turn off the ones we're not using
+    all_outputs=$(xrandr --query | grep -E "^[A-Za-z0-9-]+" | awk '{print $1}')
+    
+    # Build xrandr command: set internal only, turn off all others
+    xrandr_cmd="xrandr --output ${INTERNAL_SCREEN} --primary --mode ${internal_resolution} --pos 0x0 --rotate normal"
+    
+    # Turn off all other outputs
+    for output in $all_outputs; do
+        if [[ "$output" != "$INTERNAL_SCREEN" ]]; then
+            xrandr_cmd="${xrandr_cmd} --output ${output} --off"
+        fi
+    done
+    
+    # Execute the xrandr command
+    eval "$xrandr_cmd"
     
     echo "Screen layout configured successfully"
 fi

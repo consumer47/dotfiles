@@ -1,0 +1,54 @@
+[global]
+# Display
+monitor = 1
+origin = top-right
+offset = 15x25
+width = (300, 700)
+height = (0, 700)
+gap_size = 5
+notification_limit = 5
+
+# Appearance
+font = "Mononoki Nerd Font 11"
+frame_width = 1
+separator_color = frame
+corner_radius = 12
+progress_bar_corner_radius = 8
+progress_bar_corner_radius = 5
+
+# Colors loaded from theme via dunstrc.d/00-colors.conf
+
+# Timing
+timeout = 5
+idle_threshold = 120
+
+# Icons
+max_icon_size = 64
+icon_path = /usr/share/icons/Papirus-Dark/48x48/apps:/usr/share/icons/Papirus-Dark/48x48/status:/usr/share/icons/hicolor/48x48/apps
+enable_recursive_icon_lookup = true
+
+# Behavior
+dmenu = ~/.local/bin/dunst-dmenu
+show_indicators = yes
+sticky_history = yes
+history_length = 20
+
+# Mouse actions
+mouse_left_click = close_current
+mouse_right_click = close_all
+mouse_middle_click = context_all
+
+# Format
+format = "<b>󰁕 %a</b>\n%s\n<i>%b</i>"
+
+[urgency_low]
+timeout = 3
+default_icon = "~/.config/dunst/icons/bell-badge-low.svg"
+
+[urgency_normal]
+timeout = 5
+default_icon = "~/.config/dunst/icons/bell-badge.svg"
+
+[urgency_critical]
+timeout = 0
+default_icon = "~/.config/dunst/icons/alert-decagram.svg"

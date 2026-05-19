@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  ptouch-print:
+    build: .
+    container_name: ptouch-print
+    restart: "no"  # Don't auto-restart, manual control only
+    
+    # USB device passthrough - pass entire USB bus
+    # This allows access to USB devices without interfering with other devices
+    privileged: true  # Required for libusb to access USB devices
+    
+    # Alternative: more specific device mapping (if needed)
+    # devices:
+    #   - /dev/bus/usb:/dev/bus/usb
+    
+    # Mount workspace for input/output files
+    volumes:
+      - ./workspace:/workspace
+    
+    # Run as current user to avoid permission issues
+    user: "${UID:-1000}:${GID:-1000}"
+    
+    # Network mode host for USB access (if needed)
+    network_mode: host
+
+

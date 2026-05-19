@@ -1,0 +1,3 @@
+# Allow dennis to run sudo without password (for automation / Cursor)
+# Install once: sudo cp ~/dotfiles/sudoers.d/99-dennis-nopasswd /etc/sudoers.d/ && sudo chmod 440 /etc/sudoers.d/99-dennis-nopasswd
+dennis ALL=(ALL) NOPASSWD: ALL
