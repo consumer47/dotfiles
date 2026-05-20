@@ -1,0 +1,12 @@
+{
+  "content": "T-012 first: build a reusable popup workflow that can run a command in a temporary shell, optionally spawn a detached tmux session, and restore the caller's view unchanged. This becomes the common primitive for detached session start, rename-before-detach, and future floating command flows.\n\nT-011 second: add a direct window rename shortcut and wire it into the new rename flow so pane/window/session renaming are consistent. Keep it keyboard-first and low risk.\n\nT-013 last: refactor the top bar after the interaction model stabilizes. Replace the current flat session>window1|window2 presentation with a clearer hierarchy that shows the active session and window structure at a glance.",
+  "createdDate": "2026-05-20",
+  "id": "N-001",
+  "status": "active",
+  "tags": [
+    "tmux",
+    "plan"
+  ],
+  "title": "tmux implementation plan",
+  "updatedDate": "2026-05-20"
+}

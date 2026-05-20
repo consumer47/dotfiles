@@ -21,13 +21,40 @@ def tmux_value(expr: str, default: str = "") -> str:
         return default
 
 
-window_id = os.environ.get("TMUX_SIDEBAR_WINDOW_ID") or tmux_value("#{window_id}")
-window_name = os.environ.get("TMUX_SIDEBAR_WINDOW_NAME") or tmux_value("#{window_name}")
-client_tty = os.environ.get("TMUX_SIDEBAR_CLIENT_TTY") or tmux_value("#{client_tty}")
+def looks_like_format_literal(value: str) -> bool:
+    return value.startswith("#{") and value.endswith("}")
 
 
-def restore_sidebar_mode() -> None:
-    if client_tty:
+argv = sys.argv[1:]
+
+target_kind = argv[0] if len(argv) > 0 and argv[0] in {"pane", "session", "window"} else os.environ.get("TMUX_SIDEBAR_RENAME_KIND", "window")
+target_id = argv[1] if len(argv) > 1 else os.environ.get("TMUX_SIDEBAR_TARGET_ID", "")
+current_name = argv[2] if len(argv) > 2 else os.environ.get("TMUX_SIDEBAR_CURRENT_NAME", "")
+restore_arg = argv[3] if len(argv) > 3 else ""
+client_arg = argv[4] if len(argv) > 4 else ""
+client_tty = client_arg or os.environ.get("TMUX_SIDEBAR_CLIENT_TTY") or tmux_value("#{client_tty}")
+restore_sidebar_mode = restore_arg == "1" or os.environ.get("TMUX_SIDEBAR_RESTORE_MODE", "") == "1"
+
+if looks_like_format_literal(target_id):
+    target_id = ""
+if looks_like_format_literal(current_name):
+    current_name = ""
+
+if not target_id:
+    if target_kind == "pane":
+        target_id = tmux_value("#{pane_id}")
+        current_name = current_name or tmux_value("#{pane_title}")
+    elif target_kind == "session":
+        target_id = tmux_value("#{session_name}")
+        current_name = current_name or tmux_value("#{session_name}")
+    else:
+        target_kind = "window"
+        target_id = tmux_value("#{window_id}")
+        current_name = current_name or tmux_value("#{window_name}")
+
+
+def restore_mode() -> None:
+    if restore_sidebar_mode and client_tty:
         subprocess.run(
             ["tmux", "switch-client", "-c", client_tty, "-T", "tmux-sidebar"],
             check=False,
@@ -36,14 +63,23 @@ def restore_sidebar_mode() -> None:
         )
 
 
-def rename_window(new_name: str) -> None:
-    if new_name and new_name != window_name:
-        subprocess.run(
-            ["tmux", "rename-window", "-t", window_id, new_name],
-            check=False,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+def rename_target(new_name: str) -> None:
+    if not new_name or new_name == current_name:
+        return
+
+    command = {
+        "pane": "select-pane",
+        "session": "rename-session",
+        "window": "rename-window",
+    }[target_kind]
+
+    args = ["tmux", command, "-t", target_id]
+    if target_kind == "pane":
+        args.extend(["-T", new_name])
+    else:
+        args.append(new_name)
+
+    subprocess.run(args, check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
 
 def redraw(prompt: str, buffer: str) -> None:
@@ -58,15 +94,16 @@ def redraw(prompt: str, buffer: str) -> None:
 
 
 def main() -> int:
+    prompt = f"rename {target_kind}: "
+
     if not sys.stdin.isatty():
-        rename_window(window_name)
-        restore_sidebar_mode()
+        rename_target(current_name)
+        restore_mode()
         return 0
 
     fd = sys.stdin.fileno()
     old = termios.tcgetattr(fd)
-    prompt = "rename window: "
-    buffer = window_name
+    buffer = current_name
 
     try:
         tty.setraw(fd)
@@ -99,8 +136,8 @@ def main() -> int:
         sys.stdout.write("\r\033[K")
         sys.stdout.flush()
 
-    rename_window(buffer)
-    restore_sidebar_mode()
+    rename_target(buffer)
+    restore_mode()
     return 0
 
 

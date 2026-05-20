@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-20",
+  "description": "Build a reusable tmux popup flow that can launch a command in a temporary shell, send it to the background or detach it, and then restore the original session view unchanged. Use this to support starting a new tmux session unattached, optionally naming it before detaching, and other future floating command flows. Acceptance: a popup shell can capture a command, run or spawn it, and return focus to the previous session without disturbing the current layout.\n\nPlan:\n- Extract the popup execution and restore logic into a generic helper.\n- Support detached session creation as one command target, with an optional naming step before detaching.\n- Preserve the current session/window state so the popup behaves like a temporary overlay, not a layout change.\n- Keep the existing rename popup behavior working on top of the generalized helper.",
+  "id": "T-012",
+  "order": 120,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Generalize tmux popup workflow for detached commands",
+  "type": "feature"
+}

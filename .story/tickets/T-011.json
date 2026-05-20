@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-20",
+  "description": "Add a dedicated shortcut for renaming the current tmux window, alongside the existing pane and session rename follow-ups. Keep the shortcut model consistent with the current tmux naming workflow so pane/window/session can be renamed without leaving the keyboard. Acceptance: the current window can be renamed from normal tmux focus, and the rename flow does not interfere with pane or session renaming.\n\nPlan:\n- Reuse the existing rename popup flow instead of introducing a separate prompt.\n- Make sure the shortcut works from normal tmux focus and from the sidebar.\n- Keep the rename command no-op if the target name is unchanged.\n- Validate that session and pane rename paths keep working after the window rename shortcut is added.",
+  "id": "T-011",
+  "order": 110,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Add tmux window rename shortcut",
+  "type": "feature"
+}

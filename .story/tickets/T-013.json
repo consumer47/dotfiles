@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-20",
+  "description": "Replace the current top bar format that renders `session>window1|window2` with a clearer hierarchy for the active tmux session and its windows. Explore a presentation that makes the active session, active window, and available windows easier to scan at a glance. Acceptance: the top bar no longer relies on the current flat separator style and instead presents tmux session/window state in a more readable structure.\n\nPlan:\n- Review how the current status line is composed and what information is already available from tmux formats.\n- Choose a hierarchy that distinguishes active session, active window, and the rest of the windows without adding clutter.\n- Keep the bar compact enough to work in normal tmux sessions.\n- Verify the final format against the sidebar and popup workflows so they remain visually coherent.",
+  "id": "T-013",
+  "order": 130,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Refactor tmux top bar to show session and window structure",
+  "type": "task"
+}

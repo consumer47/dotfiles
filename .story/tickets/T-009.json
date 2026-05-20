@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "Add a second sidebar mode for tmux sessions, entered with `Alt-B`, using the same sidebar style and navigation feel as the current window mode. Session mode should list sessions first, let the user move with Vim-like keys, and attach/select the highlighted session. Keep the mode separate from the current window sidebar so the user can switch between workspace-level and window-level navigation deliberately. Acceptance: `Alt-B` opens a session sidebar, the user can move through sessions, and selecting one attaches or focuses that session.",
+  "id": "T-009",
+  "order": 90,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Add tmux sidebar session mode",
+  "type": "feature"
+}

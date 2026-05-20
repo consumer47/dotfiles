@@ -22,6 +22,7 @@ declare -A options=(
 #    ["12. Display (CLI)"]="gnome-terminal -- xrandr & read"
     ["12. File Manager"]="gnome-terminal -- ranger"
     ["13. System Monitor"]="gnome-terminal -- htop"
+    ["14. SSH Site Toggle"]="~/.config/i3/ssh-site-toggle.sh"
 )
 
 # Generate the options string for rofi

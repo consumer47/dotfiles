@@ -1,0 +1,12 @@
+{
+  "blockedBy": [],
+  "completedDate": null,
+  "createdDate": "2026-05-19",
+  "description": "Track two follow-ups for the tmux sidebar workflow: when the sidebar is not focused, add `Alt-r` to rename the current pane and `Alt-R` to rename the current session; keep fullscreen/zoom mode active when changing panes. Acceptance: rename shortcuts work from normal tmux focus without requiring the sidebar, and fullscreen/zoom does not collapse just because pane focus changed.",
+  "id": "T-010",
+  "order": 100,
+  "phase": "tmux",
+  "status": "open",
+  "title": "Add tmux sidebar rename and fullscreen follow-ups",
+  "type": "task"
+}
