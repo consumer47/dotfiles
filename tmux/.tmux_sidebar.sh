@@ -3,13 +3,15 @@
 set -euo pipefail
 
 sidebar_title="tmux-sidebar"
+popup_session_name="${TMUX_POPUP_SHELL_SESSION:-popup-shell}"
+project_profiles_dir="${TMUX_PROJECT_PROFILES_DIR:-$HOME/dotfiles/tmux/profiles}"
 sidebar_width="${TMUX_SIDEBAR_WIDTH:-28}"
 poll_interval="${TMUX_SIDEBAR_POLL_INTERVAL:-0.25}"
 script_path="${TMUX_SIDEBAR_SCRIPT:-$HOME/.tmux_sidebar.sh}"
 target_pane="${TMUX_PANE:-}"
 
 usage() {
-  echo "Usage: $0 open|toggle|toggle-mode|ensure|ensure-all|hide|watch|render|focus|count|move|select|rename|rename-pane|rename-session|rename-window|launch|launch-pane|launch-window|launch-session"
+  echo "Usage: $0 open|toggle|toggle-mode|ensure|ensure-all|hide|watch|render|focus|count|move|select|rename|rename-pane|rename-session|rename-window|launch|launch-pane|launch-window|launch-session|profile-menu|launch-profile|popup-latest|detach"
 }
 
 tmux_value() {
@@ -74,6 +76,15 @@ tmux_socket_path() {
 
   if [ -n "$tmux_env" ]; then
     printf '%s' "${tmux_env%%,*}"
+  fi
+}
+
+tmux_socket_args() {
+  local socket_path
+
+  socket_path="$(tmux_socket_path)"
+  if [ -n "$socket_path" ]; then
+    printf -- '-S %s' "$(shell_quote "$socket_path")"
   fi
 }
 
@@ -202,6 +213,23 @@ set_session_sidebar_cursor() {
 
 session_names() {
   tmux list-sessions -F "#{session_name}"
+}
+
+session_exists() {
+  local target_session="$1"
+  local session_name
+
+  while IFS= read -r session_name; do
+    [ "$session_name" = "$target_session" ] && return 0
+  done < <(session_names)
+
+  return 1
+}
+
+switch_to_session() {
+  local session_name="$1"
+
+  tmux switch-client -t "=$session_name" 2>/dev/null || true
 }
 
 session_index_for_name() {
@@ -524,28 +552,163 @@ launch_window_shell() {
 }
 
 launch_session_shell() {
-  local requested_name="${1:-}"
-  local session_name workdir socket_path attach_command
+  local session_name workdir
 
   workdir="$(tmux_value "#{pane_current_path}")"
-  if [ -n "$requested_name" ]; then
-    session_name="$requested_name"
-  else
-    session_name="shell-$(date +%Y%m%d-%H%M%S)"
-  fi
+  session_name="$popup_session_name"
 
-  if ! tmux has-session -t "=${session_name}" 2>/dev/null; then
+  if ! session_exists "$session_name"; then
     tmux new-session -d -s "$session_name" -c "$workdir"
   fi
 
-  socket_path="$(tmux_socket_path)"
-  if [ -n "$socket_path" ]; then
-    attach_command="TMUX= tmux -S $(shell_quote "$socket_path") attach-session -t $(shell_quote "$session_name")"
+  tmux set-option -q -t "$session_name" @tmux_popup_shell 1
+  open_popup_session "$session_name"
+}
+
+open_popup_session() {
+  local session_name="$1"
+  local workdir attach_command socket_args
+
+  [ -n "$session_name" ] || return 1
+  if ! session_exists "$session_name"; then
+    tmux display-message "popup session not found: $session_name"
+    return 1
+  fi
+
+  workdir="$(tmux_value "#{pane_current_path}")"
+  socket_args="$(tmux_socket_args)"
+  if [ -n "$socket_args" ]; then
+    attach_command="TMUX= tmux $socket_args attach-session -t $(shell_quote "$session_name")"
   else
     attach_command="TMUX= tmux attach-session -t $(shell_quote "$session_name")"
   fi
-
   popup_shell "$session_name" 90% 90% "$workdir" "$attach_command"
+}
+
+open_latest_popup_session() {
+  local session_name
+
+  session_name="$popup_session_name"
+  if ! session_exists "$session_name"; then
+    launch_session_shell
+    return
+  fi
+
+  open_popup_session "$session_name"
+}
+
+toggle_latest_popup_session() {
+  if [ "$(current_session_name)" = "$popup_session_name" ]; then
+    detach_current_client
+  else
+    open_latest_popup_session
+  fi
+}
+
+choose_popup_session() {
+  # Compatibility for any live tmux client that still has the old key binding.
+  toggle_latest_popup_session
+}
+
+detach_current_client() {
+  tmux detach-client
+}
+
+project_profile_names() {
+  local profile_path profile_name
+
+  [ -d "$project_profiles_dir" ] || return
+
+  while IFS= read -r profile_path; do
+    profile_name="${profile_path##*/}"
+    printf '%s\n' "${profile_name%.sh}"
+  done < <(find "$project_profiles_dir" -maxdepth 1 -type f -name '*.sh' | sort)
+}
+
+project_profile_path() {
+  local profile_name="$1"
+
+  case "$profile_name" in
+    ""|*/*|*..*)
+      return 1
+      ;;
+  esac
+
+  printf '%s/%s.sh' "$project_profiles_dir" "$profile_name"
+}
+
+project_profile_require_dir() {
+  local path="$1"
+
+  if [ ! -d "$path" ]; then
+    printf 'project profile directory does not exist: %s\n' "$path" >&2
+    return 1
+  fi
+}
+
+load_project_profile() {
+  local profile_name="$1"
+  local profile_path
+
+  profile_path="$(project_profile_path "$profile_name")" || {
+    printf 'invalid project profile: %s\n' "$profile_name" >&2
+    return 1
+  }
+
+  if [ ! -f "$profile_path" ]; then
+    printf 'project profile not found: %s\n' "$profile_name" >&2
+    return 1
+  fi
+
+  unset TMUX_PROJECT_PROFILE_SESSION
+  unset -f tmux_project_profile_create 2>/dev/null || true
+  # shellcheck source=/dev/null
+  . "$profile_path"
+
+  if ! declare -F tmux_project_profile_create >/dev/null; then
+    printf 'project profile does not define tmux_project_profile_create: %s\n' "$profile_name" >&2
+    return 1
+  fi
+
+  TMUX_PROJECT_PROFILE_SESSION="${TMUX_PROJECT_PROFILE_SESSION:-$profile_name}"
+}
+
+launch_project_profile() {
+  local profile_name="$1"
+
+  load_project_profile "$profile_name" || return
+
+  if tmux has-session -t "=$TMUX_PROJECT_PROFILE_SESSION" 2>/dev/null; then
+    switch_to_session "$TMUX_PROJECT_PROFILE_SESSION"
+    return
+  fi
+
+  tmux_project_profile_create
+  switch_to_session "$TMUX_PROJECT_PROFILE_SESSION"
+}
+
+open_project_profile_menu() {
+  local profile_name key index command
+  local -a menu_items=()
+
+  index=1
+  while IFS= read -r profile_name; do
+    [ -n "$profile_name" ] || continue
+    key="$index"
+    if [ "$index" -gt 9 ]; then
+      key=""
+    fi
+    command="run-shell \"$script_path launch-profile $profile_name #{pane_id}\""
+    menu_items+=("$profile_name" "$key" "$command")
+    index=$((index + 1))
+  done < <(project_profile_names)
+
+  if [ "${#menu_items[@]}" -eq 0 ]; then
+    tmux display-message "no project profiles found in $project_profiles_dir"
+    return
+  fi
+
+  tmux display-menu -T "project profiles" "${menu_items[@]}"
 }
 
 open_launch_mode() {
@@ -553,7 +716,7 @@ open_launch_mode() {
 
   client_tty="$(current_client_tty)"
   tmux switch-client -c "$client_tty" -T launch-target 2>/dev/null || true
-  tmux display-message "launch: p pane | w window | s session | q cancel"
+  tmux display-message "launch: p pane | w window | s session | P profiles | q cancel"
 }
 
 render_sidebar() {
@@ -708,8 +871,31 @@ case "${1:-}" in
     launch_window_shell
     ;;
   launch-session)
+    target_pane="${2:-${TMUX_PANE:-}}"
+    launch_session_shell
+    ;;
+  profile-menu)
+    target_pane="${2:-${TMUX_PANE:-}}"
+    open_project_profile_menu
+    ;;
+  launch-profile)
     target_pane="${3:-${TMUX_PANE:-}}"
-    launch_session_shell "${2:-}"
+    launch_project_profile "${2:-}"
+    ;;
+  popup-open)
+    target_pane="${3:-${TMUX_PANE:-}}"
+    open_popup_session "$popup_session_name"
+    ;;
+  popup-latest)
+    target_pane="${2:-${TMUX_PANE:-}}"
+    toggle_latest_popup_session
+    ;;
+  popup-choose)
+    target_pane="${2:-${TMUX_PANE:-}}"
+    choose_popup_session
+    ;;
+  detach)
+    detach_current_client
     ;;
   ensure)
     target_pane="${2:-${TMUX_PANE:-}}"
