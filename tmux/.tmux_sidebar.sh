@@ -662,6 +662,7 @@ load_project_profile() {
 
   unset TMUX_PROJECT_PROFILE_SESSION
   unset -f tmux_project_profile_create 2>/dev/null || true
+  unset -f tmux_project_profile_update 2>/dev/null || true
   # shellcheck source=/dev/null
   . "$profile_path"
 
@@ -679,6 +680,9 @@ launch_project_profile() {
   load_project_profile "$profile_name" || return
 
   if tmux has-session -t "=$TMUX_PROJECT_PROFILE_SESSION" 2>/dev/null; then
+    if declare -F tmux_project_profile_update >/dev/null; then
+      tmux_project_profile_update
+    fi
     switch_to_session "$TMUX_PROJECT_PROFILE_SESSION"
     return
   fi
