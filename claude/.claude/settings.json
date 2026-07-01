@@ -1,0 +1,49 @@
+{
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/dennis/.nvm/versions/node/v24.15.0/bin/storybloq session compact-prepare"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/dennis/.nvm/versions/node/v24.15.0/bin/storybloq session resume-prompt"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/dennis/.nvm/versions/node/v24.15.0/bin/storybloq hook-status",
+            "async": true
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "tui": "fullscreen",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark-daltonized",
+  "editorMode": "vim",
+  "model": "opus",
+  "env": {
+    "CLAUDE_CODE_DISABLE_MOUSE": "1"
+  }
+}
