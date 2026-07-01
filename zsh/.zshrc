@@ -123,3 +123,6 @@ fi
 export PATH=/home/dennis/.opencode/bin:$PATH
 # Rust user binaries (cargo install, e.g. taskwarrior-tui)
 [[ -d "$HOME/.cargo/bin" ]] && export PATH="$HOME/.cargo/bin:$PATH"
+
+# Let tmux handle mouse scrolling/selection around Claude Code panes.
+export CLAUDE_CODE_DISABLE_MOUSE=1
