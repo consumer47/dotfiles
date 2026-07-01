@@ -38,12 +38,9 @@
   "permissions": {
     "defaultMode": "bypassPermissions"
   },
-  "tui": "fullscreen",
+  "tui": "default",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-daltonized",
   "editorMode": "vim",
-  "model": "opus",
-  "env": {
-    "CLAUDE_CODE_DISABLE_MOUSE": "1"
-  }
+  "model": "opus"
 }
