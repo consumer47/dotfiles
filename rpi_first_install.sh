@@ -64,6 +64,7 @@ deploy_dotfiles() {
     stow -v zsh || warn "Failed to stow zsh (may already be deployed)"
     stow -v nvim || warn "Failed to stow nvim (may already be deployed)"
     stow -v commonrc || warn "Failed to stow commonrc (may already be deployed)"
+    stow -v claude || warn "Failed to stow claude (may already be deployed)"
     
     info "Dotfiles deployed successfully"
 }

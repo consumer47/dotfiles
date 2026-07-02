@@ -1,4 +1,8 @@
 {
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "model": "opus",
   "hooks": {
     "PreCompact": [
       {
@@ -6,7 +10,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/dennis/.nvm/versions/node/v24.15.0/bin/storybloq session compact-prepare"
+            "command": "storybloq session compact-prepare"
           }
         ]
       }
@@ -17,7 +21,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/dennis/.nvm/versions/node/v24.15.0/bin/storybloq session resume-prompt"
+            "command": "storybloq session resume-prompt"
           }
         ]
       }
@@ -28,19 +32,15 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/dennis/.nvm/versions/node/v24.15.0/bin/storybloq hook-status",
+            "command": "storybloq hook-status",
             "async": true
           }
         ]
       }
     ]
   },
-  "permissions": {
-    "defaultMode": "bypassPermissions"
-  },
   "tui": "default",
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark-daltonized",
-  "editorMode": "vim",
-  "model": "opus"
+  "editorMode": "vim"
 }
