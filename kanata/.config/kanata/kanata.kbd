@@ -1,0 +1,39 @@
+;; Global keyboard remapping, replacing ~/.xmodmap.
+;;
+;; Base layer:
+;;   Caps       -> Escape
+;;   tap Space  -> Space
+;;   hold Space -> navigation layer
+
+(defcfg
+  process-unmapped-keys yes
+)
+
+(defsrc)
+
+(defhands
+  ;; Assign only the SpaceFN chord participants. All unlisted keys resolve
+  ;; Space as a normal tap, preserving application shortcuts such as Space+w.
+  (left spc)
+  (right h j k l)
+)
+
+(defalias
+  space-nav (tap-hold-opposite-hand 180 spc (layer-while-held nav)
+    (timeout tap)
+    (same-hand tap)
+    (unknown-hand tap))
+)
+
+(deflayermap (base)
+  caps esc
+  spc  @space-nav
+)
+
+;; Only these four keys activate the layer.
+(deflayermap (nav)
+  h left
+  j down
+  k up
+  l right
+)

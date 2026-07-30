@@ -21,5 +21,5 @@ fi
 #     exit 1
 # fi
 
-# Apply xmodmap settings
-xmodmap ~/.xmodmap
+# Physical-key remapping is handled independently by Kanata. Keeping layout
+# selection here means the same Kanata layers work with both US and German XKB.
